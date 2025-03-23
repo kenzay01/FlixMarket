@@ -1,5 +1,7 @@
-import AdminCheck from "../../../components/adminCheck";
+"use client";
 
+import AdminCheck from "../../../components/adminCheck";
+import { useParams } from "next/navigation";
 // Словник для локалізації
 const translations = {
   en: {
@@ -24,13 +26,12 @@ const translations = {
   },
 };
 
-export default function AdminDashboard({
-  params,
-}: {
-  params: { locale: "en" | "de" };
-}) {
-  const locale = params.locale || "en";
-  const t = translations[locale];
+type LocaleKey = keyof typeof translations;
+
+export default function AdminDashboard() {
+  const params = useParams();
+  const locale = ((params.locale as string) || "en") as LocaleKey;
+  const t = translations[locale] || translations.en;
 
   return (
     <AdminCheck>

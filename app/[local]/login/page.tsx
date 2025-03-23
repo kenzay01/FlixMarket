@@ -51,7 +51,7 @@ export default function SignIn() {
 
       router.refresh();
     } catch (error) {
-      setError(errorLogin);
+      setError(errorLogin + " " + error);
       setIsLoading(false);
     }
   };

@@ -69,7 +69,7 @@ export default function SignUp() {
         router.push(`/${locale}/login`);
       }, 2000);
     } catch (error) {
-      setError(errorRegister);
+      setError(errorRegister + " " + error);
       setIsLoading(false);
     }
   };

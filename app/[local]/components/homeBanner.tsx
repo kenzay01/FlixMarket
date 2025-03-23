@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 const subscriptions = [
   {
     id: 1,
@@ -65,7 +64,6 @@ export default function HomeBanner() {
             <div
               className={`absolute top-0 left-0 w-full h-full ${subscription.color}`}
             ></div>
-            {/* <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div> */}
             <div className="flex flex-col justify-center h-full max-w-3xl mx-auto px-4 md:px-8 relative z-10">
               <div className="md:w-1/2 w-full text-white">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">

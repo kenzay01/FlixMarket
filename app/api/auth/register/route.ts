@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     return NextResponse.json(
-      { message: "Сталася помилка при реєстрації користувача" },
+      { message: `Сталася помилка при реєстрації користувача: ${error}` },
       { status: 500 }
     );
   }

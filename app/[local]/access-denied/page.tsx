@@ -1,4 +1,7 @@
+"use client";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+
 const translations = {
   en: {
     title: "Access Denied",
@@ -14,23 +17,23 @@ const translations = {
   },
 };
 
-export default function AccessDenied({
-  params,
-}: {
-  params: { locale: "en" | "de" };
-}) {
-  const locale = params.locale || "en";
-  const t = translations[locale];
+// Define the allowed locales
+type LocaleKey = keyof typeof translations;
+
+export default function AccessDenied() {
+  const params = useParams();
+  // Ensure locale is a valid key or default to "en"
+  const locale = ((params.locale as string) || "en") as LocaleKey;
+
+  // Now TypeScript knows this is a valid key
+  const t = translations[locale] || translations.en;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md text-center">
-        <h1 className="text-2xl font-bold text-red-600 mb-4">{t.title}</h1>
-        <p className="text-gray-600 mb-6">{t.message}</p>
-        <Link
-          href={`/${locale}`}
-          className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
+    <div className="flex h-screen flex-col items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+        <h1 className="mb-4 text-2xl font-bold text-red-600">{t.title}</h1>
+        <p className="mb-6 text-gray-700">{t.message}</p>
+        <Link href="/" className="text-blue-500 hover:underline">
           {t.backToHome}
         </Link>
       </div>

@@ -3,34 +3,11 @@ import NextAuth, {
   SessionStrategy,
   User,
   Session,
-  Account,
-  Profile,
 } from "next-auth";
-import { JWT } from "next-auth/jwt";
-import { AdapterUser } from "next-auth/adapters";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 
-// В реальному проекті ви б отримували користувачів з бази даних
-// Це просто для прикладу
-const users = [
-  {
-    id: "1",
-    name: "Admin",
-    email: "admin@gmail.com",
-    password: "$2b$10$your_hashed_admin_password", // Замініть це на реальний хеш паролю
-    role: "admin",
-  },
-  {
-    id: "2",
-    name: "User",
-    email: "test@gmail.com",
-    password: "$2b$10$your_hashed_user_password",
-    role: "user",
-  },
-  // Нові користувачі будуть додаватися через реєстрацію
-];
-
+// Custom interfaces
 interface CustomUser extends User {
   role?: string;
 }
@@ -45,7 +22,26 @@ interface CustomSession extends Session {
   };
 }
 
-export const authOptions: AuthOptions = {
+// Example users
+const users = [
+  {
+    id: "1",
+    name: "Admin",
+    email: "admin@gmail.com",
+    password: "$2b$10$your_hashed_admin_password",
+    role: "admin",
+  },
+  {
+    id: "2",
+    name: "User",
+    email: "test@gmail.com",
+    password: "$2b$10$your_hashed_user_password",
+    role: "user",
+  },
+];
+
+// Auth options configuration
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -58,7 +54,7 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
-        // Для адміна залишаємо спрощену логіку
+        // Admin simplified logic
         if (
           credentials.email === "admin@gmail.com" &&
           credentials.password === "adminPassword"
@@ -81,15 +77,14 @@ export const authOptions: AuthOptions = {
           } as CustomUser;
         }
 
-        // Для інших користувачів шукаємо в "базі даних"
-        // В реальному проекті тут би був запит до бази даних
+        // For other users
         const user = users.find((user) => user.email === credentials.email);
 
         if (!user) {
           return null;
         }
 
-        // Перевірка паролю (для адміна ми вже перевірили вище)
+        // Password check
         if (user.id !== "1") {
           const passwordMatch = await compare(
             credentials.password,
@@ -123,7 +118,7 @@ export const authOptions: AuthOptions = {
         },
       } as CustomSession;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.role = (user as CustomUser).role;
