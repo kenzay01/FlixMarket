@@ -94,7 +94,10 @@ export default function ReviewsContainer() {
 
   return (
     <>
-      <section className="w-full mx-auto flex flex-col items-center justify-center overflow-hidden py-12 px-4 bg-gray-50">
+      <section
+        className="w-full mx-auto flex flex-col items-center justify-center overflow-hidden py-12 px-4 bg-gray-50 pt-24"
+        id="comments"
+      >
         <div className="w-full max-w-5xl flex flex-col">
           <header className="w-full flex flex-col md:flex-row justify-between items-center mb-8">
             <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">

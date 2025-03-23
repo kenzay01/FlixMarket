@@ -22,6 +22,7 @@ export default function Header() {
   const isHome = pathParts.length === 1;
 
   const howItWorks = useClientTranslation("how_it_works");
+  const comments = useClientTranslation("comments");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,10 +58,17 @@ export default function Header() {
   const listOfLinks = [
     { href: `/${currentLang}/faqs`, body: "FAQ", needUnderline: true },
     {
+      href: `/${currentLang}/#comments`,
+      body: comments,
+      needUnderline: true,
+    },
+
+    {
       href: `/${currentLang}#how-it-works`,
       body: howItWorks,
       needUnderline: true,
     },
+
     {
       href: session
         ? session.user.role === "admin"
@@ -149,10 +157,10 @@ export default function Header() {
                   key={index}
                   href={link.href}
                   onClick={() => {
-                    if (link.href.split("#").at(-1) === "how-it-works") {
-                      const target = document.getElementById("how-it-works");
-                      if (target) {
-                        target.scrollIntoView({
+                    if (link.href.includes("#")) {
+                      const hash = link.href.split("#").at(-1);
+                      if (hash && document.getElementById(hash)) {
+                        document.getElementById(hash)?.scrollIntoView({
                           behavior: "smooth",
                           block: "start",
                         });
