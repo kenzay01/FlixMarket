@@ -3,6 +3,7 @@ import { useClientTranslation } from "../hooks/useTranslate";
 import HomeBanner from "./components/homeBanner";
 import PopularItems from "./components/popularItems";
 import HowItWorks from "./components/howItWorks";
+import ReviewsContainer from "./components/reviewsContainer";
 export default function Home() {
   console.log(useClientTranslation("welcome"));
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <HomeBanner />
       <PopularItems />
       <HowItWorks />
+      <ReviewsContainer />
     </div>
   );
 }

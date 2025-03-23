@@ -13,7 +13,7 @@ export default function HowItWorks() {
   const mainTitle = useClientTranslation("how_it_works");
   return (
     <section
-      className="w-full mx-auto flex bg-gray-100 items-center justify-center pt-24 overflow-x-hidden"
+      className="w-full mx-auto flex items-center justify-center overflow-x-hidden"
       id="how-it-works"
     >
       <div className="max-w-5xl flex flex-col md:flex-row w-full p-6 gap-6">

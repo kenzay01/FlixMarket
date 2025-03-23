@@ -23,5 +23,11 @@
 
   "how_it_works": "How it works",
   "step": "Step",
-  "try_now": "Try Now"
+  "try_now": "Try Now",
+
+  "user_comments": "User Comments",
+  "add_comment": "Add a comment",
+  "comment": "Comment",
+  "rating": "Rating",
+  "add": "Add"
 }

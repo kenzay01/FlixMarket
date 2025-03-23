@@ -21,5 +21,11 @@
 
   "how_it_works": "Wie es funktioniert",
   "step": "Schritt",
-  "try_now": "Jetzt aus probieren"
+  "try_now": "Jetzt aus probieren",
+
+  "user_comments": "Benutzer Kommentare",
+  "add_comment": "Kommentar hinzufügen",
+  "comment": "Kommentar",
+  "add": "Hinzufügen",
+  "rating": "Bewertung"
 }
