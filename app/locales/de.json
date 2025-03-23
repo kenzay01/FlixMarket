@@ -14,5 +14,12 @@
   "email_exists": "E-Mail existiert bereits",
   "error_register": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
   "register_success": "Registrierung erfolgreich!",
-  "dont_have_account": "Haben Sie kein Konto"
+  "dont_have_account": "Haben Sie kein Konto",
+  "buy_now": "Jetzt kaufen",
+  "month": "Monat",
+  "months": "Monate",
+
+  "how_it_works": "Wie es funktioniert",
+  "step": "Schritt",
+  "try_now": "Jetzt aus probieren"
 }

@@ -3,7 +3,6 @@
 import { usePathname, useRouter } from "next/navigation";
 
 export default function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
-  console.log("scrolled", scrolled);
   const router = useRouter();
   const pathname = usePathname();
   const isHomePage = pathname === "/en" || pathname === "/de";

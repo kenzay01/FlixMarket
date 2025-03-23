@@ -3,6 +3,7 @@
 import Header from "../components/header";
 import { Providers } from "./providers";
 import { usePathname } from "next/navigation";
+import Footer from "../components/footer";
 export default function RootLayoutExtanded({
   children,
 }: {
@@ -18,6 +19,7 @@ export default function RootLayoutExtanded({
           <Header />
         </div>
         <main className="w-full">{children}</main>
+        <Footer />
       </div>
     </Providers>
   );

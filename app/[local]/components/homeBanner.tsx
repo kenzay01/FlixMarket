@@ -50,7 +50,7 @@ export default function HomeBanner() {
   };
 
   return (
-    <section className="w-full h-screen min-h-96 max-h-screen relative overflow-hidden">
+    <section className="w-full h-screen max-h-screen relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
         {subscriptions.map((subscription, index) => (
           <div
@@ -103,7 +103,7 @@ export default function HomeBanner() {
       </div>
       <button
         onClick={prevSlide}
-        className="absolute left-16 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 w-10 h-10 rounded-full flex items-center justify-center text-white z-20 hover:bg-opacity-50 transition-all duration-300 cursor-pointer"
+        className="hidden lg:flex absolute left-16 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 w-10 h-10 rounded-full items-center justify-center text-white z-20 hover:bg-opacity-50 transition-all duration-300 cursor-pointer"
         aria-label="Previous slide"
       >
         <svg
@@ -123,7 +123,7 @@ export default function HomeBanner() {
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-16 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 w-10 h-10 rounded-full flex items-center justify-center text-white z-20 hover:bg-opacity-50 transition-all duration-300 cursor-pointer"
+        className="hidden absolute right-16 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 w-10 h-10 rounded-full lg:flex items-center justify-center text-white z-20 hover:bg-opacity-50 transition-all duration-300 cursor-pointer"
         aria-label="Next slide"
       >
         <svg
