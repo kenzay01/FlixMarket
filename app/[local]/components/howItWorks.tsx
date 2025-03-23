@@ -21,7 +21,7 @@ export default function HowItWorks() {
           className="flex-6"
           initial={{ opacity: 0, x: -200 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.3 }}
           viewport={{ once: true, amount: 0.2 }}
         >
           <div className="w-full h-32 bg-amber-950"></div>
@@ -30,7 +30,7 @@ export default function HowItWorks() {
           className="p-6 flex-5"
           initial={{ opacity: 0, x: 200 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.3 }}
           viewport={{ once: true, amount: 0.2 }}
         >
           <h1 className="text-4xl">{mainTitle}</h1>

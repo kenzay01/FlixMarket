@@ -21,7 +21,7 @@ export default function PopularItem({
         className="w-full md:w-1/2 pt-8"
         initial={{ opacity: 0, x: isEven ? 150 : -150 }}
         whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.3 }}
         viewport={{ once: true, amount: 0.2 }}
       >
         <div className="w-full h-48 bg-gray-800"></div>
@@ -30,7 +30,7 @@ export default function PopularItem({
         className="w-full md:w-1/2 p-6"
         initial={{ opacity: 0, x: isEven ? 200 : -200 }}
         whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.3 }}
         viewport={{ once: true, amount: 0.2 }}
       >
         <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
