@@ -2,5 +2,5 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  @apply bg-white text-gray-800 max-w-2xl container mx-auto;
+  @apply bg-white text-gray-800 mx-auto;
 }

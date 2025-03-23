@@ -1,0 +1,18 @@
+{
+  "welcome": "Willkommen auf unserer Website!",
+  "language": "Sprache",
+  "sign_in": "Anmelden",
+  "email": "E-Mail",
+  "password": "Passwort",
+  "invalid_credentials": "Ungültige Anmeldeinformationen",
+  "error_login": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
+  "sign_up": "Registrieren",
+  "name": "Ihr Name",
+  "confirm_password": "Passwort bestätigen",
+  "already_have_account": "Haben Sie bereits ein Konto",
+  "passwords_do_not_match": "Passwörter stimmen nicht überein",
+  "email_exists": "E-Mail existiert bereits",
+  "error_register": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
+  "register_success": "Registrierung erfolgreich!",
+  "dont_have_account": "Haben Sie kein Konto"
+}
