@@ -15,7 +15,9 @@ export default function RootLayoutExtanded({
   return (
     <Providers>
       <div className="flex flex-col items-center w-full">
-        <div className={`w-full px-4 z-50 ${isHomePage ? "" : "mb-26"}`}>
+        <div
+          className={`w-full px-4 z-50 ${isHomePage ? "" : " mb-16 md:mb-18"}`}
+        >
           <Header />
         </div>
         <main className="w-full">{children}</main>

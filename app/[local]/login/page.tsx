@@ -57,7 +57,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex h-auto items-start justify-center mt-12">
+    <div className="flex h-auto items-start justify-center my-12">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow">
         <div>
           <h1 className="text-2xl font-bold">{singIn}</h1>

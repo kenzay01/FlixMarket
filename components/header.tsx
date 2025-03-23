@@ -107,7 +107,9 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-10 transition-all duration-300 ${
+        className={`${
+          isHome ? "fixed" : "absolute"
+        } top-0 left-0 w-full z-10 transition-all duration-300 ${
           scrolled && isHome ? "bg-white shadow-md py-4" : "bg-transparent py-4"
         } ${hidden ? "-translate-y-full" : "translate-y-0"} ${
           isHome ? "" : "shadow-md"
@@ -147,12 +149,14 @@ export default function Header() {
                   key={index}
                   href={link.href}
                   onClick={() => {
-                    const target = document.getElementById("how-it-works");
-                    if (target) {
-                      target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      });
+                    if (link.href.split("#").at(-1) === "how-it-works") {
+                      const target = document.getElementById("how-it-works");
+                      if (target) {
+                        target.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
+                      }
                     }
                   }}
                   className={`relative flex items-center gap-1 justify-center transition-colors group ${
