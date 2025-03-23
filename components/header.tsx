@@ -80,7 +80,7 @@ export default function Header() {
               <button
                 onClick={() => {
                   signOut({ callbackUrl: `/${currentLang}` });
-                  toggleMenu;
+                  toggleMenu();
                 }}
                 className="border-1 border-red-500 px-2 py-1 rounded-md text-red-500 hover:bg-red-500 hover:text-white duration-150 cursor-pointer"
               >
@@ -90,7 +90,7 @@ export default function Header() {
               <button
                 onClick={() => {
                   router.push(`/${currentLang}/login`);
-                  toggleMenu;
+                  toggleMenu();
                 }}
                 className="border-1 border-indigo-500 px-2 py-1 rounded-md text-indigo-500 hover:bg-indigo-500 hover:text-white duration-150 cursor-pointer"
               >
