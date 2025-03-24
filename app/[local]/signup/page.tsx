@@ -146,7 +146,7 @@ export default function SignUp() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 duration-150 disabled:bg-blue-400 disabled:cursor-not-allowed"
+              className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 duration-150 disabled:bg-indigo-400 disabled:cursor-not-allowed"
             >
               {isLoading ? "..." : signUp}
             </button>
@@ -156,7 +156,7 @@ export default function SignUp() {
               {alreadyHaveAccount}{" "}
               <Link
                 href={`/${locale}/login`}
-                className="text-blue-600 hover:underline"
+                className="text-indigo-600 hover:underline"
               >
                 {signInLink}
               </Link>

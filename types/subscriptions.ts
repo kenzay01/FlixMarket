@@ -13,5 +13,4 @@ export type Subscription = {
   price_per_6months_eu?: number;
   price_per_12months?: number;
   price_per_12months_eu?: number;
-  price?: number;
 };
