@@ -1,5 +1,4 @@
 "use client";
-import { useClientTranslation } from "../hooks/useTranslate";
 import HomeBanner from "./components/homeBanner";
 import PopularItems from "./components/popularItems";
 import HowItWorks from "./components/howItWorks";
