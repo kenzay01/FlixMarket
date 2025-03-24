@@ -9,7 +9,7 @@ export default function Footer() {
       name: "Facebook",
       link: "",
       icon: <FaFacebookF className="w-4 h-4" />,
-      colorBackground: "bg-blue-950",
+      colorBackground: "bg-indigo-950",
     },
     {
       name: "Instagram",
@@ -21,7 +21,7 @@ export default function Footer() {
       name: "Telegram",
       link: "",
       icon: <FaTelegramPlane className="w-4 h-4" />,
-      colorBackground: "bg-blue-900",
+      colorBackground: "bg-indigo-900",
     },
   ];
   return (
@@ -65,8 +65,8 @@ export default function Footer() {
                       social.name === "Instagram"
                         ? "hover:bg-amber-800"
                         : social.name === "Facebook"
-                        ? "hover:bg-blue-950"
-                        : "hover:bg-blue-800"
+                        ? "hover:bg-indigo-950"
+                        : "hover:bg-indigo-800"
                     } hover:text-white ease-in-out duration-200 cursor-pointer`}
                   >
                     {social.icon}

@@ -17,15 +17,11 @@ const translations = {
   },
 };
 
-// Define the allowed locales
 type LocaleKey = keyof typeof translations;
 
 export default function AccessDenied() {
   const params = useParams();
-  // Ensure locale is a valid key or default to "en"
   const locale = ((params.locale as string) || "en") as LocaleKey;
-
-  // Now TypeScript knows this is a valid key
   const t = translations[locale] || translations.en;
 
   return (
@@ -33,7 +29,7 @@ export default function AccessDenied() {
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
         <h1 className="mb-4 text-2xl font-bold text-red-600">{t.title}</h1>
         <p className="mb-6 text-gray-700">{t.message}</p>
-        <Link href="/" className="text-blue-500 hover:underline">
+        <Link href="/" className="text-indigo-500 hover:underline">
           {t.backToHome}
         </Link>
       </div>

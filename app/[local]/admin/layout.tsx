@@ -2,29 +2,9 @@
 
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
-
-// Словник для локалізації
-const translations = {
-  en: {
-    adminPanel: "Admin Panel",
-    home: "Home",
-    users: "Users",
-    settings: "Settings",
-    reports: "Reports",
-    logout: "Logout",
-  },
-  de: {
-    adminPanel: "Admin-Panel",
-    home: "Startseite",
-    users: "Benutzer",
-    settings: "Einstellungen",
-    reports: "Berichte",
-    logout: "Abmelden",
-  },
-};
-
+import Link from "next/link";
+import { useState } from "react";
 export default function AdminLayout({
   children,
 }: {
@@ -32,64 +12,71 @@ export default function AdminLayout({
 }) {
   const { data: session } = useSession();
   const params = useParams();
-  const locale = (params.locale as "en" | "de") || "en";
-  const t = translations[locale];
+  const locale = params.local || "en";
+  const [showSignOutModal, setShowSignOutModal] = useState(false);
+
+  const handleSignOut = () => {
+    signOut({ callbackUrl: `/${locale}` });
+  };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-800 text-white">
-        <div className="p-4 text-xl font-bold">{t.adminPanel}</div>
-        <nav className="mt-6">
-          <Link
-            href={`/${locale}/admin`}
-            className="block px-4 py-2 hover:bg-gray-700"
-          >
-            {t.home}
-          </Link>
-          <Link
-            href={`/${locale}/admin/users`}
-            className="block px-4 py-2 hover:bg-gray-700"
-          >
-            {t.users}
-          </Link>
-          <Link
-            href={`/${locale}/admin/settings`}
-            className="block px-4 py-2 hover:bg-gray-700"
-          >
-            {t.settings}
-          </Link>
-          <Link
-            href={`/${locale}/admin/reports`}
-            className="block px-4 py-2 hover:bg-gray-700"
-          >
-            {t.reports}
-          </Link>
-        </nav>
-      </div>
-
-      {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <header className="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
-          <h1 className="text-xl font-semibold">{t.adminPanel}</h1>
-          {session && (
-            <div className="flex items-center">
-              <span className="mr-4">
-                {session.user.name || session.user.email}
-              </span>
+    <div className="flex h-auto">
+      {showSignOutModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full">
+            <h2 className="text-xl font-semibold mb-4">Підтвердження виходу</h2>
+            <p className="text-gray-600 mb-6">Ви впевненні що хочете вийти?</p>
+            <div className="flex justify-end space-x-4">
               <button
-                onClick={() => signOut({ callbackUrl: `/${locale}` })}
-                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                onClick={() => setShowSignOutModal(false)}
+                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md cursor-pointer"
               >
-                {t.logout}
+                Відмінити
+              </button>
+              <button
+                onClick={handleSignOut}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 cursor-pointer"
+              >
+                Вийти
               </button>
             </div>
-          )}
-        </header>
-
-        {/* Main content */}
-        <main className="flex-1 overflow-y-auto p-6 bg-gray-100">
+          </div>
+        </div>
+      )}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="flex justify-between align-center p-4 bg-white shadow-xl rounded-md">
+            <div className="flex items-center gap-8">
+              <h1 className="text-2xl font-bold">Панель адміністратора</h1>
+              <div className="flex gap-4">
+                <Link
+                  href={`/${locale}/admin`}
+                  className="px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600"
+                >
+                  Звіти
+                </Link>
+                <Link
+                  href={`/${locale}/admin/subscriptions`}
+                  className="px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600"
+                >
+                  Підписки
+                </Link>
+              </div>
+            </div>
+            {session && (
+              <div className="flex items-center">
+                <span className="mr-4">
+                  {session.user.name || session.user.email}
+                </span>
+                <button
+                  onClick={() => setShowSignOutModal(true)}
+                  className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                  Вийти
+                </button>
+              </div>
+            )}
+          </div>
           {children}
         </main>
       </div>

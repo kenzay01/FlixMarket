@@ -12,6 +12,8 @@ export default function RootLayoutExtanded({
   const pathname = usePathname();
   const pathParts = pathname.split("/").filter(Boolean);
   const isHomePage = pathParts.length === 1;
+  const isAdminPanel = pathname.includes("/admin");
+
   return (
     <Providers>
       <div className="flex flex-col items-center w-full">
@@ -21,7 +23,7 @@ export default function RootLayoutExtanded({
           <Header />
         </div>
         <main className="w-full">{children}</main>
-        <Footer />
+        {isAdminPanel ? null : <Footer />}
       </div>
     </Providers>
   );
