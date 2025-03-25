@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Subscription } from "../../../../types/subscriptions";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([
@@ -14,6 +15,8 @@ export default function Subscriptions() {
       benefitsList_de: ["Funktion 1", "Funktion 2"],
       description: "Базовий план підписки",
       description_de: "Basis-Abonnementplan",
+      price_per_month: 9.99,
+      price_per_month_eu: 8.99,
       price_per_3months: 29.99,
       price_per_3months_eu: 27.99,
       price_per_6months: 54.99,
@@ -37,7 +40,7 @@ export default function Subscriptions() {
     const { name, value } = e.target;
     setCurrentSubscription((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value === "" ? 0 : value,
     }));
   };
 
@@ -68,17 +71,29 @@ export default function Subscriptions() {
   };
 
   const handleAddOrUpdateSubscription = () => {
+    const processedSubscription = {
+      ...currentSubscription,
+      price_per_month: currentSubscription.price_per_month ?? 0,
+      price_per_month_eu: currentSubscription.price_per_month_eu ?? 0,
+      price_per_3months: currentSubscription.price_per_3months ?? 0,
+      price_per_3months_eu: currentSubscription.price_per_3months_eu ?? 0,
+      price_per_6months: currentSubscription.price_per_6months ?? 0,
+      price_per_6months_eu: currentSubscription.price_per_6months_eu ?? 0,
+      price_per_12months: currentSubscription.price_per_12months ?? 0,
+      price_per_12months_eu: currentSubscription.price_per_12months_eu ?? 0,
+    };
+
     if (isEditing) {
       setSubscriptions((prev) =>
         prev.map((sub) =>
           sub.id === currentSubscription.id
-            ? { ...sub, ...currentSubscription }
+            ? { ...sub, ...processedSubscription }
             : sub
         )
       );
     } else {
       const newSubscription: Subscription = {
-        ...currentSubscription,
+        ...processedSubscription,
         id: String(subscriptions.length + 1),
       } as Subscription;
       setSubscriptions((prev) => [...prev, newSubscription]);
@@ -121,6 +136,19 @@ export default function Subscriptions() {
   const handleClearForm = () => {
     setCurrentSubscription({});
     setIsEditing(false);
+  };
+
+  const handleTogglePriceVisibility = (
+    name: keyof Subscription,
+    currentValue: string | number | string[] | null | undefined
+  ) => {
+    setCurrentSubscription((prev) => ({
+      ...prev,
+      [name]:
+        Number(currentValue) === 0 || currentValue === undefined
+          ? prev[name]
+          : 0,
+    }));
   };
 
   return (
@@ -180,29 +208,41 @@ export default function Subscriptions() {
                   ))}
                 </ul>
               </div>
-
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-800">
-                <div className="p-3 bg-gray-50 rounded-lg border">
-                  <span className="font-semibold">3 місяці:</span>
-                  <div>
-                    ${subscription.price_per_3months} / €
-                    {subscription.price_per_3months_eu}
-                  </div>
-                </div>
-                <div className="p-3 bg-gray-50 rounded-lg border">
-                  <span className="font-semibold">6 місяців:</span>
-                  <div>
-                    ${subscription.price_per_6months} / €
-                    {subscription.price_per_6months_eu}
-                  </div>
-                </div>
-                <div className="p-3 bg-gray-50 rounded-lg border">
-                  <span className="font-semibold">12 місяців:</span>
-                  <div>
-                    ${subscription.price_per_12months} / €
-                    {subscription.price_per_12months_eu}
-                  </div>
-                </div>
+                {[
+                  {
+                    label: "1 місяць",
+                    price: subscription.price_per_month,
+                    priceEu: subscription.price_per_month_eu,
+                  },
+                  {
+                    label: "3 місяці",
+                    price: subscription.price_per_3months,
+                    priceEu: subscription.price_per_3months_eu,
+                  },
+                  {
+                    label: "6 місяців",
+                    price: subscription.price_per_6months,
+                    priceEu: subscription.price_per_6months_eu,
+                  },
+                  {
+                    label: "12 місяців",
+                    price: subscription.price_per_12months,
+                    priceEu: subscription.price_per_12months_eu,
+                  },
+                ]
+                  .filter((term) => term.price != null && term.price > 0)
+                  .map((term, index) => (
+                    <div
+                      key={index}
+                      className="p-3 bg-gray-50 rounded-lg border"
+                    >
+                      <span className="font-semibold">{term.label}:</span>
+                      <div>
+                        ${term.price} / €{term.priceEu}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           ))}
@@ -219,38 +259,50 @@ export default function Subscriptions() {
               Очистити
             </button>
           </div>
-          <div className="space-y-4">
-            <input
-              type="text"
-              name="title"
-              placeholder="Назва (Англійська)"
-              value={currentSubscription.title || ""}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="text"
-              name="title_de"
-              placeholder="Назва (Німецька)"
-              value={currentSubscription.title_de || ""}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-            />
+          <div className="space-y-2">
+            <div>
+              <label className="block mb-1">Назва (Англійська)</label>
+              <input
+                type="text"
+                name="title"
+                placeholder="Назва (Англійська)"
+                value={currentSubscription.title || ""}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div>
+              <label className="block mb-1">Назва (Німецька)</label>
+              <input
+                type="text"
+                name="title_de"
+                placeholder="Назва (Німецька)"
+                value={currentSubscription.title_de || ""}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+            </div>
 
-            <textarea
-              name="description"
-              placeholder="Опис (Англійська)"
-              value={currentSubscription.description || ""}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-            />
-            <textarea
-              name="description_de"
-              placeholder="Опис (Німецька)"
-              value={currentSubscription.description_de || ""}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-            />
+            <div>
+              <label className="block mb-1">Опис (Англійська)</label>
+              <textarea
+                name="description"
+                placeholder="Опис (Англійська)"
+                value={currentSubscription.description || ""}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div>
+              <label className="block mb-1">Опис (Німецька)</label>
+              <textarea
+                name="description_de"
+                placeholder="Опис (Німецька)"
+                value={currentSubscription.description_de || ""}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+            </div>
 
             <div>
               <h3 className="font-semibold mb-2">Бенефіти (Англійська)</h3>
@@ -313,96 +365,86 @@ export default function Subscriptions() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block mb-1">Ціна за 3 місяці (USD)</label>
-                <div className="flex items-center">
-                  <span className="mr-2">$</span>
-                  <input
-                    type="number"
-                    name="price_per_3months"
-                    step="0.01"
-                    min="0"
-                    value={currentSubscription.price_per_3months || ""}
-                    onChange={handleInputChange}
-                    className="w-full p-2 border rounded"
-                  />
+              {[
+                {
+                  label: "Ціна за 1 місяць (USD)",
+                  name: "price_per_month" as keyof Subscription,
+                },
+                {
+                  label: "Ціна за 1 місяць (EU)",
+                  name: "price_per_month_eu" as keyof Subscription,
+                },
+                {
+                  label: "Ціна за 3 місяці (USD)",
+                  name: "price_per_3months" as keyof Subscription,
+                },
+                {
+                  label: "Ціна за 3 місяці (EU)",
+                  name: "price_per_3months_eu" as keyof Subscription,
+                },
+                {
+                  label: "Ціна за 6 місяців (USD)",
+                  name: "price_per_6months" as keyof Subscription,
+                },
+                {
+                  label: "Ціна за 6 місяців (EU)",
+                  name: "price_per_6months_eu" as keyof Subscription,
+                },
+                {
+                  label: "Ціна за 12 місяців (USD)",
+                  name: "price_per_12months" as keyof Subscription,
+                },
+                {
+                  label: "Ціна за 12 місяців (EU)",
+                  name: "price_per_12months_eu" as keyof Subscription,
+                },
+              ].map((field) => (
+                <div key={field.name} className="relative">
+                  <label className="block mb-1">{field.label}</label>
+                  <div className="flex items-center">
+                    <span className="mr-2">
+                      {field.name.includes("_eu") ? "€" : "$"}
+                    </span>
+                    <input
+                      type="number"
+                      name={field.name}
+                      step="0.01"
+                      min="0"
+                      value={currentSubscription[field.name] || ""}
+                      onChange={handleInputChange}
+                      className={`w-full p-2 border rounded ${
+                        currentSubscription[field.name] === 0 ||
+                        currentSubscription[field.name] === undefined
+                          ? "bg-gray-100 text-gray-500"
+                          : "bg-white text-black"
+                      }`}
+                      placeholder="0.00"
+                    />
+                    <button
+                      onClick={() =>
+                        handleTogglePriceVisibility(
+                          field.name,
+                          currentSubscription[field.name]
+                        )
+                      }
+                      className="ml-2 text-gray-500 hover:text-gray-700"
+                      title={
+                        currentSubscription[field.name] === 0 ||
+                        currentSubscription[field.name] === undefined
+                          ? "Активувати термін"
+                          : "Деактивувати термін"
+                      }
+                    >
+                      {currentSubscription[field.name] === 0 ||
+                      currentSubscription[field.name] === undefined ? (
+                        <EyeOff className="w-5 h-5 text-red-500" />
+                      ) : (
+                        <Eye className="w-5 h-5 text-green-500" />
+                      )}
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <label className="block mb-1">Ціна за 3 місяці (EU)</label>
-                <div className="flex items-center">
-                  <span className="mr-2">€</span>
-                  <input
-                    type="number"
-                    name="price_per_3months_eu"
-                    step="0.01"
-                    min="0"
-                    value={currentSubscription.price_per_3months_eu || ""}
-                    onChange={handleInputChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block mb-1">Ціна за 6 місяців (USD)</label>
-                <div className="flex items-center">
-                  <span className="mr-2">$</span>
-                  <input
-                    type="number"
-                    name="price_per_6months"
-                    step="0.01"
-                    min="0"
-                    value={currentSubscription.price_per_6months || ""}
-                    onChange={handleInputChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block mb-1">Ціна за 6 місяців (EU)</label>
-                <div className="flex items-center">
-                  <span className="mr-2">€</span>
-                  <input
-                    type="number"
-                    name="price_per_6months_eu"
-                    step="0.01"
-                    min="0"
-                    value={currentSubscription.price_per_6months_eu || ""}
-                    onChange={handleInputChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block mb-1">Ціна за 12 місяців (USD)</label>
-                <div className="flex items-center">
-                  <span className="mr-2">$</span>
-                  <input
-                    type="number"
-                    name="price_per_12months"
-                    step="0.01"
-                    min="0"
-                    value={currentSubscription.price_per_12months || ""}
-                    onChange={handleInputChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block mb-1">Ціна за 12 місяців (EU)</label>
-                <div className="flex items-center">
-                  <span className="mr-2">€</span>
-                  <input
-                    type="number"
-                    name="price_per_12months_eu"
-                    step="0.01"
-                    min="0"
-                    value={currentSubscription.price_per_12months_eu || ""}
-                    onChange={handleInputChange}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
 
             <button

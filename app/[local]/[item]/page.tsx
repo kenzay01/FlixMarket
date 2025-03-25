@@ -30,6 +30,8 @@ const fetchSubscriptionById = async (
         "E-Mail-Support",
         "Grundlegende Analysen",
       ],
+      price_per_month: 9.99,
+      price_per_month_eu: 8.99,
       price_per_3months: 29.99,
       price_per_3months_eu: 27.99,
       price_per_6months: 49.99,
@@ -58,12 +60,14 @@ const fetchSubscriptionById = async (
         "Detailliertes Analytics-Dashboard",
         "Anpassungsoptionen",
       ],
-      price_per_3months: 59.99,
-      price_per_3months_eu: 56.99,
+      price_per_month: 29.99,
+      price_per_month_eu: 26.99,
+      price_per_3months: 0,
+      price_per_3months_eu: 0,
       price_per_6months: 99.99,
       price_per_6months_eu: 94.99,
-      price_per_12months: 179.99,
-      price_per_12months_eu: 169.99,
+      price_per_12months: null,
+      price_per_12months_eu: null,
       imageUrl: "/images/pro-plan.jpg",
     },
     {
@@ -90,12 +94,14 @@ const fetchSubscriptionById = async (
         "White-Labeling-Optionen",
         "Team-Kollaborationsfunktionen",
       ],
+      price_per_month: 59.99,
+      price_per_month_eu: 54.99,
       price_per_3months: 99.99,
       price_per_3months_eu: 94.99,
       price_per_6months: 179.99,
       price_per_6months_eu: 169.99,
-      price_per_12months: 329.99,
-      price_per_12months_eu: 309.99,
+      price_per_12months: 0,
+      price_per_12months_eu: 0,
       imageUrl: "/images/enterprise-plan.jpg",
     },
   ];
@@ -117,7 +123,7 @@ export default function ItemPage() {
   const featuresText = useClientTranslation("features") || "Features";
 
   const [subscription, setSubscription] = useState<Subscription | null>(null);
-  const [selectedPlan, setSelectedPlan] = useState<"3" | "6" | "12">("3");
+  const [selectedPlan, setSelectedPlan] = useState<"1" | "3" | "6" | "12">("1");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getLocalizedContent = (field: string, fallback: string) => {
@@ -133,6 +139,47 @@ export default function ItemPage() {
     return locale === "de"
       ? subscription.benefitsList_de
       : subscription.benefitsList;
+  };
+
+  const getMonthPicker = () => {
+    if (!subscription) return [];
+
+    const monthTermin = [];
+
+    if (
+      subscription.price_per_month != null &&
+      subscription.price_per_month_eu != null &&
+      subscription.price_per_month > 0 &&
+      subscription.price_per_month_eu > 0
+    ) {
+      monthTermin.push("1");
+    }
+    if (
+      subscription.price_per_3months != null &&
+      subscription.price_per_3months_eu != null &&
+      subscription.price_per_3months > 0 &&
+      subscription.price_per_3months_eu > 0
+    ) {
+      monthTermin.push("3");
+    }
+    if (
+      subscription.price_per_6months != null &&
+      subscription.price_per_6months_eu != null &&
+      subscription.price_per_6months > 0 &&
+      subscription.price_per_6months_eu > 0
+    ) {
+      monthTermin.push("6");
+    }
+    if (
+      subscription.price_per_12months != null &&
+      subscription.price_per_12months_eu != null &&
+      subscription.price_per_12months > 0 &&
+      subscription.price_per_12months_eu > 0
+    ) {
+      monthTermin.push("12");
+    }
+
+    return monthTermin;
   };
 
   useEffect(() => {
@@ -167,6 +214,10 @@ export default function ItemPage() {
     const isEuro = locale === "de";
 
     switch (selectedPlan) {
+      case "1":
+        return isEuro
+          ? subscription.price_per_month_eu
+          : subscription.price_per_month;
       case "3":
         return isEuro
           ? subscription.price_per_3months_eu
@@ -256,10 +307,12 @@ export default function ItemPage() {
             <div className="mb-8">
               <h3 className="text-xl font-semibold mb-4">{selectPlanText}:</h3>
               <div className="flex flex-wrap gap-2 md:gap-4">
-                {["3", "6", "12"].map((months) => (
+                {getMonthPicker()?.map((months) => (
                   <button
                     key={months}
-                    onClick={() => setSelectedPlan(months as "3" | "6" | "12")}
+                    onClick={() =>
+                      setSelectedPlan(months as "1" | "3" | "6" | "12")
+                    }
                     className={`px-3 py-1.5 md:px-6 md:py-3 rounded-full border-2 transition-all cursor-pointer ${
                       selectedPlan === months
                         ? "border-indigo-600 bg-indigo-600 text-white"
