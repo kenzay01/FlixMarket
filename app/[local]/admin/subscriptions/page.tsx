@@ -10,19 +10,26 @@ export default function Subscriptions() {
       id: "1",
       title: "Базовий план",
       title_de: "Basis-Plan",
+      title_ua: "Базовий план",
       imageUrl: "",
       benefitsList: ["Перевага 1", "Перевага 2"],
       benefitsList_de: ["Funktion 1", "Funktion 2"],
+      benefitsList_ua: ["Перевага 1", "Перевага 2"],
       description: "Базовий план підписки",
       description_de: "Basis-Abonnementplan",
+      description_ua: "Базовий план підписки",
       price_per_month: 9.99,
       price_per_month_eu: 8.99,
+      price_per_month_ua: 250,
       price_per_3months: 29.99,
       price_per_3months_eu: 27.99,
+      price_per_3months_ua: 750,
       price_per_6months: 54.99,
       price_per_6months_eu: 51.99,
+      price_per_6months_ua: 1499,
       price_per_12months: 99.99,
       price_per_12months_eu: 94.99,
+      price_per_12months_ua: 2999,
     },
   ]);
 
@@ -33,6 +40,7 @@ export default function Subscriptions() {
 
   const [newBenefit, setNewBenefit] = useState("");
   const [newBenefit_de, setNewBenefit_de] = useState("");
+  const [newBenefit_ua, setNewBenefit_ua] = useState("");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,9 +52,19 @@ export default function Subscriptions() {
     }));
   };
 
-  const handleAddBenefit = (lang: "en" | "de") => {
-    const benefit = lang === "en" ? newBenefit : newBenefit_de;
-    const key = lang === "en" ? "benefitsList" : "benefitsList_de";
+  const handleAddBenefit = (lang: "en" | "de" | "ua") => {
+    const benefit =
+      lang === "en"
+        ? newBenefit
+        : lang === "de"
+        ? newBenefit_de
+        : newBenefit_ua;
+    const key =
+      lang === "en"
+        ? "benefitsList"
+        : lang === "de"
+        ? "benefitsList_de"
+        : "benefitsList_ua";
 
     if (benefit.trim()) {
       setCurrentSubscription((prev) => ({
@@ -56,14 +74,21 @@ export default function Subscriptions() {
 
       if (lang === "en") {
         setNewBenefit("");
-      } else {
+      } else if (lang === "de") {
         setNewBenefit_de("");
+      } else {
+        setNewBenefit_ua("");
       }
     }
   };
 
-  const handleRemoveBenefit = (lang: "en" | "de", index: number) => {
-    const key = lang === "en" ? "benefitsList" : "benefitsList_de";
+  const handleRemoveBenefit = (lang: "en" | "de" | "ua", index: number) => {
+    const key =
+      lang === "en"
+        ? "benefitsList"
+        : lang === "de"
+        ? "benefitsList_de"
+        : "benefitsList_ua";
     setCurrentSubscription((prev) => ({
       ...prev,
       [key]: (prev[key] || []).filter((_, i) => i !== index),
@@ -75,12 +100,16 @@ export default function Subscriptions() {
       ...currentSubscription,
       price_per_month: currentSubscription.price_per_month ?? 0,
       price_per_month_eu: currentSubscription.price_per_month_eu ?? 0,
+      price_per_month_ua: currentSubscription.price_per_month_ua ?? 0,
       price_per_3months: currentSubscription.price_per_3months ?? 0,
       price_per_3months_eu: currentSubscription.price_per_3months_eu ?? 0,
+      price_per_3months_ua: currentSubscription.price_per_3months_ua ?? 0,
       price_per_6months: currentSubscription.price_per_6months ?? 0,
       price_per_6months_eu: currentSubscription.price_per_6months_eu ?? 0,
+      price_per_6months_ua: currentSubscription.price_per_6months_ua ?? 0,
       price_per_12months: currentSubscription.price_per_12months ?? 0,
       price_per_12months_eu: currentSubscription.price_per_12months_eu ?? 0,
+      price_per_12months_ua: currentSubscription.price_per_12months_ua ?? 0,
     };
 
     if (isEditing) {
@@ -108,6 +137,7 @@ export default function Subscriptions() {
     setCurrentSubscription(subscription);
     setIsEditing(true);
   };
+
   const [modalOpen, setModalOpen] = useState(false);
   const [subscriptionToDelete, setSubscriptionToDelete] = useState<
     string | null
@@ -165,7 +195,8 @@ export default function Subscriptions() {
             >
               <h3 className="text-xl font-bold text-gray-900 flex justify-between items-center">
                 <span>
-                  {subscription.title} / {subscription.title_de}
+                  {subscription.title} / {subscription.title_de} /{" "}
+                  {subscription.title_ua}
                 </span>
                 <div className="space-x-2">
                   <button
@@ -193,6 +224,9 @@ export default function Subscriptions() {
                 <p className="text-gray-600">
                   Нім. {subscription.description_de}
                 </p>
+                <p className="text-gray-600">
+                  Укр. {subscription.description_ua}
+                </p>
               </div>
 
               <div className="mb-3">
@@ -204,6 +238,9 @@ export default function Subscriptions() {
                       <div className="text-gray-600">
                         Нім. {subscription.benefitsList_de?.[index]}
                       </div>
+                      <div className="text-gray-600">
+                        Укр. {subscription.benefitsList_ua?.[index]}
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -214,21 +251,25 @@ export default function Subscriptions() {
                     label: "1 місяць",
                     price: subscription.price_per_month,
                     priceEu: subscription.price_per_month_eu,
+                    priceUa: subscription.price_per_month_ua,
                   },
                   {
                     label: "3 місяці",
                     price: subscription.price_per_3months,
                     priceEu: subscription.price_per_3months_eu,
+                    priceUa: subscription.price_per_3months_ua,
                   },
                   {
                     label: "6 місяців",
                     price: subscription.price_per_6months,
                     priceEu: subscription.price_per_6months_eu,
+                    priceUa: subscription.price_per_6months_ua,
                   },
                   {
                     label: "12 місяців",
                     price: subscription.price_per_12months,
                     priceEu: subscription.price_per_12months_eu,
+                    priceUa: subscription.price_per_12months_ua,
                   },
                 ]
                   .filter((term) => term.price != null && term.price > 0)
@@ -239,7 +280,7 @@ export default function Subscriptions() {
                     >
                       <span className="font-semibold">{term.label}:</span>
                       <div>
-                        ${term.price} / €{term.priceEu}
+                        ${term.price} / €{term.priceEu} / ₴{term.priceUa}
                       </div>
                     </div>
                   ))}
@@ -282,6 +323,17 @@ export default function Subscriptions() {
                 className="w-full p-2 border rounded"
               />
             </div>
+            <div>
+              <label className="block mb-1">Назва (Українська)</label>
+              <input
+                type="text"
+                name="title_ua"
+                placeholder="Назва (Українська)"
+                value={currentSubscription.title_ua || ""}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+            </div>
 
             <div>
               <label className="block mb-1">Опис (Англійська)</label>
@@ -299,6 +351,16 @@ export default function Subscriptions() {
                 name="description_de"
                 placeholder="Опис (Німецька)"
                 value={currentSubscription.description_de || ""}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div>
+              <label className="block mb-1">Опис (Українська)</label>
+              <textarea
+                name="description_ua"
+                placeholder="Опис (Українська)"
+                value={currentSubscription.description_ua || ""}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
               />
@@ -364,6 +426,36 @@ export default function Subscriptions() {
               </div>
             </div>
 
+            <div>
+              <h3 className="font-semibold mb-2">Бенефіти (Українська)</h3>
+              {currentSubscription.benefitsList_ua?.map((benefit, index) => (
+                <div key={index} className="flex items-center mb-2">
+                  <span className="mr-2">{benefit}</span>
+                  <button
+                    onClick={() => handleRemoveBenefit("ua", index)}
+                    className="bg-red-500 text-white px-2 py-1 rounded text-xs cursor-pointer"
+                  >
+                    Видалити
+                  </button>
+                </div>
+              ))}
+              <div className="flex">
+                <input
+                  type="text"
+                  value={newBenefit_ua}
+                  onChange={(e) => setNewBenefit_ua(e.target.value)}
+                  placeholder="Додати бенефіт (Українська)"
+                  className="flex-grow p-2 border rounded mr-2"
+                />
+                <button
+                  onClick={() => handleAddBenefit("ua")}
+                  className="bg-green-500 text-white px-3 py-2 rounded cursor-pointer"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               {[
                 {
@@ -375,12 +467,20 @@ export default function Subscriptions() {
                   name: "price_per_month_eu" as keyof Subscription,
                 },
                 {
+                  label: "Ціна за 1 місяць (UAH)",
+                  name: "price_per_month_ua" as keyof Subscription,
+                },
+                {
                   label: "Ціна за 3 місяці (USD)",
                   name: "price_per_3months" as keyof Subscription,
                 },
                 {
                   label: "Ціна за 3 місяці (EU)",
                   name: "price_per_3months_eu" as keyof Subscription,
+                },
+                {
+                  label: "Ціна за 3 місяці (UAH)",
+                  name: "price_per_3months_ua" as keyof Subscription,
                 },
                 {
                   label: "Ціна за 6 місяців (USD)",
@@ -391,6 +491,10 @@ export default function Subscriptions() {
                   name: "price_per_6months_eu" as keyof Subscription,
                 },
                 {
+                  label: "Ціна за 6 місяців (UAH)",
+                  name: "price_per_6months_ua" as keyof Subscription,
+                },
+                {
                   label: "Ціна за 12 місяців (USD)",
                   name: "price_per_12months" as keyof Subscription,
                 },
@@ -398,12 +502,20 @@ export default function Subscriptions() {
                   label: "Ціна за 12 місяців (EU)",
                   name: "price_per_12months_eu" as keyof Subscription,
                 },
+                {
+                  label: "Ціна за 12 місяців (UAH)",
+                  name: "price_per_12months_ua" as keyof Subscription,
+                },
               ].map((field) => (
                 <div key={field.name} className="relative">
                   <label className="block mb-1">{field.label}</label>
                   <div className="flex items-center">
                     <span className="mr-2">
-                      {field.name.includes("_eu") ? "€" : "$"}
+                      {field.name.includes("_eu")
+                        ? "€"
+                        : field.name.includes("_ua")
+                        ? "₴"
+                        : "$"}
                     </span>
                     <input
                       type="number"

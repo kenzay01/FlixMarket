@@ -1,33 +1,41 @@
 "use client";
-
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
   const router = useRouter();
   const pathname = usePathname();
-  const isHomePage = pathname === "/en" || pathname === "/de";
+
+  const isHomePage =
+    pathname === "/en" || pathname === "/de" || pathname === "/ua";
   const currentLocale = pathname.split("/")[1];
 
-  const switchLanguage = () => {
-    const currentLocale = pathname.split("/")[1];
-    const newLocale = currentLocale === "de" ? "en" : "de";
+  const locales = [
+    { code: "en", name: "En" },
+    { code: "de", name: "De" },
+    { code: "ua", name: "Ua" },
+  ];
 
-    const newPath = `/${newLocale}${pathname.replace(/^\/(en|de)/, "")}`;
+  const switchLanguage = (newLocale: string) => {
+    const newPath = `/${newLocale}${pathname.replace(/^\/(en|de|ua)/, "")}`;
     router.push(newPath);
   };
 
   return (
     <div>
-      <button
-        onClick={switchLanguage}
-        className={`px-2 py-1 rounded ease-in-out transition-colors cursor-pointer ${
-          scrolled || !isHomePage
-            ? "text-gray-800 hover:bg-indigo-600 hover:text-white"
-            : "text-white"
+      <select
+        value={currentLocale}
+        onChange={(e) => switchLanguage(e.target.value)}
+        className={`px-2 py-1 rounded transition-colors group cursor-pointer outline-0 text-gray-800 ${
+          scrolled || !isHomePage ? "bg-transparent" : " bg-white"
         }`}
       >
-        {currentLocale === "en" ? "DE" : "EN"}
-      </button>
+        {locales.map((locale) => (
+          <option key={locale.code} value={locale.code}>
+            {locale.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

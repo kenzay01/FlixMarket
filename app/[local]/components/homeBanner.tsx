@@ -8,9 +8,11 @@ const mockSubscriptions: Subscription[] = [
     id: "1",
     title: "Basic Plan",
     title_de: "Basis-Plan",
+    title_ua: "Базовий план",
     description: "Perfect for individual content creators just starting out.",
     description_de:
       "Perfekt für einzelne Content-Ersteller, die gerade anfangen.",
+    description_ua: "Ідеально підходить для початківців",
     benefitsList: [
       "Access to basic creation tools",
       "Up to 10GB storage",
@@ -23,20 +25,35 @@ const mockSubscriptions: Subscription[] = [
       "E-Mail-Support",
       "Grundlegende Analysen",
     ],
+    benefitsList_ua: [
+      "Доступ до базових інструментів створення",
+      "До 10 ГБ сховища",
+      "Підтримка по електронній пошті",
+      "Основна аналітика",
+    ],
+    price_per_month: 9.99,
+    price_per_month_eu: 8.99,
+    price_per_month_ua: 250,
     price_per_3months: 29.99,
     price_per_3months_eu: 27.99,
+    price_per_3months_ua: 750,
     price_per_6months: 49.99,
     price_per_6months_eu: 46.99,
+    price_per_6months_ua: 1499,
     price_per_12months: 89.99,
     price_per_12months_eu: 84.99,
+    price_per_12months_ua: 2999,
     imageUrl: "/images/basic-plan.jpg",
   },
   {
     id: "2",
     title: "Professional Plan",
     title_de: "Profi-Plan",
+    title_ua: "Професійний план",
     description: "Ideal for growing creators and small teams.",
     description_de: "Ideal für wachsende Ersteller und kleine Teams.",
+    description_ua:
+      "Ідеально підходить для зростаючих творців та невеликих команд.",
     benefitsList: [
       "Advanced creation tools",
       "Up to 50GB storage",
@@ -51,22 +68,38 @@ const mockSubscriptions: Subscription[] = [
       "Detailliertes Analytics-Dashboard",
       "Anpassungsoptionen",
     ],
-    price_per_3months: 59.99,
-    price_per_3months_eu: 56.99,
+    benefitsList_ua: [
+      "Розширені інструменти створення",
+      "До 50 ГБ сховища",
+      "Пріоритетна підтримка",
+      "Детальна інформація на панелі аналітики",
+      "Опції налаштування",
+    ],
+    price_per_month: 29.99,
+    price_per_month_eu: 26.99,
+    price_per_month_ua: 750,
+    price_per_3months: 0,
+    price_per_3months_eu: 0,
+    price_per_3months_ua: 0,
     price_per_6months: 99.99,
     price_per_6months_eu: 94.99,
-    price_per_12months: 179.99,
-    price_per_12months_eu: 169.99,
+    price_per_6months_ua: 2499,
+    price_per_12months: null,
+    price_per_12months_eu: null,
+    price_per_12months_ua: null,
     imageUrl: "/images/pro-plan.jpg",
   },
   {
     id: "3",
     title: "Enterprise Plan",
     title_de: "Unternehmensplan",
+    title_ua: "Корпоративний план",
     description:
       "Complete solution for established businesses and large teams.",
     description_de:
       "Komplettlösung für etablierte Unternehmen und große Teams.",
+    description_ua:
+      "Повне рішення для встановлених підприємств та великих команд.",
     benefitsList: [
       "Full suite of premium tools",
       "Unlimited storage",
@@ -83,12 +116,26 @@ const mockSubscriptions: Subscription[] = [
       "White-Labeling-Optionen",
       "Team-Kollaborationsfunktionen",
     ],
+    benefitsList_ua: [
+      "Повний набір преміум-інструментів",
+      "Необмежене сховище",
+      "Цілодобова спеціалізована підтримка",
+      "Розширена аналітика з експортом",
+      "Опції білого маркування",
+      "Функції співпраці команди",
+    ],
+    price_per_month: 59.99,
+    price_per_month_eu: 54.99,
+    price_per_month_ua: 1500,
     price_per_3months: 99.99,
     price_per_3months_eu: 94.99,
+    price_per_3months_ua: 2500,
     price_per_6months: 179.99,
     price_per_6months_eu: 169.99,
-    price_per_12months: 329.99,
-    price_per_12months_eu: 309.99,
+    price_per_6months_ua: 4499,
+    price_per_12months: 0,
+    price_per_12months_eu: 0,
+    price_per_12months_ua: 0,
     imageUrl: "/images/enterprise-plan.jpg",
   },
 ];
@@ -122,7 +169,7 @@ export default function HomeBanner() {
   };
 
   const params = useParams();
-  const locale = (params.local as "en" | "de") || "en";
+  const locale = (params.local as "en" | "de" | "ua") || "en";
   const titleMonth = useClientTranslation("months").toLowerCase();
   const btnTitle = useClientTranslation("try_now");
 
@@ -144,17 +191,25 @@ export default function HomeBanner() {
             <div className="flex flex-col justify-center h-full max-w-3xl mx-auto px-4 md:px-8 relative z-10">
               <div className="md:w-1/2 w-full text-white">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                  {locale === "en" ? subscription.title : subscription.title_de}
+                  {locale === "en"
+                    ? subscription.title
+                    : locale === "ua"
+                    ? subscription.title_ua
+                    : subscription.title_de}
                 </h1>
                 <p className="text-lg mb-8 opacity-90">
                   {locale === "en"
                     ? subscription.description
+                    : locale === "ua"
+                    ? subscription.description_ua
                     : subscription.description_de}
                 </p>
                 <div className="mb-8">
                   <span className="text-3xl font-bold">
                     {locale === "en"
                       ? "$" + subscription.price_per_3months
+                      : locale === "ua"
+                      ? "₴" + subscription.price_per_3months_ua
                       : "€" + subscription.price_per_3months_eu}{" "}
                   </span>
                   <span className="ml-2 opacity-80">/3 {titleMonth}</span>

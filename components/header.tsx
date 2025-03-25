@@ -18,7 +18,9 @@ export default function Header() {
   const path = usePathname();
   const { data: session } = useSession();
   const pathParts = path.split("/").filter(Boolean);
-  const currentLang = ["en", "de"].includes(pathParts[0]) ? pathParts[0] : "en";
+  const currentLang = ["en", "de", "ua"].includes(pathParts[0])
+    ? pathParts[0]
+    : "en";
   const isHome = pathParts.length === 1;
 
   const howItWorks = useClientTranslation("how_it_works");

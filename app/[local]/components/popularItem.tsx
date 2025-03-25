@@ -13,16 +13,29 @@ export default function PopularItem({
 }) {
   const router = useRouter();
   const params = useParams();
-  const locale = (params.local as "en" | "de") || "en";
+  const locale = (params.local as "en" | "de" | "ua") || "en";
 
   const isEven = index % 2 === 0;
   const btnTitle = useClientTranslation("buy_now");
 
-  const displayTitle = locale === "en" ? item.title : item.title_de;
+  const displayTitle =
+    locale === "en"
+      ? item.title
+      : locale === "ua"
+      ? item.title_ua
+      : item.title_de;
   const displayDescription =
-    locale === "en" ? item.description : item.description_de;
+    locale === "en"
+      ? item.description
+      : locale === "ua"
+      ? item.description_ua
+      : item.description_de;
   const displayBenefits =
-    locale === "en" ? item.benefitsList : item.benefitsList_de;
+    locale === "en"
+      ? item.benefitsList
+      : locale === "ua"
+      ? item.benefitsList_ua
+      : item.benefitsList_de;
   const monthsText = useClientTranslation("months").toLowerCase();
 
   return (
@@ -61,6 +74,8 @@ export default function PopularItem({
           <span className="text-pink-600 text-2xl font-bold">
             {locale === "en"
               ? "$" + item.price_per_3months
+              : locale === "ua"
+              ? "₴" + item.price_per_3months_ua
               : "€" + item.price_per_3months_eu}{" "}
             / 3 {monthsText}
           </span>

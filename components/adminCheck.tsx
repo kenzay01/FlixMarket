@@ -12,7 +12,7 @@ export default function AdminCheck({
   const { data: session, status } = useSession();
   const router = useRouter();
   const params = useParams();
-  const locale = params.locale || "en";
+  const locale = params.local || "en";
 
   useEffect(() => {
     if (status === "loading") return;

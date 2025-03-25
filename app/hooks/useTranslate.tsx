@@ -2,9 +2,10 @@
 
 import en from "../locales/en.json";
 import de from "../locales/de.json";
+import ua from "../locales/ua.json";
 import { useParams } from "next/navigation";
 
-const translations: Record<string, typeof en> = { en, de };
+const translations: Record<string, typeof en> = { en, de, ua };
 export function getTranslation(
   key: keyof typeof en,
   locale: keyof typeof translations

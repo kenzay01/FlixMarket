@@ -15,9 +15,11 @@ const fetchSubscriptionById = async (
       id: "1",
       title: "Basic Plan",
       title_de: "Basis-Plan",
+      title_ua: "Базовий план",
       description: "Perfect for individual content creators just starting out.",
       description_de:
         "Perfekt für einzelne Content-Ersteller, die gerade anfangen.",
+      description_ua: "Ідеально підходить для початківців",
       benefitsList: [
         "Access to basic creation tools",
         "Up to 10GB storage",
@@ -30,22 +32,35 @@ const fetchSubscriptionById = async (
         "E-Mail-Support",
         "Grundlegende Analysen",
       ],
+      benefitsList_ua: [
+        "Доступ до базових інструментів створення",
+        "До 10 ГБ сховища",
+        "Підтримка по електронній пошті",
+        "Основна аналітика",
+      ],
       price_per_month: 9.99,
       price_per_month_eu: 8.99,
+      price_per_month_ua: 250,
       price_per_3months: 29.99,
       price_per_3months_eu: 27.99,
+      price_per_3months_ua: 750,
       price_per_6months: 49.99,
       price_per_6months_eu: 46.99,
+      price_per_6months_ua: 1499,
       price_per_12months: 89.99,
       price_per_12months_eu: 84.99,
+      price_per_12months_ua: 2999,
       imageUrl: "/images/basic-plan.jpg",
     },
     {
       id: "2",
       title: "Professional Plan",
       title_de: "Profi-Plan",
+      title_ua: "Професійний план",
       description: "Ideal for growing creators and small teams.",
       description_de: "Ideal für wachsende Ersteller und kleine Teams.",
+      description_ua:
+        "Ідеально підходить для зростаючих творців та невеликих команд.",
       benefitsList: [
         "Advanced creation tools",
         "Up to 50GB storage",
@@ -60,24 +75,38 @@ const fetchSubscriptionById = async (
         "Detailliertes Analytics-Dashboard",
         "Anpassungsoptionen",
       ],
+      benefitsList_ua: [
+        "Розширені інструменти створення",
+        "До 50 ГБ сховища",
+        "Пріоритетна підтримка",
+        "Детальна інформація на панелі аналітики",
+        "Опції налаштування",
+      ],
       price_per_month: 29.99,
       price_per_month_eu: 26.99,
+      price_per_month_ua: 750,
       price_per_3months: 0,
       price_per_3months_eu: 0,
+      price_per_3months_ua: 0,
       price_per_6months: 99.99,
       price_per_6months_eu: 94.99,
+      price_per_6months_ua: 2499,
       price_per_12months: null,
       price_per_12months_eu: null,
+      price_per_12months_ua: null,
       imageUrl: "/images/pro-plan.jpg",
     },
     {
       id: "3",
       title: "Enterprise Plan",
       title_de: "Unternehmensplan",
+      title_ua: "Корпоративний план",
       description:
         "Complete solution for established businesses and large teams.",
       description_de:
         "Komplettlösung für etablierte Unternehmen und große Teams.",
+      description_ua:
+        "Повне рішення для встановлених підприємств та великих команд.",
       benefitsList: [
         "Full suite of premium tools",
         "Unlimited storage",
@@ -94,14 +123,26 @@ const fetchSubscriptionById = async (
         "White-Labeling-Optionen",
         "Team-Kollaborationsfunktionen",
       ],
+      benefitsList_ua: [
+        "Повний набір преміум-інструментів",
+        "Необмежене сховище",
+        "Цілодобова спеціалізована підтримка",
+        "Розширена аналітика з експортом",
+        "Опції білого маркування",
+        "Функції співпраці команди",
+      ],
       price_per_month: 59.99,
       price_per_month_eu: 54.99,
+      price_per_month_ua: 1500,
       price_per_3months: 99.99,
       price_per_3months_eu: 94.99,
+      price_per_3months_ua: 2500,
       price_per_6months: 179.99,
       price_per_6months_eu: 169.99,
+      price_per_6months_ua: 4499,
       price_per_12months: 0,
       price_per_12months_eu: 0,
+      price_per_12months_ua: 0,
       imageUrl: "/images/enterprise-plan.jpg",
     },
   ];
@@ -131,6 +172,8 @@ export default function ItemPage() {
 
     return locale === "de" && subscription[`${field}_de` as keyof Subscription]
       ? subscription[`${field}_de` as keyof Subscription]
+      : locale === "ua" && subscription[`${field}_ua` as keyof Subscription]
+      ? subscription[`${field}_ua` as keyof Subscription]
       : subscription[field as keyof Subscription];
   };
 
@@ -138,6 +181,8 @@ export default function ItemPage() {
     if (!subscription) return [];
     return locale === "de"
       ? subscription.benefitsList_de
+      : locale === "ua"
+      ? subscription.benefitsList_ua
       : subscription.benefitsList;
   };
 
@@ -150,7 +195,9 @@ export default function ItemPage() {
       subscription.price_per_month != null &&
       subscription.price_per_month_eu != null &&
       subscription.price_per_month > 0 &&
-      subscription.price_per_month_eu > 0
+      subscription.price_per_month_eu > 0 &&
+      subscription.price_per_month_ua != null &&
+      subscription.price_per_month_ua > 0
     ) {
       monthTermin.push("1");
     }
@@ -158,7 +205,9 @@ export default function ItemPage() {
       subscription.price_per_3months != null &&
       subscription.price_per_3months_eu != null &&
       subscription.price_per_3months > 0 &&
-      subscription.price_per_3months_eu > 0
+      subscription.price_per_3months_eu > 0 &&
+      subscription.price_per_3months_ua != null &&
+      subscription.price_per_3months_ua > 0
     ) {
       monthTermin.push("3");
     }
@@ -166,7 +215,9 @@ export default function ItemPage() {
       subscription.price_per_6months != null &&
       subscription.price_per_6months_eu != null &&
       subscription.price_per_6months > 0 &&
-      subscription.price_per_6months_eu > 0
+      subscription.price_per_6months_eu > 0 &&
+      subscription.price_per_6months_ua != null &&
+      subscription.price_per_6months_ua > 0
     ) {
       monthTermin.push("6");
     }
@@ -174,7 +225,9 @@ export default function ItemPage() {
       subscription.price_per_12months != null &&
       subscription.price_per_12months_eu != null &&
       subscription.price_per_12months > 0 &&
-      subscription.price_per_12months_eu > 0
+      subscription.price_per_12months_eu > 0 &&
+      subscription.price_per_12months_ua != null &&
+      subscription.price_per_12months_ua > 0
     ) {
       monthTermin.push("12");
     }
@@ -212,33 +265,44 @@ export default function ItemPage() {
     if (!subscription) return 0;
 
     const isEuro = locale === "de";
+    const isUa = locale === "ua";
 
     switch (selectedPlan) {
       case "1":
         return isEuro
           ? subscription.price_per_month_eu
+          : isUa
+          ? subscription.price_per_month_ua
           : subscription.price_per_month;
       case "3":
         return isEuro
           ? subscription.price_per_3months_eu
+          : isUa
+          ? subscription.price_per_3months_ua
           : subscription.price_per_3months;
       case "6":
         return isEuro
           ? subscription.price_per_6months_eu
+          : isUa
+          ? subscription.price_per_6months_ua
           : subscription.price_per_6months;
       case "12":
         return isEuro
           ? subscription.price_per_12months_eu
+          : isUa
+          ? subscription.price_per_12months_ua
           : subscription.price_per_12months;
       default:
         return isEuro
           ? subscription.price_per_3months_eu
+          : isUa
+          ? subscription.price_per_3months_ua
           : subscription.price_per_3months;
     }
   };
 
   const getCurrencySymbol = () => {
-    return locale === "de" ? "€" : "$";
+    return locale === "de" ? "€" : locale === "ua" ? "₴" : "$";
   };
 
   if (isLoading) {

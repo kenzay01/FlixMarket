@@ -14,7 +14,7 @@ interface SubscriptionWithDate {
   subscription: Subscription;
   user: User;
   price: number;
-  locale: "en" | "de";
+  locale: "en" | "de" | "ua";
 }
 
 interface Payment {
@@ -24,7 +24,7 @@ interface Payment {
   subscription: Subscription;
   status: "successful" | "pending" | "failed";
   user: User;
-  locale: "en" | "de";
+  locale: "en" | "de" | "ua";
 }
 
 export default function MyProfile() {
@@ -93,6 +93,7 @@ export default function MyProfile() {
           id: "1",
           title: "Basic Plan",
           title_de: "Basis-Plan",
+          title_ua: "Базовий план",
         },
         user: {
           id: "2",
@@ -111,6 +112,7 @@ export default function MyProfile() {
           id: "1",
           title: "Basic Plan",
           title_de: "Basis-Plan",
+          title_ua: "Базовий план",
         },
         user: {
           id: "2",
@@ -129,6 +131,7 @@ export default function MyProfile() {
           id: "2",
           title: "Professional Plan",
           title_de: "Profi-Plan",
+          title_ua: "Професійний план",
         },
         user: {
           id: "2",
@@ -149,6 +152,7 @@ export default function MyProfile() {
           id: "1",
           title: "Basic Plan",
           title_de: "Basis-Plan",
+          title_ua: "Базовий план",
         },
         status: "successful",
         user: {
@@ -167,6 +171,7 @@ export default function MyProfile() {
           id: "1",
           title: "Basic Plan",
           title_de: "Basis-Plan",
+          title_ua: "Базовий план",
         },
         status: "successful",
         user: {
@@ -185,6 +190,7 @@ export default function MyProfile() {
           id: "1",
           title: "Basic Plan",
           title_de: "Basis-Plan",
+          title_ua: "Базовий план",
         },
         status: "successful",
         user: {
@@ -203,6 +209,7 @@ export default function MyProfile() {
           id: "1",
           title: "Basic Plan",
           title_de: "Basis-Plan",
+          title_ua: "Базовий план",
         },
         status: "successful",
         user: {
@@ -245,7 +252,7 @@ export default function MyProfile() {
   };
 
   const params = useParams();
-  const locale = (params.local as "en" | "de") || "en";
+  const locale = (params.local as "en" | "de" | "ua") || "en";
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -365,6 +372,8 @@ export default function MyProfile() {
                           <h4 className="font-medium">
                             {locale === "en"
                               ? subscription.subscription.title
+                              : locale === "ua"
+                              ? subscription.subscription.title_ua
                               : subscription.subscription.title_de}
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
@@ -378,7 +387,12 @@ export default function MyProfile() {
                         </span>
                       </div>
                       <div className="mt-2 text-sm">
-                        {priceText}: {subscription.locale === "en" ? "$" : "€"}
+                        {priceText}:{" "}
+                        {subscription.locale === "en"
+                          ? "$"
+                          : subscription.locale === "ua"
+                          ? "₴"
+                          : "€"}
                         {subscription.price} {perMonthText}
                       </div>
                     </div>
@@ -406,6 +420,8 @@ export default function MyProfile() {
                           <h4 className="font-medium">
                             {locale === "en"
                               ? subscription.subscription.title
+                              : locale === "ua"
+                              ? subscription.subscription.title_ua
                               : subscription.subscription.title_de}
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
@@ -419,7 +435,12 @@ export default function MyProfile() {
                         </span>
                       </div>
                       <div className="mt-2 text-sm">
-                        {priceText}: {subscription.locale === "en" ? "$" : "€"}
+                        {priceText}:{" "}
+                        {subscription.locale === "en"
+                          ? "$"
+                          : subscription.locale === "ua"
+                          ? "₴"
+                          : "€"}
                         {subscription.price} {perMonthText}
                       </div>
                     </div>
@@ -465,10 +486,17 @@ export default function MyProfile() {
                         <td className="py-3 px-4 text-sm">
                           {locale === "en"
                             ? payment.subscription.title
+                            : locale === "ua"
+                            ? payment.subscription.title_ua
                             : payment.subscription.title_de}
                         </td>
                         <td className="py-3 px-4 text-sm">
-                          {payment.locale === "en" ? "$" : "€"} {payment.price}
+                          {payment.locale === "en"
+                            ? "$"
+                            : payment.locale === "ua"
+                            ? "₴"
+                            : "€"}{" "}
+                          {payment.price}
                         </td>
                         <td className="py-3 px-4 text-sm">
                           <span

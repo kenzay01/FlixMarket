@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   });
 
   const locale = request.nextUrl.pathname.split("/")[1];
-  const isValidLocale = ["en", "de"].includes(locale);
+  const isValidLocale = ["en", "de", "ua"].includes(locale);
 
   if (request.nextUrl.pathname.includes("/admin")) {
     if (!token || token.role !== "admin") {
