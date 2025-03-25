@@ -456,7 +456,7 @@ export default function Subscriptions() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               {[
                 {
                   label: "Ціна за 1 місяць (USD)",

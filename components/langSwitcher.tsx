@@ -1,6 +1,5 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
   const router = useRouter();
