@@ -110,10 +110,8 @@ export default function Faqs() {
   const locale = (params?.local as string) || "en";
   const title = useClientTranslation("faq");
 
-  // State to track which FAQ is currently open
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
-  // Toggle FAQ open/closed
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
