@@ -66,5 +66,6 @@
   "log_in": "Einloggen",
   "module_log_out_qestion": "Möchten Sie sich wirklich abmelden?",
   "exit_confirm": "Ausgangsbestätigung",
-  "page_not_found": "Seite nicht gefunden"
+  "page_not_found": "Seite nicht gefunden",
+  "faq": "FAQ"
 }

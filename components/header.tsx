@@ -25,6 +25,7 @@ export default function Header() {
 
   const howItWorks = useClientTranslation("how_it_works");
   const comments = useClientTranslation("comments");
+  const faq = useClientTranslation("faq");
   const logIn = useClientTranslation("log_in");
   const logOut = useClientTranslation("log_out");
 
@@ -60,7 +61,7 @@ export default function Header() {
     setMenuOpen((prev) => !prev);
   };
   const listOfLinks = [
-    { href: `/${currentLang}/faqs`, body: "FAQ", needUnderline: true },
+    { href: `/${currentLang}/faqs`, body: faq, needUnderline: true },
     {
       href: `/${currentLang}/#comments`,
       body: comments,
@@ -135,7 +136,7 @@ export default function Header() {
               scrolled || !isHome ? "text-gray-800" : "text-white"
             }`}
           >
-            FlixMarket
+            EasyPlay
           </Link>
 
           <div className="flex items-center gap-4 md:flex-row-reverse">

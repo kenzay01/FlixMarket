@@ -21,7 +21,7 @@ type LocaleKey = keyof typeof translations;
 
 export default function AccessDenied() {
   const params = useParams();
-  const locale = ((params.locale as string) || "en") as LocaleKey;
+  const locale = ((params.local as string) || "en") as LocaleKey;
   const t = translations[locale] || translations.en;
 
   return (
