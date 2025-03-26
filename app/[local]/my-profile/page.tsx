@@ -3,36 +3,14 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
-import type { User } from "../../../types/user";
-import type { Subscription } from "../../../types/subscriptions";
+import type { SubscriptionPayment } from "../../../types/subscriptionPayment";
 import { useParams } from "next/navigation";
-
-interface SubscriptionWithDate {
-  status: "active" | "completed";
-  startDate: string;
-  endDate: string;
-  subscription: Subscription;
-  user: User;
-  price: number;
-  locale: "en" | "de" | "ua";
-}
-
-interface Payment {
-  id: string;
-  date: string;
-  price: number;
-  subscription: Subscription;
-  status: "successful" | "pending" | "failed";
-  user: User;
-  locale: "en" | "de" | "ua";
-}
 
 export default function MyProfile() {
   const { data: session, update } = useSession();
-  const [subscriptions, setSubscriptions] = useState<SubscriptionWithDate[]>(
-    []
-  );
-  const [payments, setPayments] = useState<Payment[]>([]);
+  const [subscriptionPayments, setSubscriptionPayments] = useState<
+    SubscriptionPayment[]
+  >([]);
   const [activeTab, setActiveTab] = useState<"subscriptions" | "payments">(
     "subscriptions"
   );
@@ -82,8 +60,9 @@ export default function MyProfile() {
 
   useEffect(() => {
     // Тут має бути запит до API
-    const mockSubscriptions: SubscriptionWithDate[] = [
+    const mockSubscriptionPayments: SubscriptionPayment[] = [
       {
+        id: "1",
         status: "active",
         startDate: "2025-02-15",
         endDate: "2025-03-15",
@@ -103,6 +82,7 @@ export default function MyProfile() {
         },
       },
       {
+        id: "sub-comp-1",
         status: "completed",
         startDate: "2025-02-15",
         endDate: "2025-03-15",
@@ -122,6 +102,7 @@ export default function MyProfile() {
         },
       },
       {
+        id: "sub-comp-2",
         status: "completed",
         startDate: "2024-11-10",
         endDate: "2025-02-10",
@@ -140,11 +121,9 @@ export default function MyProfile() {
           role: "user",
         },
       },
-    ];
-
-    const mockPayments: Payment[] = [
       {
         id: "pay-1",
+        status: "successful",
         date: "2025-02-15",
         price: 29.99,
         locale: "en",
@@ -154,7 +133,6 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        status: "successful",
         user: {
           id: "2",
           name: "Test",
@@ -164,6 +142,7 @@ export default function MyProfile() {
       },
       {
         id: "pay-2",
+        status: "successful",
         date: "2025-01-10",
         price: 29.99,
         locale: "en",
@@ -173,7 +152,6 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        status: "successful",
         user: {
           id: "2",
           name: "Test",
@@ -183,6 +161,7 @@ export default function MyProfile() {
       },
       {
         id: "pay-3",
+        status: "successful",
         date: "2024-12-10",
         price: 29.99,
         locale: "en",
@@ -192,7 +171,6 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        status: "successful",
         user: {
           id: "2",
           name: "Test",
@@ -202,6 +180,7 @@ export default function MyProfile() {
       },
       {
         id: "pay-4",
+        status: "successful",
         date: "2024-11-10",
         price: 29.99,
         locale: "en",
@@ -211,7 +190,6 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        status: "successful",
         user: {
           id: "2",
           name: "Test",
@@ -221,8 +199,7 @@ export default function MyProfile() {
       },
     ];
 
-    setSubscriptions(mockSubscriptions);
-    setPayments(mockPayments);
+    setSubscriptionPayments(mockSubscriptionPayments);
   }, []);
 
   const formatDate = (dateString: string) => {
@@ -357,14 +334,14 @@ export default function MyProfile() {
             <h3 className="text-lg font-semibold mb-3">
               {activeSubscriptionsText}
             </h3>
-            {subscriptions.filter((sub) => sub.status === "active").length >
-            0 ? (
+            {subscriptionPayments.filter((sub) => sub.status === "active")
+              .length > 0 ? (
               <div className="space-y-4">
-                {subscriptions
+                {subscriptionPayments
                   .filter((sub) => sub.status === "active")
-                  .map((subscription, index) => (
+                  .map((subscription) => (
                     <div
-                      key={"sub-" + index}
+                      key={subscription.id}
                       className="p-4 bg-white rounded shadow"
                     >
                       <div className="flex justify-between items-start">
@@ -378,8 +355,8 @@ export default function MyProfile() {
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
                             {startDateText}:{" "}
-                            {formatDate(subscription.startDate)} |{endDateText}:{" "}
-                            {formatDate(subscription.endDate)}
+                            {formatDate(subscription.startDate!)} |{endDateText}
+                            : {formatDate(subscription.endDate!)}
                           </div>
                         </div>
                         <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
@@ -405,14 +382,14 @@ export default function MyProfile() {
             <h3 className="text-lg font-semibold mb-3 mt-6">
               {completedSubscriptionsText}
             </h3>
-            {subscriptions.filter((sub) => sub.status === "completed").length >
-            0 ? (
+            {subscriptionPayments.filter((sub) => sub.status === "completed")
+              .length > 0 ? (
               <div className="space-y-4">
-                {subscriptions
+                {subscriptionPayments
                   .filter((sub) => sub.status === "completed")
-                  .map((subscription, index) => (
+                  .map((subscription) => (
                     <div
-                      key={"sub-comp-" + index}
+                      key={subscription.id}
                       className="p-4 bg-white rounded shadow"
                     >
                       <div className="flex justify-between items-start">
@@ -426,8 +403,8 @@ export default function MyProfile() {
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
                             {startDateText}:{" "}
-                            {formatDate(subscription.startDate)} |{endDateText}:{" "}
-                            {formatDate(subscription.endDate)}
+                            {formatDate(subscription.startDate!)} |{endDateText}
+                            : {formatDate(subscription.endDate!)}
                           </div>
                         </div>
                         <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
@@ -455,7 +432,7 @@ export default function MyProfile() {
         {activeTab === "payments" && (
           <div>
             <h3 className="text-lg font-semibold mb-3">{paymentHistoryText}</h3>
-            {payments.length > 0 ? (
+            {subscriptionPayments.filter((pay) => pay.date).length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white">
                   <thead>
@@ -475,48 +452,47 @@ export default function MyProfile() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {payments.map((payment) => (
-                      <tr
-                        key={"pay-" + payment.id}
-                        className="hover:bg-gray-50"
-                      >
-                        <td className="py-3 px-4 text-sm">
-                          {formatDate(payment.date)}
-                        </td>
-                        <td className="py-3 px-4 text-sm">
-                          {locale === "en"
-                            ? payment.subscription.title
-                            : locale === "ua"
-                            ? payment.subscription.title_ua
-                            : payment.subscription.title_de}
-                        </td>
-                        <td className="py-3 px-4 text-sm">
-                          {payment.locale === "en"
-                            ? "$"
-                            : payment.locale === "ua"
-                            ? "₴"
-                            : "€"}{" "}
-                          {payment.price}
-                        </td>
-                        <td className="py-3 px-4 text-sm">
-                          <span
-                            className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                              payment.status === "successful"
-                                ? "bg-green-100 text-green-800"
+                    {subscriptionPayments
+                      .filter((pay) => pay.date)
+                      .map((payment) => (
+                        <tr key={payment.id} className="hover:bg-gray-50">
+                          <td className="py-3 px-4 text-sm">
+                            {formatDate(payment.date!)}
+                          </td>
+                          <td className="py-3 px-4 text-sm">
+                            {locale === "en"
+                              ? payment.subscription.title
+                              : locale === "ua"
+                              ? payment.subscription.title_ua
+                              : payment.subscription.title_de}
+                          </td>
+                          <td className="py-3 px-4 text-sm">
+                            {payment.locale === "en"
+                              ? "$"
+                              : payment.locale === "ua"
+                              ? "₴"
+                              : "€"}{" "}
+                            {payment.price}
+                          </td>
+                          <td className="py-3 px-4 text-sm">
+                            <span
+                              className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                                payment.status === "successful"
+                                  ? "bg-green-100 text-green-800"
+                                  : payment.status === "pending"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : "bg-red-100 text-red-800"
+                              }`}
+                            >
+                              {payment.status === "successful"
+                                ? successfulText
                                 : payment.status === "pending"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : "bg-red-100 text-red-800"
-                            }`}
-                          >
-                            {payment.status === "successful"
-                              ? successfulText
-                              : payment.status === "pending"
-                              ? pendingText
-                              : failedText}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
+                                ? pendingText
+                                : failedText}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

@@ -198,7 +198,7 @@ export default function Subscriptions() {
                   {subscription.title} / {subscription.title_de} /{" "}
                   {subscription.title_ua}
                 </span>
-                <div className="space-x-2">
+                <div className="flex space-x-2">
                   <button
                     onClick={() => handleDeleteClick(subscription.id)}
                     className="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg transition-all cursor-pointer"
