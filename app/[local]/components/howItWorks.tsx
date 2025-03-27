@@ -1,16 +1,37 @@
 import { useClientTranslation } from "@/app/hooks/useTranslate";
 import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
+
+const steps = {
+  en: [
+    "Authorize or register on our website",
+    "Choose the desired subscription and term",
+    "Pay for your order",
+    "A manager will contact you and connect your subscription",
+    "Enjoy quality services during the paid period",
+  ],
+  ua: [
+    "Авторизуйтесь або зареєструйтесь на нашому сайті",
+    "Виберіть потрібну підписку та бажаний термін",
+    "Оплатіть ваше замовлення",
+    "З вами звʼяжеться менеджер та підключить вашу підписку",
+    "Насолоджуєтесь якісними послугами оплачений період",
+  ],
+  de: [
+    "Melden Sie sich auf unserer Website an oder registrieren Sie sich",
+    "Wählen Sie das gewünschte Abonnement und den gewünschten Zeitraum",
+    "Bezahlen Sie Ihre Bestellung",
+    "Ein Mitarbeiter wird Sie kontaktieren und Ihr Abonnement aktivieren",
+    "Genießen Sie Qualitätsdienstleistungen während des bezahlten Zeitraums",
+  ],
+};
 export default function HowItWorks() {
-  const steps = [
-    "Sign up for an account",
-    "Add your first item",
-    "step 3",
-    "step 4",
-    "step 5",
-  ];
+  const params = useParams();
+  const locale = (params.local as "en" | "ua" | "de") || "en";
   const stepTitle = useClientTranslation("step");
   const btnTitle = useClientTranslation("try_now");
   const mainTitle = useClientTranslation("how_it_works");
+
   return (
     <section
       className="w-full mx-auto flex items-center justify-center overflow-x-hidden pt-24"
@@ -34,20 +55,14 @@ export default function HowItWorks() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <h1 className="text-4xl">{mainTitle}</h1>
-          <p className="p-2 text-gray-600">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta,
-            aperiam ipsum commodi non, nam maiores libero molestiae doloremque
-            fugiat cupiditate minus placeat culpa quae similique? Ut
-            necessitatibus qui deserunt ab!
-          </p>
           <div>
-            {steps.map((step, index) => {
+            {steps[locale].map((step, index) => {
               return (
                 <div key={index} className="flex gap-4 items-start my-8">
-                  <div className="w-16 h-16 bg-indigo-300 text-indigo-600 rounded-full flex items-center justify-center text-2xl">
+                  <div className="w-16 h-16  bg-indigo-300 text-indigo-600 rounded-full flex items-center justify-center text-2xl">
                     {index + 1}
                   </div>
-                  <div className="p-2 ">
+                  <div className="p-2 flex-1">
                     <h2 className="text-2xl font-bold mb-2">
                       {stepTitle} {index + 1}
                     </h2>

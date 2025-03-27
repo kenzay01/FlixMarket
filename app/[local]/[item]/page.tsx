@@ -51,6 +51,7 @@ const fetchSubscriptionById = async (
       price_per_12months_eu: 84.99,
       price_per_12months_ua: 2999,
       imageUrl: "/images/basic-plan.jpg",
+      regions: ["en", "de", "ua"],
     },
     {
       id: "2",
@@ -95,6 +96,7 @@ const fetchSubscriptionById = async (
       price_per_12months_eu: null,
       price_per_12months_ua: null,
       imageUrl: "/images/pro-plan.jpg",
+      regions: ["en", "ua"],
     },
     {
       id: "3",
@@ -144,6 +146,7 @@ const fetchSubscriptionById = async (
       price_per_12months_eu: 0,
       price_per_12months_ua: 0,
       imageUrl: "/images/enterprise-plan.jpg",
+      regions: ["ua"],
     },
   ];
 

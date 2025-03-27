@@ -22,4 +22,5 @@ export type Subscription = {
   price_per_12months?: number | null;
   price_per_12months_eu?: number | null;
   price_per_12months_ua?: number | null;
+  regions?: string[];
 };

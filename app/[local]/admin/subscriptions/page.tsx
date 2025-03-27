@@ -30,8 +30,11 @@ export default function Subscriptions() {
       price_per_12months: 99.99,
       price_per_12months_eu: 94.99,
       price_per_12months_ua: 2999,
+      regions: ["en", "de", "ua"],
     },
   ]);
+
+  const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
 
   const [currentSubscription, setCurrentSubscription] = useState<
     Partial<Subscription>
@@ -41,6 +44,14 @@ export default function Subscriptions() {
   const [newBenefit, setNewBenefit] = useState("");
   const [newBenefit_de, setNewBenefit_de] = useState("");
   const [newBenefit_ua, setNewBenefit_ua] = useState("");
+
+  const toggleRegion = (region: string) => {
+    setSelectedRegions((prev) =>
+      prev.includes(region)
+        ? prev.filter((r) => r !== region)
+        : [...prev, region]
+    );
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -98,6 +109,7 @@ export default function Subscriptions() {
   const handleAddOrUpdateSubscription = () => {
     const processedSubscription = {
       ...currentSubscription,
+      regions: selectedRegions.length > 0 ? selectedRegions : ["en"],
       price_per_month: currentSubscription.price_per_month ?? 0,
       price_per_month_eu: currentSubscription.price_per_month_eu ?? 0,
       price_per_month_ua: currentSubscription.price_per_month_ua ?? 0,
@@ -131,10 +143,12 @@ export default function Subscriptions() {
     // Скидання форми
     setCurrentSubscription({});
     setIsEditing(false);
+    setSelectedRegions([]);
   };
 
   const handleEdit = (subscription: Subscription) => {
     setCurrentSubscription(subscription);
+    setSelectedRegions(subscription.regions || ["en"]);
     setIsEditing(true);
   };
 
@@ -181,6 +195,10 @@ export default function Subscriptions() {
     }));
   };
 
+  const isEn = selectedRegions.includes("en");
+  const isDe = selectedRegions.includes("de");
+  const isUa = selectedRegions.includes("ua");
+
   return (
     <div className="p-6 min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Управління підписками</h1>
@@ -195,7 +213,16 @@ export default function Subscriptions() {
             >
               <h3 className="text-xl font-bold text-gray-900 flex justify-between items-center">
                 <span>
-                  {subscription.title} / {subscription.title_de} /{" "}
+                  {subscription.title}{" "}
+                  {subscription.regions?.includes("de") ||
+                  subscription.regions?.includes("en")
+                    ? "/"
+                    : ""}{" "}
+                  {subscription.title_de}{" "}
+                  {subscription.regions?.includes("ua") &&
+                  subscription.regions?.includes("de")
+                    ? "/"
+                    : ""}{" "}
                   {subscription.title_ua}
                 </span>
                 <div className="flex space-x-2">
@@ -214,19 +241,39 @@ export default function Subscriptions() {
                 </div>
               </h3>
 
+              <div className="m-3">
+                <h4>Вибрані регіони:</h4>
+                <ul className="flex gap-1">
+                  {subscription.regions?.map((region, index) => (
+                    <li
+                      key={index}
+                      className="text-gray-600 px-2 bg-gray-100 rounded-lg"
+                    >
+                      {region}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               <hr className="my-3 border-gray-300" />
 
               <div className="mb-3">
                 <h4 className="text-gray-700 font-semibold">Опис:</h4>
-                <p className="text-gray-600">
-                  Англ. {subscription.description}
-                </p>
-                <p className="text-gray-600">
-                  Нім. {subscription.description_de}
-                </p>
-                <p className="text-gray-600">
-                  Укр. {subscription.description_ua}
-                </p>
+                {subscription.regions?.includes("en") && (
+                  <p className="text-gray-600">
+                    Англ. {subscription.description}
+                  </p>
+                )}
+                {subscription.regions?.includes("de") && (
+                  <p className="text-gray-600">
+                    Нім. {subscription.description_de}
+                  </p>
+                )}
+                {subscription.regions?.includes("ua") && (
+                  <p className="text-gray-600">
+                    Укр. {subscription.description_ua}
+                  </p>
+                )}
               </div>
 
               <div className="mb-3">
@@ -234,13 +281,19 @@ export default function Subscriptions() {
                 <ul className="space-y-2">
                   {subscription.benefitsList?.map((benefit, index) => (
                     <li key={index} className="bg-gray-100 p-2 rounded-lg">
-                      <div className="text-gray-800">Англ. {benefit}</div>
-                      <div className="text-gray-600">
-                        Нім. {subscription.benefitsList_de?.[index]}
-                      </div>
-                      <div className="text-gray-600">
-                        Укр. {subscription.benefitsList_ua?.[index]}
-                      </div>
+                      {subscription.regions?.includes("en") && (
+                        <div className="text-gray-800">Англ. {benefit}</div>
+                      )}
+                      {subscription.regions?.includes("de") && (
+                        <div className="text-gray-600">
+                          Нім. {subscription.benefitsList_de?.[index]}
+                        </div>
+                      )}
+                      {subscription.regions?.includes("ua") && (
+                        <div className="text-gray-600">
+                          Укр. {subscription.benefitsList_ua?.[index]}
+                        </div>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -280,7 +333,18 @@ export default function Subscriptions() {
                     >
                       <span className="font-semibold">{term.label}:</span>
                       <div>
-                        ${term.price} / €{term.priceEu} / ₴{term.priceUa}
+                        {subscription.regions?.includes("en") && "$"}
+                        {term.price === 0 ? "" : term.price}{" "}
+                        {subscription.regions?.includes("de") ||
+                        subscription.regions?.includes("en")
+                          ? "/ €"
+                          : ""}
+                        {term.priceEu === 0 ? "" : term.priceEu}
+                        {subscription.regions?.includes("ua") &&
+                        subscription.regions?.includes("de")
+                          ? "/ ₴"
+                          : ""}
+                        {term.priceUa === 0 ? "" : term.priceUa}
                       </div>
                     </div>
                   ))}
@@ -300,263 +364,323 @@ export default function Subscriptions() {
               Очистити
             </button>
           </div>
+
+          {/* // НОВИЙ БЛОК ДЛЯ ВИБОРУ РЕГІОНІВ */}
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-2">Виберіть регіони</h3>
+            <div className="flex space-x-2">
+              {["en", "de", "ua"].map((region) => (
+                <button
+                  key={region}
+                  onClick={() => toggleRegion(region)}
+                  className={`px-4 py-2 rounded-lg transition-all cursor-pointer ${
+                    selectedRegions.includes(region)
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  }`}
+                >
+                  {region.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="space-y-2">
-            <div>
-              <label className="block mb-1">Назва (Англійська)</label>
-              <input
-                type="text"
-                name="title"
-                placeholder="Назва (Англійська)"
-                value={currentSubscription.title || ""}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block mb-1">Назва (Німецька)</label>
-              <input
-                type="text"
-                name="title_de"
-                placeholder="Назва (Німецька)"
-                value={currentSubscription.title_de || ""}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block mb-1">Назва (Українська)</label>
-              <input
-                type="text"
-                name="title_ua"
-                placeholder="Назва (Українська)"
-                value={currentSubscription.title_ua || ""}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            <div>
-              <label className="block mb-1">Опис (Англійська)</label>
-              <textarea
-                name="description"
-                placeholder="Опис (Англійська)"
-                value={currentSubscription.description || ""}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block mb-1">Опис (Німецька)</label>
-              <textarea
-                name="description_de"
-                placeholder="Опис (Німецька)"
-                value={currentSubscription.description_de || ""}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block mb-1">Опис (Українська)</label>
-              <textarea
-                name="description_ua"
-                placeholder="Опис (Українська)"
-                value={currentSubscription.description_ua || ""}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-2">Бенефіти (Англійська)</h3>
-              {currentSubscription.benefitsList?.map((benefit, index) => (
-                <div key={index} className="flex items-center mb-2">
-                  <span className="mr-2">{benefit}</span>
-                  <button
-                    onClick={() => handleRemoveBenefit("en", index)}
-                    className="bg-red-500 text-white px-2 py-1 rounded text-xs cursor-pointer"
-                  >
-                    Видалити
-                  </button>
-                </div>
-              ))}
-              <div className="flex">
+            {isEn && (
+              <div>
+                <label className="block mb-1">Назва (Англійська)</label>
                 <input
                   type="text"
-                  value={newBenefit}
-                  onChange={(e) => setNewBenefit(e.target.value)}
-                  placeholder="Додати бенефіт (Англійська)"
-                  className="flex-grow p-2 border rounded mr-2"
+                  name="title"
+                  placeholder="Назва (Англійська)"
+                  value={currentSubscription.title || ""}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
                 />
-                <button
-                  onClick={() => handleAddBenefit("en")}
-                  className="bg-green-500 text-white px-3 py-2 rounded cursor-pointer"
-                >
-                  +
-                </button>
               </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-2">Бенефіти (Німецька)</h3>
-              {currentSubscription.benefitsList_de?.map((benefit, index) => (
-                <div key={index} className="flex items-center mb-2">
-                  <span className="mr-2">{benefit}</span>
-                  <button
-                    onClick={() => handleRemoveBenefit("de", index)}
-                    className="bg-red-500 text-white px-2 py-1 rounded text-xs cursor-pointer"
-                  >
-                    Видалити
-                  </button>
-                </div>
-              ))}
-              <div className="flex">
+            )}
+            {isDe && (
+              <div>
+                <label className="block mb-1">Назва (Німецька)</label>
                 <input
                   type="text"
-                  value={newBenefit_de}
-                  onChange={(e) => setNewBenefit_de(e.target.value)}
-                  placeholder="Додати бенефіт (Німецька)"
-                  className="flex-grow p-2 border rounded mr-2"
+                  name="title_de"
+                  placeholder="Назва (Німецька)"
+                  value={currentSubscription.title_de || ""}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
                 />
-                <button
-                  onClick={() => handleAddBenefit("de")}
-                  className="bg-green-500 text-white px-3 py-2 rounded cursor-pointer"
-                >
-                  +
-                </button>
               </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-2">Бенефіти (Українська)</h3>
-              {currentSubscription.benefitsList_ua?.map((benefit, index) => (
-                <div key={index} className="flex items-center mb-2">
-                  <span className="mr-2">{benefit}</span>
-                  <button
-                    onClick={() => handleRemoveBenefit("ua", index)}
-                    className="bg-red-500 text-white px-2 py-1 rounded text-xs cursor-pointer"
-                  >
-                    Видалити
-                  </button>
-                </div>
-              ))}
-              <div className="flex">
+            )}
+            {isUa && (
+              <div>
+                <label className="block mb-1">Назва (Українська)</label>
                 <input
                   type="text"
-                  value={newBenefit_ua}
-                  onChange={(e) => setNewBenefit_ua(e.target.value)}
-                  placeholder="Додати бенефіт (Українська)"
-                  className="flex-grow p-2 border rounded mr-2"
+                  name="title_ua"
+                  placeholder="Назва (Українська)"
+                  value={currentSubscription.title_ua || ""}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
                 />
-                <button
-                  onClick={() => handleAddBenefit("ua")}
-                  className="bg-green-500 text-white px-3 py-2 rounded cursor-pointer"
-                >
-                  +
-                </button>
               </div>
-            </div>
+            )}
+
+            {isEn && (
+              <div>
+                <label className="block mb-1">Опис (Англійська)</label>
+                <textarea
+                  name="description"
+                  placeholder="Опис (Англійська)"
+                  value={currentSubscription.description || ""}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            )}
+            {isDe && (
+              <div>
+                <label className="block mb-1">Опис (Німецька)</label>
+                <textarea
+                  name="description_de"
+                  placeholder="Опис (Німецька)"
+                  value={currentSubscription.description_de || ""}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            )}
+            {isUa && (
+              <div>
+                <label className="block mb-1">Опис (Українська)</label>
+                <textarea
+                  name="description_ua"
+                  placeholder="Опис (Українська)"
+                  value={currentSubscription.description_ua || ""}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            )}
+
+            {isEn && (
+              <div>
+                <h3 className="font-semibold mb-2">Бенефіти (Англійська)</h3>
+                {currentSubscription.benefitsList?.map((benefit, index) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <span className="mr-2">{benefit}</span>
+                    <button
+                      onClick={() => handleRemoveBenefit("en", index)}
+                      className="bg-red-500 text-white px-2 py-1 rounded text-xs cursor-pointer"
+                    >
+                      Видалити
+                    </button>
+                  </div>
+                ))}
+                <div className="flex">
+                  <input
+                    type="text"
+                    value={newBenefit}
+                    onChange={(e) => setNewBenefit(e.target.value)}
+                    placeholder="Додати бенефіт (Англійська)"
+                    className="flex-grow p-2 border rounded mr-2"
+                  />
+                  <button
+                    onClick={() => handleAddBenefit("en")}
+                    className="bg-green-500 text-white px-3 py-2 rounded cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {isDe && (
+              <div>
+                <h3 className="font-semibold mb-2">Бенефіти (Німецька)</h3>
+                {currentSubscription.benefitsList_de?.map((benefit, index) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <span className="mr-2">{benefit}</span>
+                    <button
+                      onClick={() => handleRemoveBenefit("de", index)}
+                      className="bg-red-500 text-white px-2 py-1 rounded text-xs cursor-pointer"
+                    >
+                      Видалити
+                    </button>
+                  </div>
+                ))}
+                <div className="flex">
+                  <input
+                    type="text"
+                    value={newBenefit_de}
+                    onChange={(e) => setNewBenefit_de(e.target.value)}
+                    placeholder="Додати бенефіт (Німецька)"
+                    className="flex-grow p-2 border rounded mr-2"
+                  />
+                  <button
+                    onClick={() => handleAddBenefit("de")}
+                    className="bg-green-500 text-white px-3 py-2 rounded cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {isUa && (
+              <div>
+                <h3 className="font-semibold mb-2">Бенефіти (Українська)</h3>
+                {currentSubscription.benefitsList_ua?.map((benefit, index) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <span className="mr-2">{benefit}</span>
+                    <button
+                      onClick={() => handleRemoveBenefit("ua", index)}
+                      className="bg-red-500 text-white px-2 py-1 rounded text-xs cursor-pointer"
+                    >
+                      Видалити
+                    </button>
+                  </div>
+                ))}
+                <div className="flex">
+                  <input
+                    type="text"
+                    value={newBenefit_ua}
+                    onChange={(e) => setNewBenefit_ua(e.target.value)}
+                    placeholder="Додати бенефіт (Українська)"
+                    className="flex-grow p-2 border rounded mr-2"
+                  />
+                  <button
+                    onClick={() => handleAddBenefit("ua")}
+                    className="bg-green-500 text-white px-3 py-2 rounded cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-3 gap-4">
               {[
                 {
+                  region: "en",
                   label: "Ціна за 1 місяць (USD)",
                   name: "price_per_month" as keyof Subscription,
                 },
                 {
+                  region: "de",
                   label: "Ціна за 1 місяць (EU)",
                   name: "price_per_month_eu" as keyof Subscription,
                 },
                 {
+                  region: "ua",
                   label: "Ціна за 1 місяць (UAH)",
                   name: "price_per_month_ua" as keyof Subscription,
                 },
                 {
+                  region: "en",
                   label: "Ціна за 3 місяці (USD)",
                   name: "price_per_3months" as keyof Subscription,
                 },
                 {
+                  region: "de",
                   label: "Ціна за 3 місяці (EU)",
                   name: "price_per_3months_eu" as keyof Subscription,
                 },
                 {
+                  region: "ua",
                   label: "Ціна за 3 місяці (UAH)",
                   name: "price_per_3months_ua" as keyof Subscription,
                 },
                 {
+                  region: "en",
                   label: "Ціна за 6 місяців (USD)",
                   name: "price_per_6months" as keyof Subscription,
                 },
                 {
+                  region: "de",
                   label: "Ціна за 6 місяців (EU)",
                   name: "price_per_6months_eu" as keyof Subscription,
                 },
                 {
+                  region: "ua",
                   label: "Ціна за 6 місяців (UAH)",
                   name: "price_per_6months_ua" as keyof Subscription,
                 },
                 {
+                  region: "en",
                   label: "Ціна за 12 місяців (USD)",
                   name: "price_per_12months" as keyof Subscription,
                 },
                 {
+                  region: "de",
                   label: "Ціна за 12 місяців (EU)",
                   name: "price_per_12months_eu" as keyof Subscription,
                 },
                 {
+                  region: "ua",
                   label: "Ціна за 12 місяців (UAH)",
                   name: "price_per_12months_ua" as keyof Subscription,
                 },
-              ].map((field) => (
-                <div key={field.name} className="relative">
-                  <label className="block mb-1">{field.label}</label>
-                  <div className="flex items-center">
-                    <span className="mr-2">
-                      {field.name.includes("_eu")
-                        ? "€"
-                        : field.name.includes("_ua")
-                        ? "₴"
-                        : "$"}
-                    </span>
-                    <input
-                      type="number"
-                      name={field.name}
-                      step="0.01"
-                      min="0"
-                      value={currentSubscription[field.name] || ""}
-                      onChange={handleInputChange}
-                      className={`w-full p-2 border rounded ${
-                        currentSubscription[field.name] === 0 ||
-                        currentSubscription[field.name] === undefined
-                          ? "bg-gray-100 text-gray-500"
-                          : "bg-white text-black"
-                      }`}
-                      placeholder="0.00"
-                    />
-                    <button
-                      onClick={() =>
-                        handleTogglePriceVisibility(
-                          field.name,
-                          currentSubscription[field.name]
-                        )
-                      }
-                      className="ml-2 text-gray-500 hover:text-gray-700"
-                      title={
-                        currentSubscription[field.name] === 0 ||
-                        currentSubscription[field.name] === undefined
-                          ? "Активувати термін"
-                          : "Деактивувати термін"
-                      }
-                    >
-                      {currentSubscription[field.name] === 0 ||
-                      currentSubscription[field.name] === undefined ? (
-                        <EyeOff className="w-5 h-5 text-red-500" />
-                      ) : (
-                        <Eye className="w-5 h-5 text-green-500" />
-                      )}
-                    </button>
+              ]
+                .filter((field) => {
+                  const region = field.region;
+                  return (
+                    (region === "en" && isEn) ||
+                    (region === "de" && isDe) ||
+                    (region === "ua" && isUa)
+                  );
+                })
+                .map((field) => (
+                  <div key={field.name} className="relative">
+                    <label className="block mb-1">{field.label}</label>
+                    <div className="flex items-center">
+                      <span className="mr-2">
+                        {field.name.includes("_eu")
+                          ? "€"
+                          : field.name.includes("_ua")
+                          ? "₴"
+                          : "$"}
+                      </span>
+                      <input
+                        type="number"
+                        name={field.name}
+                        step="0.01"
+                        min="0"
+                        value={currentSubscription[field.name] || ""}
+                        onChange={handleInputChange}
+                        className={`w-full p-2 border rounded ${
+                          currentSubscription[field.name] === 0 ||
+                          currentSubscription[field.name] === undefined
+                            ? "bg-gray-100 text-gray-500"
+                            : "bg-white text-black"
+                        }`}
+                        placeholder="0.00"
+                      />
+                      <button
+                        onClick={() =>
+                          handleTogglePriceVisibility(
+                            field.name,
+                            currentSubscription[field.name]
+                          )
+                        }
+                        className="ml-2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                        title={
+                          currentSubscription[field.name] === 0 ||
+                          currentSubscription[field.name] === undefined
+                            ? "Активувати термін"
+                            : "Деактивувати термін"
+                        }
+                      >
+                        {currentSubscription[field.name] === 0 ||
+                        currentSubscription[field.name] === undefined ? (
+                          <EyeOff className="w-5 h-5 text-red-500" />
+                        ) : (
+                          <Eye className="w-5 h-5 text-green-500" />
+                        )}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
 
             <button
