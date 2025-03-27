@@ -10,9 +10,9 @@ export default function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
   const currentLocale = pathname.split("/")[1];
 
   const locales = [
-    { code: "en", name: "En" },
-    { code: "de", name: "De" },
-    { code: "ua", name: "Ua" },
+    { code: "en", name: "EN" },
+    { code: "de", name: "DE" },
+    { code: "ua", name: "UA" },
   ];
 
   const switchLanguage = (newLocale: string) => {
