@@ -49,6 +49,16 @@ const authOptions: AuthOptions = {
             email: "admin@gmail.com",
             role: "admin",
           } as CustomUser;
+        } else if (
+          credentials.email === "test@gmail.com" &&
+          credentials.password === "test"
+        ) {
+          return {
+            id: "2",
+            name: "Test",
+            email: "test@gmail.com",
+            role: "test",
+          } as CustomUser;
         }
 
         if (!AppDataSource.isInitialized) {
