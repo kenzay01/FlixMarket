@@ -1,5 +1,4 @@
 import { Subscription } from "./subscriptions";
-import { User } from "./user";
 export interface SubscriptionPayment {
   id: string;
   status: "active" | "completed" | "successful" | "pending" | "failed";
@@ -8,6 +7,5 @@ export interface SubscriptionPayment {
   date?: string;
   price: number;
   subscription: Subscription;
-  user: User;
   locale: "en" | "de" | "ua";
 }

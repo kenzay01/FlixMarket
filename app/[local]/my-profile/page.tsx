@@ -5,9 +5,13 @@ import { useSession } from "next-auth/react";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
 import type { SubscriptionPayment } from "../../../types/subscriptionPayment";
 import { useParams } from "next/navigation";
+import { useUsers } from "@/context/hooks";
 
 export default function MyProfile() {
   const { data: session, update } = useSession();
+  const { users, fetchUsers } = useUsers();
+  const currentUser = users.find((user) => user.id === session?.user.id);
+
   const [subscriptionPayments, setSubscriptionPayments] = useState<
     SubscriptionPayment[]
   >([]);
@@ -52,11 +56,11 @@ export default function MyProfile() {
   const cancelText = useClientTranslation("cancel");
 
   useEffect(() => {
-    if (session?.user) {
-      setUserName(session.user.name || "");
-      setUserEmail(session.user.email || "");
+    if (session?.user && currentUser) {
+      setUserName(currentUser?.name || session.user.name || "");
+      setUserEmail(currentUser?.email || session.user.email || "");
     }
-  }, [session]);
+  }, [session, users]);
 
   useEffect(() => {
     // Тут має бути запит до API
@@ -74,12 +78,12 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        user: {
-          id: "2",
-          name: "Test",
-          email: "test@gmail.com",
-          role: "user",
-        },
+        // user: {
+        //   id: "2",
+        //   name: "Test",
+        //   email: "test@gmail.com",
+        //   role: "user",
+        // },
       },
       {
         id: "sub-comp-1",
@@ -94,12 +98,12 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        user: {
-          id: "2",
-          name: "Test",
-          email: "test@gmail.com",
-          role: "user",
-        },
+        // user: {
+        //   id: "2",
+        //   name: "Test",
+        //   email: "test@gmail.com",
+        //   role: "user",
+        // },
       },
       {
         id: "sub-comp-2",
@@ -114,12 +118,12 @@ export default function MyProfile() {
           title_de: "Profi-Plan",
           title_ua: "Професійний план",
         },
-        user: {
-          id: "2",
-          name: "Test",
-          email: "test@gmail.com",
-          role: "user",
-        },
+        // user: {
+        //   id: "2",
+        //   name: "Test",
+        //   email: "test@gmail.com",
+        //   role: "user",
+        // },
       },
       {
         id: "pay-1",
@@ -133,12 +137,12 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        user: {
-          id: "2",
-          name: "Test",
-          email: "test@gmail.com",
-          role: "user",
-        },
+        // user: {
+        //   id: "2",
+        //   name: "Test",
+        //   email: "test@gmail.com",
+        //   role: "user",
+        // },
       },
       {
         id: "pay-2",
@@ -152,12 +156,12 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        user: {
-          id: "2",
-          name: "Test",
-          email: "test@gmail.com",
-          role: "user",
-        },
+        // user: {
+        //   id: "2",
+        //   name: "Test",
+        //   email: "test@gmail.com",
+        //   role: "user",
+        // },
       },
       {
         id: "pay-3",
@@ -171,12 +175,12 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        user: {
-          id: "2",
-          name: "Test",
-          email: "test@gmail.com",
-          role: "user",
-        },
+        // user: {
+        //   id: "2",
+        //   name: "Test",
+        //   email: "test@gmail.com",
+        //   role: "user",
+        // },
       },
       {
         id: "pay-4",
@@ -190,12 +194,12 @@ export default function MyProfile() {
           title_de: "Basis-Plan",
           title_ua: "Базовий план",
         },
-        user: {
-          id: "2",
-          name: "Test",
-          email: "test@gmail.com",
-          role: "user",
-        },
+        // user: {
+        //   id: "2",
+        //   name: "Test",
+        //   email: "test@gmail.com",
+        //   role: "user",
+        // },
       },
     ];
 
@@ -208,11 +212,28 @@ export default function MyProfile() {
   };
 
   // Зберегти зміни в профілі користувача
+  // Зберегти зміни в профілі користувача
   const handleSaveProfile = async () => {
     try {
-      // Тут має бути запит до API для оновлення інформації користувача
+      // Зробити запит до API для оновлення інформації користувача
+      const response = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: userName,
+          email: currentUser?.email,
+          newEmail: userEmail,
+        }),
+      });
 
-      // Оновлення сесії
+      // Перевірка відповіді від API
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+
+      // Оновлення сесії після успішного оновлення профілю
       await update({
         ...session,
         user: {
@@ -222,6 +243,7 @@ export default function MyProfile() {
         },
       });
 
+      fetchUsers(); // Оновлення списку користувачів
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -271,7 +293,13 @@ export default function MyProfile() {
               </div>
               <div className="flex justify-end space-x-2">
                 <button
-                  onClick={() => setIsEditing(false)}
+                  onClick={() => {
+                    setIsEditing(false);
+                    setUserName(currentUser?.name || session.user.name || "");
+                    setUserEmail(
+                      currentUser?.email || session.user.email || ""
+                    );
+                  }}
                   className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
                 >
                   {cancelText}
@@ -288,8 +316,8 @@ export default function MyProfile() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div>
-                  <h2 className="text-xl font-semibold">{session.user.name}</h2>
-                  <p className="text-gray-600">{session.user.email}</p>
+                  <h2 className="text-xl font-semibold">{userName}</h2>
+                  <p className="text-gray-600">{userEmail}</p>
                 </div>
               </div>
               <button

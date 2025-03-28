@@ -1,23 +1,16 @@
+// app/api/auth/register/route.ts
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import { type NextRequest } from "next/server";
-// Припускаємо, що у вас є якась модель для роботи з користувачами
-// Тут я наведу приклад з простим підходом
-
-// Примітка: в реальному проекті, вам потрібно зберігати користувачів у базі даних
-// Це просто приклад для демонстрації логіки
-const users = [
-  {
-    id: "1",
-    name: "Admin",
-    email: "admin@gmail.com",
-    password: "hashed_admin_password", // В реальному проекті це має бути хешований пароль
-    role: "admin",
-  },
-];
+import { AppDataSource } from "../../../../lib/db";
+import { User } from "../../../../entities/User";
 
 export async function POST(request: NextRequest) {
   try {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+
     const body = await request.json();
     const { name, email, password } = body;
 
@@ -29,8 +22,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Підключення до репозиторію
+    const userRepository = AppDataSource.getRepository(User);
+
     // Перевірка, чи користувач з такою поштою вже існує
-    const existingUser = users.find((user) => user.email === email);
+    const existingUser = await userRepository.findOne({
+      where: { email },
+    });
+    console.log("existingUser", existingUser);
+
     if (existingUser) {
       return NextResponse.json(
         { message: "Користувач з такою адресою електронної пошти вже існує" },
@@ -42,24 +42,32 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await hash(password, 10);
 
     // Створення нового користувача
-    // В реальному проекті тут буде код для збереження користувача в базі даних
-    const newUser = {
-      id: String(users.length + 1),
+    const newUser = userRepository.create({
       name,
       email,
       password: hashedPassword,
       role: "user", // За замовчуванням роль "user"
-    };
+    });
 
-    // Додаємо користувача до масиву (в реальному проекті - до бази даних)
-    users.push(newUser);
+    // Збереження користувача в базі даних
+    console.log("Новий користувач перед збереженням:", newUser);
+
+    await userRepository.save(newUser);
 
     // Повертаємо успішну відповідь
     return NextResponse.json(
-      { message: "Користувач успішно зареєстрований" },
+      {
+        message: "Користувач успішно зареєстрований",
+        user: {
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email,
+        },
+      },
       { status: 201 }
     );
   } catch (error) {
+    console.error("Помилка реєстрації:", error);
     return NextResponse.json(
       { message: `Сталася помилка при реєстрації користувача: ${error}` },
       { status: 500 }

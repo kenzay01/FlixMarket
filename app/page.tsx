@@ -1,6 +1,7 @@
 "use client";
-import { useClientTranslation } from "./hooks/useTranslate";
+import { useAppContext } from "@/context/AppContext";
 export default function Home() {
-  console.log(useClientTranslation("welcome"));
+  const { isLoading } = useAppContext();
+  console.log("isLoading", isLoading);
   return <div>Home</div>;
 }

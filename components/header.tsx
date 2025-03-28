@@ -8,9 +8,11 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
+import { useUsers } from "@/context/hooks";
 import Image from "next/image";
 export default function Header() {
   const router = useRouter();
+  const { users } = useUsers();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -18,6 +20,7 @@ export default function Header() {
 
   const path = usePathname();
   const { data: session } = useSession();
+  const currentUser = users.find((user) => user.id === session?.user?.id);
   const pathParts = path.split("/").filter(Boolean);
   const currentLang = ["en", "de", "ua"].includes(pathParts[0])
     ? pathParts[0]
@@ -86,7 +89,7 @@ export default function Header() {
           <div className="flex items-center gap-1">
             <MdAccountCircle className="w-8 h-8 md:w-10 md:h-10" />
             <div className="pt-1 md:pt-0">
-              {session ? session.user.name : null}
+              {session ? currentUser?.name : null}
             </div>
           </div>
           <div className="md:hidden">
