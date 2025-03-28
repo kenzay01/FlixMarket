@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+// import dynamic from "next/dynamic";
 import "./globals.css";
 import RootLayoutExtanded from "./rootLayout";
+import LanguageRedirect from "@/components/languageRedirect";
+// const LanguageRedirect = dynamic(
+//   () => import("../components/languageRedirect"),
+//   {
+//     ssr: false,
+//   }
+// );
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full`}
       >
+        <LanguageRedirect />
         <RootLayoutExtanded>{children}</RootLayoutExtanded>
       </body>
     </html>

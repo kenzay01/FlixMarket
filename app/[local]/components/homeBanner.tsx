@@ -166,7 +166,7 @@ export default function HomeBanner() {
     if (currentSlide >= filteredSubscriptions.length) {
       setCurrentSlide(0);
     }
-  }, [filteredSubscriptions]);
+  }, [filteredSubscriptions, currentSlide]);
 
   useEffect(() => {
     const timer = setInterval(() => {

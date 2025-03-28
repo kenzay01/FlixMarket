@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
+import Image from "next/image";
 export default function Header() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
@@ -130,11 +131,17 @@ export default function Header() {
       >
         <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center gap-1">
-            <img src="/EasyPlayLogo.png" alt="" className="w-14 h-14" />
+            <Image
+              src="/EasyPlayLogo.png"
+              width={200}
+              height={200}
+              alt="logo"
+              className="w-14 h-14"
+            />
             <Link
               href={`/${currentLang}`}
               onClick={setMenuOpen.bind(null, false)}
-              className={`text-2xl font-bold transition-colors duration-300 ${
+              className={`flex-1 text-2xl font-bold transition-colors duration-300 ${
                 scrolled || !isHome ? "text-gray-800" : "text-white"
               }`}
             >
