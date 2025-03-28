@@ -129,15 +129,18 @@ export default function Header() {
         }`}
       >
         <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
-          <Link
-            href={`/${currentLang}`}
-            onClick={setMenuOpen.bind(null, false)}
-            className={`text-2xl font-bold transition-colors duration-300 ${
-              scrolled || !isHome ? "text-gray-800" : "text-white"
-            }`}
-          >
-            EasyPlay
-          </Link>
+          <div className="flex items-center gap-1">
+            <img src="/EasyPlayLogo.png" alt="" className="w-14 h-14" />
+            <Link
+              href={`/${currentLang}`}
+              onClick={setMenuOpen.bind(null, false)}
+              className={`text-2xl font-bold transition-colors duration-300 ${
+                scrolled || !isHome ? "text-gray-800" : "text-white"
+              }`}
+            >
+              EasyPlay
+            </Link>
+          </div>
 
           <div className="flex items-center gap-4 md:flex-row-reverse">
             <LanguageSwitcher scrolled={scrolled} />
