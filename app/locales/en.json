@@ -69,5 +69,7 @@
   "module_log_out_qestion": "Are you sure you want to log out?",
   "exit_confirm": "Exit confirmation",
   "page_not_found": "Page not found",
-  "faq": "FAQ"
+  "faq": "FAQ",
+
+  "term_conditions": "Terms and Conditions"
 }
