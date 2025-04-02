@@ -15,15 +15,16 @@ export default function Subscriptions() {
 import { useState, useEffect } from "react";
 import { Subscription } from "../../../../types/subscriptions";
 import { Eye, EyeOff } from "lucide-react";
-import { useSubscriptions } from "@/context/hooks";
 
 export default function Subscriptions() {
-  // const { subscriptions: subs, fetchSubscriptions } = useSubscriptions();
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
 
+<<<<<<< HEAD
   console.log("Subscriptions:", subscriptions);
   const [loading, setLoading] = useState(true);
 >>>>>>> 75318fb (done admin subscrioption)
+=======
+>>>>>>> a3f7b19 (clear code)
   const [error, setError] = useState<string | null>(null);
 
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
@@ -50,9 +51,12 @@ export default function Subscriptions() {
   const fetchSubscriptions = async () => {
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       setLoading(true);
 >>>>>>> 75318fb (done admin subscrioption)
+=======
+>>>>>>> a3f7b19 (clear code)
       const response = await fetch("/api/subscriptions");
 
       if (!response.ok) {
@@ -67,10 +71,13 @@ export default function Subscriptions() {
       );
       console.error("Failed to fetch subscriptions:", err);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     } finally {
       setLoading(false);
 >>>>>>> 75318fb (done admin subscrioption)
+=======
+>>>>>>> a3f7b19 (clear code)
     }
   };
 

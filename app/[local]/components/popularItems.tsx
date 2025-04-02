@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useMemo, useEffect, useState } from "react";
 import { useSubscriptions } from "@/context/hooks";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Subscription as UISubscription } from "@/types/subscriptions";
 import { Subscription as EntitySubscription } from "@/entities/Subscription";
 
@@ -167,6 +168,11 @@ export default function PopularItems() {
   const { subscriptions, fetchSubscriptions } = useSubscriptions();
   console.log("Subscriptions:", subscriptions);
 >>>>>>> 75318fb (done admin subscrioption)
+=======
+export default function PopularItems() {
+  const { subscriptions, fetchSubscriptions } = useSubscriptions();
+
+>>>>>>> a3f7b19 (clear code)
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -197,6 +203,7 @@ export default function PopularItems() {
     );
   }, [subscriptions, locale]);
 <<<<<<< HEAD
+<<<<<<< HEAD
   let content;
   if (filteredSubscriptions.length === 0 && !isLoading) {
 =======
@@ -205,12 +212,17 @@ export default function PopularItems() {
   if (filteredSubscriptions.length === 0 && !isLoading) {
     // Показати повідомлення про відсутність підписок тільки якщо завантаження завершено
 >>>>>>> 75318fb (done admin subscrioption)
+=======
+  let content;
+  if (filteredSubscriptions.length === 0 && !isLoading) {
+>>>>>>> a3f7b19 (clear code)
     content = (
       <section className="w-full my-16 flex items-center justify-center text-center">
         <p className="text-2xl">{noSubscriptions}</p>
       </section>
     );
   } else if (filteredSubscriptions.length > 0) {
+<<<<<<< HEAD
 <<<<<<< HEAD
     content = (
       <div>
@@ -222,6 +234,8 @@ export default function PopularItems() {
           />
 =======
     // Показувати підписки тільки якщо вони є
+=======
+>>>>>>> a3f7b19 (clear code)
     content = (
       <div>
         {filteredSubscriptions.map((item, index) => (
