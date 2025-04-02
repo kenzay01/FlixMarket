@@ -18,9 +18,12 @@ export class Subscription {
   @Column({ nullable: true })
   imageUrl?: string;
 
+<<<<<<< HEAD
   @Column({ nullable: true })
   imageFile?: string;
 
+=======
+>>>>>>> 75318fb (done admin subscrioption)
   @Column("simple-array", { nullable: true })
   benefitsList?: string[];
 

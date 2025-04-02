@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< HEAD
 import { useState, useEffect, useRef } from "react";
 import { Subscription } from "../../../../types/subscriptions";
 import { Eye, EyeOff, Upload, X, Image as ImageIcon } from "lucide-react";
@@ -10,6 +11,19 @@ import { Eye, EyeOff, Upload, X, Image as ImageIcon } from "lucide-react";
 export default function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
 
+=======
+import { useState, useEffect } from "react";
+import { Subscription } from "../../../../types/subscriptions";
+import { Eye, EyeOff } from "lucide-react";
+import { useSubscriptions } from "@/context/hooks";
+
+export default function Subscriptions() {
+  // const { subscriptions: subs, fetchSubscriptions } = useSubscriptions();
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+
+  console.log("Subscriptions:", subscriptions);
+  const [loading, setLoading] = useState(true);
+>>>>>>> 75318fb (done admin subscrioption)
   const [error, setError] = useState<string | null>(null);
 
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
@@ -23,15 +37,22 @@ export default function Subscriptions() {
   const [newBenefit_de, setNewBenefit_de] = useState("");
   const [newBenefit_ua, setNewBenefit_ua] = useState("");
 
+<<<<<<< HEAD
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+=======
+>>>>>>> 75318fb (done admin subscrioption)
   useEffect(() => {
     fetchSubscriptions();
   }, []);
 
   const fetchSubscriptions = async () => {
     try {
+<<<<<<< HEAD
+=======
+      setLoading(true);
+>>>>>>> 75318fb (done admin subscrioption)
       const response = await fetch("/api/subscriptions");
 
       if (!response.ok) {
@@ -45,6 +66,11 @@ export default function Subscriptions() {
         err instanceof Error ? err.message : "An unknown error occurred"
       );
       console.error("Failed to fetch subscriptions:", err);
+<<<<<<< HEAD
+=======
+    } finally {
+      setLoading(false);
+>>>>>>> 75318fb (done admin subscrioption)
     }
   };
 
@@ -172,6 +198,7 @@ export default function Subscriptions() {
   };
 
   const handleAddOrUpdateSubscription = async () => {
+<<<<<<< HEAD
     try {
       let imageUrl = currentSubscription.imageUrl || "";
 
@@ -219,6 +246,27 @@ export default function Subscriptions() {
 
       console.log("Processed Subscription:", processedSubscription);
 
+=======
+    const processedSubscription = {
+      ...currentSubscription,
+      regions: selectedRegions.length > 0 ? selectedRegions : ["en"],
+      price_per_month: currentSubscription.price_per_month ?? 0,
+      price_per_month_eu: currentSubscription.price_per_month_eu ?? 0,
+      price_per_month_ua: currentSubscription.price_per_month_ua ?? 0,
+      price_per_3months: currentSubscription.price_per_3months ?? 0,
+      price_per_3months_eu: currentSubscription.price_per_3months_eu ?? 0,
+      price_per_3months_ua: currentSubscription.price_per_3months_ua ?? 0,
+      price_per_6months: currentSubscription.price_per_6months ?? 0,
+      price_per_6months_eu: currentSubscription.price_per_6months_eu ?? 0,
+      price_per_6months_ua: currentSubscription.price_per_6months_ua ?? 0,
+      price_per_12months: currentSubscription.price_per_12months ?? 0,
+      price_per_12months_eu: currentSubscription.price_per_12months_eu ?? 0,
+      price_per_12months_ua: currentSubscription.price_per_12months_ua ?? 0,
+    };
+    console.log("Processed Subscription:", processedSubscription);
+
+    try {
+>>>>>>> 75318fb (done admin subscrioption)
       let response;
 
       if (isEditing) {
@@ -285,9 +333,12 @@ export default function Subscriptions() {
   const confirmDelete = async () => {
     if (subscriptionToDelete) {
       try {
+<<<<<<< HEAD
         const subscriptionToRemove = subscriptions.find(
           (sub) => sub.id === subscriptionToDelete
         );
+=======
+>>>>>>> 75318fb (done admin subscrioption)
         const response = await fetch(
           `/api/subscriptions?id=${subscriptionToDelete}`,
           {
@@ -300,6 +351,7 @@ export default function Subscriptions() {
             `Error deleting subscription: ${response.statusText}`
           );
         }
+<<<<<<< HEAD
         if (subscriptionToRemove?.imageUrl) {
           const imageDeleteResponse = await fetch(
             `/api/delete-image?imageUrl=${encodeURIComponent(
@@ -317,6 +369,10 @@ export default function Subscriptions() {
           }
         }
 
+=======
+
+        // Update state to remove the deleted subscription
+>>>>>>> 75318fb (done admin subscrioption)
         setSubscriptions((prev) =>
           prev.filter((sub) => sub.id !== subscriptionToDelete)
         );
@@ -341,10 +397,13 @@ export default function Subscriptions() {
     setCurrentSubscription({});
     setIsEditing(false);
     setSelectedRegions([]);
+<<<<<<< HEAD
     setImagePreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+=======
+>>>>>>> 75318fb (done admin subscrioption)
   };
 
   const handleTogglePriceVisibility = (
@@ -389,6 +448,13 @@ export default function Subscriptions() {
                 <span>
                   {subscription.title}{" "}
                   {subscription.regions?.includes("de") &&
+<<<<<<< HEAD
+=======
+                  subscription.regions?.includes("en")
+                    ? "/"
+                    : ""}{" "}
+                  {subscription.regions?.includes("ua") &&
+>>>>>>> 75318fb (done admin subscrioption)
                   subscription.regions?.includes("en")
                     ? "/"
                     : ""}{" "}
@@ -533,12 +599,20 @@ export default function Subscriptions() {
                           className="p-3 bg-gray-50 rounded-lg border"
                         >
                           <span className="font-semibold">{term.label}:</span>
+<<<<<<< HEAD
                           <div className="text-sm">
                             {subscription.regions?.includes("en") && "$"}
                             {term.price === 0 ? "" : term.price}{" "}
                             {subscription.regions?.includes("en") &&
                             subscription.regions?.includes("ua") &&
                             !subscription.regions?.includes("de")
+=======
+                          <div>
+                            {subscription.regions?.includes("en") && "$"}
+                            {term.price === 0 ? "" : term.price}{" "}
+                            {subscription.regions?.includes("en") &&
+                            subscription.regions?.includes("ua")
+>>>>>>> 75318fb (done admin subscrioption)
                               ? "/ "
                               : ""}
                             {subscription.regions?.includes("de") &&
@@ -823,19 +897,28 @@ export default function Subscriptions() {
                   region: "en",
                   label: " 1 місяць (USD)",
                   name: "price_per_month" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "en",
                   label: " 3 місяці (USD)",
                   name: "price_per_3months" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "en",
                   label: " 6 місяців (USD)",
                   name: "price_per_6months" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "en",
@@ -847,19 +930,28 @@ export default function Subscriptions() {
                   region: "de",
                   label: " 1 місяць (EU)",
                   name: "price_per_month_eu" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "de",
                   label: " 3 місяці (EU)",
                   name: "price_per_3months_eu" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "de",
                   label: " 6 місяців (EU)",
                   name: "price_per_6months_eu" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "de",
@@ -871,19 +963,28 @@ export default function Subscriptions() {
                   region: "ua",
                   label: " 1 місяць (UAH)",
                   name: "price_per_month_ua" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "ua",
                   label: " 3 місяці (UAH)",
                   name: "price_per_3months_ua" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "ua",
                   label: " 6 місяців (UAH)",
                   name: "price_per_6months_ua" as keyof Subscription,
+<<<<<<< HEAD
                   type: "number",
+=======
+>>>>>>> 75318fb (done admin subscrioption)
                 },
                 {
                   region: "ua",

@@ -13,7 +13,10 @@ const backGroundColors = [
 export default function HomeBanner() {
   const router = useRouter();
   const { subscriptions, fetchSubscriptions } = useSubscriptions();
+<<<<<<< HEAD
   console.log("Subscriptions:", subscriptions);
+=======
+>>>>>>> 75318fb (done admin subscrioption)
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,6 +24,7 @@ export default function HomeBanner() {
   const locale = (params.local as "en" | "de" | "ua") || "en";
   const noSubscriptions = useClientTranslation("no_subscriptions");
   const loadingText = useClientTranslation("loading") || "Loading...";
+<<<<<<< HEAD
 
   useEffect(() => {
     const loadSubscriptions = async () => {
@@ -49,6 +53,36 @@ export default function HomeBanner() {
   }, [subscriptions, locale]);
 
   useEffect(() => {
+=======
+
+  // Покращена логіка завантаження
+  useEffect(() => {
+    const loadSubscriptions = async () => {
+      try {
+        setIsLoading(true);
+        await fetchSubscriptions();
+      } catch (error) {
+        console.error("Error fetching subscriptions:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (subscriptions.length === 0) {
+      loadSubscriptions();
+    } else {
+      setIsLoading(false);
+    }
+  }, [fetchSubscriptions, subscriptions.length]);
+
+  const filteredSubscriptions = useMemo(() => {
+    return subscriptions.filter((subscription) =>
+      subscription.regions?.includes(locale)
+    );
+  }, [subscriptions, locale]);
+
+  useEffect(() => {
+>>>>>>> 75318fb (done admin subscrioption)
     if (
       currentSlide >= filteredSubscriptions.length &&
       filteredSubscriptions.length > 0
