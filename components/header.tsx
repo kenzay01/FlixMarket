@@ -89,7 +89,11 @@ export default function Header() {
           <div className="flex items-center gap-1">
             <MdAccountCircle className="w-8 h-8 md:w-10 md:h-10" />
             <div className="pt-1 md:pt-0">
-              {session ? currentUser?.name : null}
+              {session
+                ? currentUser
+                  ? currentUser?.name
+                  : session.user.name
+                : null}
             </div>
           </div>
           <div className="md:hidden">

@@ -10,7 +10,7 @@ export async function GET() {
 
     const paymentsRepository = AppDataSource.getRepository(SubscriptionPayment);
     const payments = await paymentsRepository.find({
-      relations: ["user", "subscription"],
+      relations: ["subscription"],
     });
     return NextResponse.json(payments);
   } catch (error) {
