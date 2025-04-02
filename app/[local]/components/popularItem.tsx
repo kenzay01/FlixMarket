@@ -4,6 +4,7 @@ import { FaCheck } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
 import { useRouter, useParams } from "next/navigation";
+
 export default function PopularItem({
   item,
   index,
@@ -17,6 +18,7 @@ export default function PopularItem({
 
   const isEven = index % 2 === 0;
   const btnTitle = useClientTranslation("buy_now");
+  const monthsText = useClientTranslation("months").toLowerCase();
 
   const displayTitle =
     locale === "en"
@@ -36,7 +38,59 @@ export default function PopularItem({
       : locale === "ua"
       ? item.benefitsList_ua
       : item.benefitsList_de;
-  const monthsText = useClientTranslation("months").toLowerCase();
+
+  // Function to get the best available price and subscription duration
+  const getBestPriceOption = () => {
+    // Get prices based on locale
+    const prices = {
+      "3":
+        locale === "en"
+          ? item.price_per_3months
+          : locale === "ua"
+          ? item.price_per_3months_ua
+          : item.price_per_3months_eu,
+      "1":
+        locale === "en"
+          ? item.price_per_month
+          : locale === "ua"
+          ? item.price_per_month_ua
+          : item.price_per_month_eu,
+      "6":
+        locale === "en"
+          ? item.price_per_6months
+          : locale === "ua"
+          ? item.price_per_6months_ua
+          : item.price_per_6months_eu,
+      "12":
+        locale === "en"
+          ? item.price_per_12months
+          : locale === "ua"
+          ? item.price_per_12months_ua
+          : item.price_per_12months_eu,
+    };
+
+    // Priority order: 3 months, 1 month, 6 months, 12 months
+    const priorityOrder = ["3", "1", "6", "12"];
+
+    // Find first available price based on priority
+    for (const duration of priorityOrder) {
+      if (prices[duration] > 0) {
+        return {
+          price: prices[duration],
+          duration: duration,
+        };
+      }
+    }
+
+    // If no prices are available, default to 3 months
+    return {
+      price: prices["3"] || 0,
+      duration: "3",
+    };
+  };
+
+  const { price, duration } = getBestPriceOption();
+  const currencySymbol = locale === "en" ? "$" : locale === "ua" ? "₴" : "€";
 
   return (
     <section
@@ -72,12 +126,8 @@ export default function PopularItem({
 
         <div className="mt-6 flex items-center space-x-4">
           <span className="text-pink-600 text-2xl font-bold">
-            {locale === "en"
-              ? "$" + item.price_per_3months
-              : locale === "ua"
-              ? "₴" + item.price_per_3months_ua
-              : "€" + item.price_per_3months_eu}{" "}
-            / 3 {monthsText}
+            {currencySymbol}
+            {price} / {duration} {monthsText}
           </span>
         </div>
 

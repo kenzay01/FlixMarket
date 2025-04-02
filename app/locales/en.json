@@ -71,5 +71,6 @@
   "page_not_found": "Page not found",
   "faq": "FAQ",
 
-  "term_conditions": "Terms and Conditions"
+  "term_conditions": "Terms and Conditions",
+  "no_subscriptions": "No subscriptions available for this region."
 }
