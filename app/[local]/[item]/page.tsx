@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { FaCheck, FaArrowLeft } from "react-icons/fa6";
 import { motion } from "framer-motion";
@@ -17,17 +17,14 @@ export default function ItemPage() {
   const subscription = subscriptions.find(
     (sub) => sub.id === itemId.replace("item", "")
   );
-  console.log("subscription", subscription);
 
   const buyNowText = useClientTranslation("buy_now");
   const monthsText = useClientTranslation("months");
   const selectPlanText = useClientTranslation("select_plan");
   const backText = useClientTranslation("back");
-  const loadingText = useClientTranslation("loading") || "Loading...";
   const featuresText = useClientTranslation("features") || "Features";
 
   const [selectedPlan, setSelectedPlan] = useState<"1" | "3" | "6" | "12">("1");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getLocalizedContent = (field: string, fallback: string) => {
     if (!subscription) return fallback;
@@ -55,7 +52,6 @@ export default function ItemPage() {
     const isEuro = locale === "de";
     const isUa = locale === "ua";
 
-    // Check price based on locale
     const priceForMonth = isEuro
       ? subscription.price_per_month_eu
       : isUa
@@ -80,7 +76,6 @@ export default function ItemPage() {
       ? subscription.price_per_12months_ua
       : subscription.price_per_12months;
 
-    // Only add options with prices greater than 0 for the current locale
     if (priceForMonth > 0) {
       monthTermin.push("1");
     }
@@ -97,30 +92,12 @@ export default function ItemPage() {
       monthTermin.push("12");
     }
 
-    // Set default selectedPlan to the first available option
     if (monthTermin.length > 0 && !monthTermin.includes(selectedPlan)) {
       setSelectedPlan(monthTermin[0] as "1" | "3" | "6" | "12");
     }
 
-    console.log("monthTermin", monthTermin);
     return monthTermin;
   };
-
-  // useEffect(() => {
-  //   const getSubscription = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const data = await fetchSubscriptionById(itemId.replace("item", ""));
-  //       setSubscription(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch subscription data:", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   getSubscription();
-  // }, [itemId]);
 
   const handlePurchase = () => {
     console.log(
