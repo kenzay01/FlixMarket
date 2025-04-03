@@ -4,10 +4,8 @@ import { useClientTranslation } from "@/app/hooks/useTranslate";
 import ReviewItem from "./reviewItem";
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-import CommentModal from "./commentModal";
 export default function ReviewsContainer() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const reviews = [
     {
@@ -121,10 +119,6 @@ export default function ReviewsContainer() {
     };
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = isModalOpen ? "hidden" : "auto";
-  }, [isModalOpen]);
-
   return (
     <>
       <section
@@ -137,12 +131,6 @@ export default function ReviewsContainer() {
               {useClientTranslation("user_comments")}
             </h2>
             <div className="flex items-center gap-4">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="px-6 py-2 rounded-full border border-b-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors cursor-pointer"
-              >
-                {useClientTranslation("add_comment")}
-              </button>
               <div className="flex gap-2">
                 <button
                   onClick={prevSlide}
@@ -188,10 +176,6 @@ export default function ReviewsContainer() {
           </div>
         </div>
       </section>
-      <CommentModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
     </>
   );
 }
