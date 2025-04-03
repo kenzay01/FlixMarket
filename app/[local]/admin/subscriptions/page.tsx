@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Subscription } from "../../../../types/subscriptions";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Upload, X, Image as ImageIcon } from "lucide-react";
+// interface EditableSubscription extends Partial<Subscription> {
+//   imageFile?: File | null;
+// }
 
 export default function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -19,6 +22,9 @@ export default function Subscriptions() {
   const [newBenefit, setNewBenefit] = useState("");
   const [newBenefit_de, setNewBenefit_de] = useState("");
   const [newBenefit_ua, setNewBenefit_ua] = useState("");
+
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchSubscriptions();
@@ -87,10 +93,39 @@ export default function Subscriptions() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    if (name === "imageFile") return;
     setCurrentSubscription((prev) => ({
       ...prev,
       [name]: value === "" ? 0 : value,
     }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+      setCurrentSubscription((prev) => ({
+        ...prev,
+        imageFile: file,
+      }));
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setCurrentSubscription((prev) => {
+      const updated = { ...prev };
+      updated.imageFile = null;
+      updated.imageUrl = "";
+      return updated;
+    });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleAddBenefit = (lang: "en" | "de" | "ua") => {
@@ -137,25 +172,53 @@ export default function Subscriptions() {
   };
 
   const handleAddOrUpdateSubscription = async () => {
-    const processedSubscription = {
-      ...currentSubscription,
-      regions: selectedRegions.length > 0 ? selectedRegions : ["en"],
-      price_per_month: currentSubscription.price_per_month ?? 0,
-      price_per_month_eu: currentSubscription.price_per_month_eu ?? 0,
-      price_per_month_ua: currentSubscription.price_per_month_ua ?? 0,
-      price_per_3months: currentSubscription.price_per_3months ?? 0,
-      price_per_3months_eu: currentSubscription.price_per_3months_eu ?? 0,
-      price_per_3months_ua: currentSubscription.price_per_3months_ua ?? 0,
-      price_per_6months: currentSubscription.price_per_6months ?? 0,
-      price_per_6months_eu: currentSubscription.price_per_6months_eu ?? 0,
-      price_per_6months_ua: currentSubscription.price_per_6months_ua ?? 0,
-      price_per_12months: currentSubscription.price_per_12months ?? 0,
-      price_per_12months_eu: currentSubscription.price_per_12months_eu ?? 0,
-      price_per_12months_ua: currentSubscription.price_per_12months_ua ?? 0,
-    };
-    console.log("Processed Subscription:", processedSubscription);
-
     try {
+      let imageUrl = currentSubscription.imageUrl || "";
+
+      if (currentSubscription.imageFile instanceof File) {
+        const formData = new FormData();
+        formData.append("image", currentSubscription.imageFile);
+
+        // Надсилаємо зображення на сервер
+        const uploadResponse = await fetch("/api/upload-image", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error(
+            `Помилка завантаження зображення: ${uploadResponse.statusText}`
+          );
+        }
+        const uploadData = await uploadResponse.json();
+        if (uploadData.success) {
+          imageUrl = uploadData.imageUrl;
+        } else {
+          throw new Error("Не вдалося завантажити зображення");
+        }
+      }
+      const { ...subscriptionData } = currentSubscription;
+
+      const processedSubscription = {
+        ...subscriptionData,
+        imageUrl,
+        regions: selectedRegions.length > 0 ? selectedRegions : ["en"],
+        price_per_month: subscriptionData.price_per_month ?? 0,
+        price_per_month_eu: subscriptionData.price_per_month_eu ?? 0,
+        price_per_month_ua: subscriptionData.price_per_month_ua ?? 0,
+        price_per_3months: subscriptionData.price_per_3months ?? 0,
+        price_per_3months_eu: subscriptionData.price_per_3months_eu ?? 0,
+        price_per_3months_ua: subscriptionData.price_per_3months_ua ?? 0,
+        price_per_6months: subscriptionData.price_per_6months ?? 0,
+        price_per_6months_eu: subscriptionData.price_per_6months_eu ?? 0,
+        price_per_6months_ua: subscriptionData.price_per_6months_ua ?? 0,
+        price_per_12months: subscriptionData.price_per_12months ?? 0,
+        price_per_12months_eu: subscriptionData.price_per_12months_eu ?? 0,
+        price_per_12months_ua: subscriptionData.price_per_12months_ua ?? 0,
+      };
+
+      console.log("Processed Subscription:", processedSubscription);
+
       let response;
 
       if (isEditing) {
@@ -202,6 +265,11 @@ export default function Subscriptions() {
     setCurrentSubscription(subscription);
     setSelectedRegions(subscription.regions || ["en"]);
     setIsEditing(true);
+    if (subscription.imageUrl) {
+      setImagePreview(subscription.imageUrl);
+    } else {
+      setImagePreview(null);
+    }
   };
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -217,6 +285,9 @@ export default function Subscriptions() {
   const confirmDelete = async () => {
     if (subscriptionToDelete) {
       try {
+        const subscriptionToRemove = subscriptions.find(
+          (sub) => sub.id === subscriptionToDelete
+        );
         const response = await fetch(
           `/api/subscriptions?id=${subscriptionToDelete}`,
           {
@@ -229,8 +300,23 @@ export default function Subscriptions() {
             `Error deleting subscription: ${response.statusText}`
           );
         }
+        if (subscriptionToRemove?.imageUrl) {
+          const imageDeleteResponse = await fetch(
+            `/api/delete-image?imageUrl=${encodeURIComponent(
+              subscriptionToRemove.imageUrl
+            )}`,
+            {
+              method: "DELETE",
+            }
+          );
 
-        // Update state to remove the deleted subscription
+          if (!imageDeleteResponse.ok) {
+            console.error(
+              "Failed to delete image file, but subscription was removed"
+            );
+          }
+        }
+
         setSubscriptions((prev) =>
           prev.filter((sub) => sub.id !== subscriptionToDelete)
         );
@@ -255,11 +341,23 @@ export default function Subscriptions() {
     setCurrentSubscription({});
     setIsEditing(false);
     setSelectedRegions([]);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleTogglePriceVisibility = (
     name: keyof Subscription,
-    currentValue: string | number | string[] | null | undefined
+    currentValue:
+      | string
+      | number
+      | string[]
+      | null
+      | undefined
+      | File
+      | File[]
+      | readonly string[]
   ) => {
     setCurrentSubscription((prev) => ({
       ...prev,
@@ -295,7 +393,8 @@ export default function Subscriptions() {
                     ? "/"
                     : ""}{" "}
                   {subscription.regions?.includes("ua") &&
-                  subscription.regions?.includes("en")
+                  subscription.regions?.includes("en") &&
+                  !subscription.regions?.includes("de")
                     ? "/"
                     : ""}{" "}
                   {subscription.title_de}{" "}
@@ -320,6 +419,16 @@ export default function Subscriptions() {
                   </button>
                 </div>
               </h3>
+
+              {subscription.imageUrl && (
+                <div className="my-3">
+                  <img
+                    src={subscription.imageUrl}
+                    alt={subscription.title || "Subscription image"}
+                    className="w-full max-h-56 object-contain rounded-lg"
+                  />
+                </div>
+              )}
 
               <div className="m-3">
                 <h4>Вибрані регіони:</h4>
@@ -382,7 +491,7 @@ export default function Subscriptions() {
                   ))}
                 </ul>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-800">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-gray-800">
                 {[
                   {
                     label: "1 місяць",
@@ -424,11 +533,12 @@ export default function Subscriptions() {
                           className="p-3 bg-gray-50 rounded-lg border"
                         >
                           <span className="font-semibold">{term.label}:</span>
-                          <div>
+                          <div className="text-sm">
                             {subscription.regions?.includes("en") && "$"}
                             {term.price === 0 ? "" : term.price}{" "}
                             {subscription.regions?.includes("en") &&
-                            subscription.regions?.includes("ua")
+                            subscription.regions?.includes("ua") &&
+                            !subscription.regions?.includes("de")
                               ? "/ "
                               : ""}
                             {subscription.regions?.includes("de") &&
@@ -461,6 +571,56 @@ export default function Subscriptions() {
             >
               Очистити
             </button>
+          </div>
+
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2">Зображення підписки</h3>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+              {imagePreview ? (
+                <div className="relative">
+                  <img
+                    src={imagePreview}
+                    alt="Перегляд зображення"
+                    className="w-full max-h-48 object-contain mx-auto"
+                  />
+                  <button
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                    title="Видалити зображення"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <div
+                  className="flex flex-col items-center justify-center h-32 cursor-pointer"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <ImageIcon className="w-12 h-12 text-gray-400 mb-2" />
+                  <p className="text-gray-500 text-center">
+                    Натисніть, щоб завантажити зображення підписки
+                  </p>
+                </div>
+              )}
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                accept="image/*"
+                className="hidden"
+              />
+              {!imagePreview && (
+                <div className="mt-4 flex justify-center">
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    Завантажити зображення
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* // НОВИЙ БЛОК ДЛЯ ВИБОРУ РЕГІОНІВ */}
@@ -663,61 +823,73 @@ export default function Subscriptions() {
                   region: "en",
                   label: " 1 місяць (USD)",
                   name: "price_per_month" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "en",
                   label: " 3 місяці (USD)",
                   name: "price_per_3months" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "en",
                   label: " 6 місяців (USD)",
                   name: "price_per_6months" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "en",
                   label: " 12 місяців (USD)",
                   name: "price_per_12months" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "de",
                   label: " 1 місяць (EU)",
                   name: "price_per_month_eu" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "de",
                   label: " 3 місяці (EU)",
                   name: "price_per_3months_eu" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "de",
                   label: " 6 місяців (EU)",
                   name: "price_per_6months_eu" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "de",
                   label: " 12 місяців (EU)",
                   name: "price_per_12months_eu" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "ua",
                   label: " 1 місяць (UAH)",
                   name: "price_per_month_ua" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "ua",
                   label: " 3 місяці (UAH)",
                   name: "price_per_3months_ua" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "ua",
                   label: " 6 місяців (UAH)",
                   name: "price_per_6months_ua" as keyof Subscription,
+                  type: "number",
                 },
                 {
                   region: "ua",
                   label: " 12 місяців (UAH)",
                   name: "price_per_12months_ua" as keyof Subscription,
+                  type: "number",
                 },
               ]
                 .filter((field) => {
@@ -744,7 +916,11 @@ export default function Subscriptions() {
                         name={field.name}
                         step="0.01"
                         min="0"
-                        value={currentSubscription[field.name] || ""}
+                        value={
+                          (currentSubscription[
+                            field.name
+                          ] as readonly string[]) || ""
+                        }
                         onChange={handleInputChange}
                         className={`w-full p-2 border rounded ${
                           currentSubscription[field.name] === 0 ||

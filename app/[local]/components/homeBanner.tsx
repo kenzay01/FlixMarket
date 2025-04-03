@@ -13,6 +13,7 @@ const backGroundColors = [
 export default function HomeBanner() {
   const router = useRouter();
   const { subscriptions, fetchSubscriptions } = useSubscriptions();
+  console.log("Subscriptions:", subscriptions);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,7 +22,6 @@ export default function HomeBanner() {
   const noSubscriptions = useClientTranslation("no_subscriptions");
   const loadingText = useClientTranslation("loading") || "Loading...";
 
-  // Покращена логіка завантаження
   useEffect(() => {
     const loadSubscriptions = async () => {
       try {
@@ -34,14 +34,15 @@ export default function HomeBanner() {
       }
     };
 
-    if (subscriptions.length === 0) {
+    if (subscriptions.length === 0 || isLoading) {
       loadSubscriptions();
-    } else {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, [fetchSubscriptions, subscriptions.length]);
 
   const filteredSubscriptions = useMemo(() => {
+    if (isLoading) return [];
+    if (!subscriptions) return [];
     return subscriptions.filter((subscription) =>
       subscription.regions?.includes(locale)
     );

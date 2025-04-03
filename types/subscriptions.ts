@@ -3,7 +3,8 @@ export type Subscription = {
   title?: string;
   title_de?: string;
   title_ua?: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
+  imageFile?: File | string | null;
   benefitsList?: string[];
   benefitsList_de?: string[];
   benefitsList_ua?: string[];
