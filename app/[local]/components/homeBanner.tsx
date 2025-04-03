@@ -14,9 +14,13 @@ export default function HomeBanner() {
   const router = useRouter();
   const { subscriptions, fetchSubscriptions } = useSubscriptions();
 <<<<<<< HEAD
+<<<<<<< HEAD
   console.log("Subscriptions:", subscriptions);
 =======
 >>>>>>> 75318fb (done admin subscrioption)
+=======
+  console.log("Subscriptions:", subscriptions);
+>>>>>>> f6752e1 (done loading images from admin page)
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -55,7 +59,6 @@ export default function HomeBanner() {
   useEffect(() => {
 =======
 
-  // Покращена логіка завантаження
   useEffect(() => {
     const loadSubscriptions = async () => {
       try {
@@ -68,14 +71,15 @@ export default function HomeBanner() {
       }
     };
 
-    if (subscriptions.length === 0) {
+    if (subscriptions.length === 0 || isLoading) {
       loadSubscriptions();
-    } else {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, [fetchSubscriptions, subscriptions.length]);
 
   const filteredSubscriptions = useMemo(() => {
+    if (isLoading) return [];
+    if (!subscriptions) return [];
     return subscriptions.filter((subscription) =>
       subscription.regions?.includes(locale)
     );

@@ -7,6 +7,9 @@ import { useMemo, useEffect, useState } from "react";
 import { useSubscriptions } from "@/context/hooks";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f6752e1 (done loading images from admin page)
 import { Subscription as UISubscription } from "@/types/subscriptions";
 import { Subscription as EntitySubscription } from "@/entities/Subscription";
 
@@ -239,8 +242,16 @@ export default function PopularItems() {
     content = (
       <div>
         {filteredSubscriptions.map((item, index) => (
+<<<<<<< HEAD
           <PopularItem key={index} item={item} index={index} />
 >>>>>>> 75318fb (done admin subscrioption)
+=======
+          <PopularItem
+            key={index}
+            item={adaptSubscription(item)}
+            index={index}
+          />
+>>>>>>> f6752e1 (done loading images from admin page)
         ))}
       </div>
     );
