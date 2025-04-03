@@ -196,11 +196,15 @@ export default function ItemPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-gray-800 h-80 w-full rounded-xl flex items-center justify-center">
-              <span className="text-white text-xl">
-                {getLocalizedContent("title", "")}
-              </span>
-            </div>
+            {subscription.imageUrl ? (
+              <img src={subscription.imageUrl} alt="" className="max-w-2xl" />
+            ) : (
+              <div className="bg-gray-800 h-80 w-full rounded-xl flex items-center justify-center">
+                <span className="text-white text-xl">
+                  {getLocalizedContent("title", "")}
+                </span>
+              </div>
+            )}
           </motion.div>
 
           <motion.div

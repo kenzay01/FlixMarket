@@ -18,6 +18,9 @@ export class Subscription {
   @Column({ nullable: true })
   imageUrl?: string;
 
+  @Column({ nullable: true })
+  imageFile?: string;
+
   @Column("simple-array", { nullable: true })
   benefitsList?: string[];
 

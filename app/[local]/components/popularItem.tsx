@@ -105,7 +105,11 @@ export default function PopularItem({
         transition={{ duration: 0.3 }}
         viewport={{ once: true, amount: 0.2 }}
       >
-        <div className="w-full h-48 bg-gray-800"></div>
+        {item.imageUrl ? (
+          <img src={item.imageUrl} alt="" />
+        ) : (
+          <div className="w-full h-48 bg-gray-800"></div>
+        )}
       </motion.div>
       <motion.div
         className="w-full md:w-1/2 p-6"

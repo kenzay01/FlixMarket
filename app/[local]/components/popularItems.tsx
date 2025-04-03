@@ -5,6 +5,20 @@ import { useClientTranslation } from "@/app/hooks/useTranslate";
 import { useParams } from "next/navigation";
 import { useMemo, useEffect, useState } from "react";
 import { useSubscriptions } from "@/context/hooks";
+import { Subscription as UISubscription } from "@/types/subscriptions";
+import { Subscription as EntitySubscription } from "@/entities/Subscription";
+
+function adaptSubscription(subscription: EntitySubscription): UISubscription {
+  // Create a new File object from the string
+  const imageFile = subscription.imageFile
+    ? new File([new Blob()], subscription.imageFile, { type: "image/jpeg" })
+    : null;
+
+  return {
+    ...subscription,
+    imageFile,
+  } as UISubscription;
+}
 export default function PopularItems() {
   const { subscriptions, fetchSubscriptions } = useSubscriptions();
 
@@ -48,7 +62,11 @@ export default function PopularItems() {
     content = (
       <div>
         {filteredSubscriptions.map((item, index) => (
-          <PopularItem key={index} item={item} index={index} />
+          <PopularItem
+            key={index}
+            item={adaptSubscription(item)}
+            index={index}
+          />
         ))}
       </div>
     );
