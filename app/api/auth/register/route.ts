@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
     const existingUser = await userRepository.findOne({
       where: { email },
     });
-    console.log("existingUser", existingUser);
 
     if (existingUser) {
       return NextResponse.json(
@@ -49,8 +48,6 @@ export async function POST(request: NextRequest) {
       role: "user", // За замовчуванням роль "user"
     });
 
-    // Збереження користувача в базі даних
-    console.log("Новий користувач перед збереженням:", newUser);
 
     await userRepository.save(newUser);
 

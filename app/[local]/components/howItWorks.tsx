@@ -31,6 +31,7 @@ export default function HowItWorks() {
   const stepTitle = useClientTranslation("step");
   const btnTitle = useClientTranslation("try_now");
   const mainTitle = useClientTranslation("how_it_works");
+  const currentSteps = steps?.[locale] ?? [];
 
   return (
     <section
@@ -56,7 +57,7 @@ export default function HowItWorks() {
         >
           <h1 className="text-4xl">{mainTitle}</h1>
           <div>
-            {steps[locale].map((step, index) => {
+            {currentSteps.map((step, index) => {
               return (
                 <div key={index} className="flex gap-4 items-start my-8">
                   <div className="w-16 h-16  bg-indigo-300 text-indigo-600 rounded-full flex items-center justify-center text-2xl">

@@ -27,12 +27,21 @@ export default function Header() {
     : "en";
   const isHome = pathParts.length === 1;
 
-  const howItWorks = useClientTranslation("how_it_works");
-  const comments = useClientTranslation("comments");
-  const faq = useClientTranslation("faq");
-  const logIn = useClientTranslation("log_in");
-  const logOut = useClientTranslation("log_out");
-
+  const howItWorksTranslation = useClientTranslation("how_it_works");
+  const commentsTranslation = useClientTranslation("comments");
+  const faqTranslation = useClientTranslation("faq");
+  const logInTranslation = useClientTranslation("log_in");
+  const logOutTranslation = useClientTranslation("log_out");
+  const howItWorks =
+    howItWorksTranslation === "how_it_works"
+      ? "How it works"
+      : howItWorksTranslation;
+  const comments =
+    commentsTranslation === "comments" ? "Comments" : commentsTranslation;
+  const faq = faqTranslation === "faq" ? "FAQ" : faqTranslation;
+  const logIn = logInTranslation === "log_in" ? "Log In" : logInTranslation;
+  const logOut =
+    logOutTranslation === "log_out" ? "Log Out" : logOutTranslation;
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
