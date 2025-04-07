@@ -16,7 +16,6 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    // Extract the filename from the URL (e.g., "/uploads/subscription_123456789.jpg" -> "subscription_123456789.jpg")
     const filename = path.basename(imageUrl);
 
     // Construct the full path to the file

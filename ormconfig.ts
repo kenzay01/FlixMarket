@@ -7,7 +7,7 @@ import { Subscription } from "./entities/Subscription";
 const config: DataSourceOptions = {
   type: "sqlite",
   database: path.join(process.cwd(), "database.sqlite"),
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: [User, SubscriptionPayment, Subscription],
   //   migrations: [path.join(process.cwd(), "/migrations/**/*.ts")],

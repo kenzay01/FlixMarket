@@ -4,10 +4,16 @@ import { useClientTranslation } from "@/app/hooks/useTranslate";
 import ReviewItem from "./reviewItem";
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import { useParams } from "next/navigation";
+
 export default function ReviewsContainer() {
+  const params = useParams();
+  const locale = (params.local as "en" | "de" | "ua") || "en";
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const reviews = [
+
+  // Original reviews in Ukrainian
+  const originalReviews = [
     {
       id: 1,
       email: "ivanov123@ukr.net",
@@ -93,6 +99,198 @@ export default function ReviewsContainer() {
         "Я радив вас своїм друзям, які купували напряму Нетфлікс. Говорив, що так дешевше! Тепер всі разом користуємось! Все подобається!",
     },
   ];
+
+  // Translations for English
+  const englishReviews = [
+    {
+      id: 1,
+      email: "ivanov123@ukr.net",
+      rating: 4,
+      comment:
+        "One of the best services! Recommended by friends, but it's simply top-notch — subscriptions are 50-70% cheaper. I recommend trying it!",
+    },
+    {
+      id: 2,
+      username: "Marina",
+      rating: 5,
+      comment:
+        "Very satisfied with the subscriptions. Support is excellent, they respond quickly and helped me connect one of them abroad. Infinitely grateful!!!",
+    },
+    {
+      id: 3,
+      email: "pavlo.d@gmail.com",
+      rating: 5,
+      comment:
+        "I'm extremely impressed by their kindness and readiness to solve all complications! I have never encountered such great technical support. Very grateful!",
+    },
+    {
+      id: 4,
+      username: "Oleksii",
+      rating: 5,
+      comment:
+        "I've tried various services, been using GPT chat for several months now - it's indispensable. Thank you for making it accessible to me.",
+    },
+    {
+      id: 5,
+      email: "anna.petrenko@mail.com",
+      rating: 5,
+      comment:
+        "I'm thrilled! Saved 300 UAH and I'm watching Netflix literally all day long) Thank you 🤍",
+    },
+    {
+      id: 6,
+      username: "Vitalii",
+      rating: 5,
+      comment:
+        "Thank you so much for your work! Subscriptions are indeed cheaper, everything is fast and convenient. I use it with pleasure, everything works excellently.",
+    },
+    {
+      id: 7,
+      email: "dmytro.levchuk@ukr.net",
+      rating: 5,
+      comment:
+        "Simply thank you for the service! I used to use a similar method with friends, but here you can save quite well. Thank you sincerely and I wish you success!",
+    },
+    {
+      id: 8,
+      username: "Tetiana",
+      rating: 4,
+      comment:
+        "A service that saves me money. Convenient and effective. I'm looking forward to expanding the services available for subscriptions.",
+    },
+    {
+      id: 9,
+      username: "Yuliia",
+      rating: 5,
+      comment:
+        "The best! Support in Telegram is a separate love! I asked 1000 questions, they answered all of them and helped ♥️",
+    },
+    {
+      id: 10,
+      username: "Serhii",
+      rating: 5,
+      comment:
+        "I can't even imagine how I managed without you before) I recommend to everyone!",
+    },
+    {
+      id: 11,
+      username: "Olena",
+      rating: 5,
+      comment:
+        "Your service is really a true find! Affordable subscriptions, excellent quality, and most importantly - significant savings ) Now all my friends also use it!",
+    },
+    {
+      id: 12,
+      username: "Maksym",
+      rating: 5,
+      comment:
+        "I recommended you to my friends who were buying Netflix directly. I told them it's cheaper this way! Now we're all using it together! Everything is great!",
+    },
+  ];
+
+  // Translations for German
+  const germanReviews = [
+    {
+      id: 1,
+      email: "ivanov123@ukr.net",
+      rating: 4,
+      comment:
+        "Einer der besten Dienste! Von Freunden empfohlen, aber es ist einfach spitze — Abonnements sind 50-70% günstiger. Ich empfehle es auszuprobieren!",
+    },
+    {
+      id: 2,
+      username: "Marina",
+      rating: 5,
+      comment:
+        "Sehr zufrieden mit den Abonnements. Der Support ist ausgezeichnet, sie antworten schnell und haben mir geholfen, eines davon im Ausland zu verbinden. Unendlich dankbar!!!",
+    },
+    {
+      id: 3,
+      email: "pavlo.d@gmail.com",
+      rating: 5,
+      comment:
+        "Ich bin äußerst beeindruckt von ihrer Freundlichkeit und Bereitschaft, alle Komplikationen zu lösen! Ich habe noch nie einen so großartigen technischen Support erlebt. Sehr dankbar!",
+    },
+    {
+      id: 4,
+      username: "Oleksii",
+      rating: 5,
+      comment:
+        "Ich habe verschiedene Dienste ausprobiert, nutze den GPT-Chat seit mehreren Monaten - er ist unverzichtbar. Danke, dass Sie es mir zugänglich gemacht haben.",
+    },
+    {
+      id: 5,
+      email: "anna.petrenko@mail.com",
+      rating: 5,
+      comment:
+        "Ich bin begeistert! 300 UAH gespart und ich schaue buchstäblich den ganzen Tag Netflix) Danke 🤍",
+    },
+    {
+      id: 6,
+      username: "Vitalii",
+      rating: 5,
+      comment:
+        "Vielen Dank für Ihre Arbeit! Abonnements sind tatsächlich günstiger, alles ist schnell und bequem. Ich nutze es mit Vergnügen, alles funktioniert hervorragend.",
+    },
+    {
+      id: 7,
+      email: "dmytro.levchuk@ukr.net",
+      rating: 5,
+      comment:
+        "Einfach danke für den Service! Ich habe früher eine ähnliche Methode mit Freunden verwendet, aber hier kann man ziemlich gut sparen. Herzlichen Dank und ich wünsche Ihnen viel Erfolg!",
+    },
+    {
+      id: 8,
+      username: "Tetiana",
+      rating: 4,
+      comment:
+        "Ein Service, der mir Geld spart. Bequem und effektiv. Ich freue mich auf die Erweiterung der verfügbaren Dienste für Abonnements.",
+    },
+    {
+      id: 9,
+      username: "Yuliia",
+      rating: 5,
+      comment:
+        "Die Besten! Support in Telegram ist eine separate Liebe! Ich habe 1000 Fragen gestellt, sie haben alle beantwortet und geholfen ♥️",
+    },
+    {
+      id: 10,
+      username: "Serhii",
+      rating: 5,
+      comment:
+        "Ich kann mir gar nicht vorstellen, wie ich früher ohne euch ausgekommen bin) Ich empfehle es allen!",
+    },
+    {
+      id: 11,
+      username: "Olena",
+      rating: 5,
+      comment:
+        "Ihr Service ist wirklich ein wahrer Fund! Erschwingliche Abonnements, ausgezeichnete Qualität und vor allem - erhebliche Einsparungen ) Jetzt nutzen auch alle meine Freunde es!",
+    },
+    {
+      id: 12,
+      username: "Maksym",
+      rating: 5,
+      comment:
+        "Ich habe euch meinen Freunden empfohlen, die Netflix direkt gekauft haben. Ich sagte ihnen, dass es so billiger ist! Jetzt benutzen wir es alle zusammen! Alles ist großartig!",
+    },
+  ];
+
+  // Function to get reviews based on locale
+  const getLocalizedReviews = () => {
+    switch (locale) {
+      case "en":
+        return englishReviews;
+      case "de":
+        return germanReviews;
+      case "ua":
+      default:
+        return originalReviews;
+    }
+  };
+
+  const reviews = getLocalizedReviews();
+
   const getItemsPerSlide = () => {
     return isMobile ? 2 : 4;
   };
