@@ -98,7 +98,7 @@ export default function HomeBanner() {
 
     // Повертаємо перші 5 елементів (або менше, якщо їх менше 5)
     return shuffled.slice(0, 5);
-  }, [subscriptions, locale, isLoading]);
+  }, [subscriptions, locale]);
 
   useEffect(() => {
     if (
