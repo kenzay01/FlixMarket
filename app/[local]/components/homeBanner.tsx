@@ -92,13 +92,8 @@ export default function HomeBanner() {
     const filtered = subscriptions.filter((subscription) =>
       subscription.regions?.includes(locale)
     );
-
-    // Перемішуємо масив підписок випадковим чином
-    const shuffled = [...filtered].sort(() => 0.5 - Math.random());
-
-    // Повертаємо перші 5 елементів (або менше, якщо їх менше 5)
-    return shuffled.slice(0, 5);
-  }, [subscriptions, locale, isLoading]);
+    return filtered.slice(0, 5);
+  }, [subscriptions, locale]);
 
   useEffect(() => {
     if (
