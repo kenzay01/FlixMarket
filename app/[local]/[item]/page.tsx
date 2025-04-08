@@ -17,13 +17,6 @@ export default function ItemPage() {
   const subscription = subscriptions.find(
     (sub) => sub.id === itemId.replace("item", "")
   );
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  console.log("subscription", subscription);
->>>>>>> 75318fb (done admin subscrioption)
-=======
->>>>>>> a3f7b19 (clear code)
 
   const buyNowText = useClientTranslation("buy_now");
   const monthsText = useClientTranslation("months");
@@ -59,13 +52,6 @@ export default function ItemPage() {
     const isEuro = locale === "de";
     const isUa = locale === "ua";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    // Check price based on locale
->>>>>>> 75318fb (done admin subscrioption)
-=======
->>>>>>> a3f7b19 (clear code)
     const priceForMonth = isEuro
       ? subscription.price_per_month_eu
       : isUa
@@ -90,13 +76,6 @@ export default function ItemPage() {
       ? subscription.price_per_12months_ua
       : subscription.price_per_12months;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    // Only add options with prices greater than 0 for the current locale
->>>>>>> 75318fb (done admin subscrioption)
-=======
->>>>>>> a3f7b19 (clear code)
     if (priceForMonth > 0) {
       monthTermin.push("1");
     }
@@ -116,10 +95,6 @@ export default function ItemPage() {
     if (monthTermin.length > 0 && !monthTermin.includes(selectedPlan)) {
       setSelectedPlan(monthTermin[0] as "1" | "3" | "6" | "12");
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> a3f7b19 (clear code)
     return monthTermin;
   };
 

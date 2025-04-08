@@ -1,18 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa6";
-<<<<<<< HEAD
 
 export default function NotFound() {
   const router = useRouter();
-=======
-// import { useClientTranslation } from "@/app/hooks/useTranslate";
-
-export default function NotFound() {
-  const router = useRouter();
-  //   const locale = router.local as string;
->>>>>>> 94a1d3490881610771c584fa46bfc6e5b3f0e033
-
   return (
     <div className="container mx-auto py-16 px-4">
       <div className="text-center">
