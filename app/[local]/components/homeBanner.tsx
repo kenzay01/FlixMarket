@@ -87,10 +87,18 @@ export default function HomeBanner() {
   const filteredSubscriptions = useMemo(() => {
     if (isLoading) return [];
     if (!subscriptions) return [];
-    return subscriptions.filter((subscription) =>
+
+    // Спочатку фільтруємо за локаллю
+    const filtered = subscriptions.filter((subscription) =>
       subscription.regions?.includes(locale)
     );
-  }, [subscriptions, locale]);
+
+    // Перемішуємо масив підписок випадковим чином
+    const shuffled = [...filtered].sort(() => 0.5 - Math.random());
+
+    // Повертаємо перші 5 елементів (або менше, якщо їх менше 5)
+    return shuffled.slice(0, 5);
+  }, [subscriptions, locale, isLoading]);
 
   useEffect(() => {
     if (
