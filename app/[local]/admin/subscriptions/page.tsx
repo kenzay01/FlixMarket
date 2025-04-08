@@ -451,17 +451,17 @@ export default function Subscriptions() {
               <div className="mb-3">
                 <h4 className="text-gray-700 font-semibold">Опис:</h4>
                 {subscription.regions?.includes("en") && (
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 whitespace-pre-line">
                     Англ. {subscription.description}
                   </p>
                 )}
                 {subscription.regions?.includes("de") && (
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 whitespace-pre-line">
                     Нім. {subscription.description_de}
                   </p>
                 )}
                 {subscription.regions?.includes("ua") && (
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 whitespace-pre-line">
                     Укр. {subscription.description_ua}
                   </p>
                 )}

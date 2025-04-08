@@ -220,7 +220,7 @@ export default function ItemPage() {
             <h1 className="text-3xl font-bold mb-4">
               {getLocalizedContent("title", "")}
             </h1>
-            <p className="text-gray-700 mb-6 text-lg">
+            <p className="text-gray-700 mb-6 text-lg whitespace-pre-line">
               {getLocalizedContent("description", "")}
             </p>
 

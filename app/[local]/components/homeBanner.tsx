@@ -163,16 +163,16 @@ export default function HomeBanner() {
                 backGroundColors[index % backGroundColors.length]
               }`}
             ></div>
-            <div className="flex flex-col justify-center h-full max-w-3xl mx-auto px-4 md:px-8 relative z-10">
-              <div className="md:w-1/2 w-full text-white">
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <div className="flex flex-col justify-center h-full max-w-5xl mx-auto px-4 md:px-8 relative z-10">
+              <div className=" w-full text-white">
+                <h1 className="text-3xl md:text-4xl font-bold mb-4">
                   {locale === "en"
                     ? subscription.title
                     : locale === "ua"
                     ? subscription.title_ua
                     : subscription.title_de}
                 </h1>
-                <p className="text-lg mb-8 opacity-90">
+                <p className="text-xs md:text-sm mb-8 opacity-90 whitespace-pre-line">
                   {locale === "en"
                     ? subscription.description
                     : locale === "ua"
@@ -187,7 +187,7 @@ export default function HomeBanner() {
                       locale === "en" ? "$" : locale === "ua" ? "₴" : "€";
 
                     return (
-                      <span className="text-3xl font-bold">
+                      <span className="text-2xl md:text-3xl font-bold">
                         {currencySymbol}
                         {price}
                         <span className="ml-2 opacity-80">

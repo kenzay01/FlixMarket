@@ -96,7 +96,10 @@ export default function PopularItem({
     <section
       className={`flex flex-col ${
         isEven ? "md:flex-row" : "md:flex-row-reverse"
-      } justify-between bg-white md:p-6 gap-8  hover:bg-gray-100 rounded-3xl transition-colors duration-200`}
+      } justify-between bg-white md:p-6 gap-8  hover:bg-gray-100 rounded-3xl transition-colors duration-200 cursor-pointer`}
+      onClick={() => {
+        router.push(`/${locale}/item${item.id}`);
+      }}
     >
       <motion.div
         className="w-full md:w-1/2 pt-8"
@@ -119,7 +122,9 @@ export default function PopularItem({
         viewport={{ once: true, amount: 0.2 }}
       >
         <h3 className="text-2xl font-bold mb-4">{displayTitle}</h3>
-        <p className="text-gray-700 mb-4">{displayDescription}</p>
+        <p className="text-gray-700 mb-4 whitespace-pre-line">
+          {displayDescription}
+        </p>
         <ul
           className={`list-none space-y-2 text-gray-600 
             ${isEven ? "text-left" : "text-right"}
