@@ -14,7 +14,6 @@ export async function uploadImage(file: File) {
     }
     const uploadData = await uploadResponse.json();
     if (uploadData.success) {
-      console.log("Uploaded image URL:", uploadData.imageUrl);
       return uploadData.imageUrl; // /uploads/subscription_17123456789.jpg
     } else {
       console.error("Upload failed:", uploadData.message);

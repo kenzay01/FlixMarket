@@ -12,7 +12,6 @@ export default function Footer() {
   const pathname = usePathname();
   const locale = pathname.split("/")[1] as "en" | "de" | "ua";
   const termsTitle = useClientTranslation("term_conditions");
-  console.log(termsTitle);
   const socials = [
     {
       name: "Facebook",

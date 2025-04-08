@@ -217,8 +217,6 @@ export default function Subscriptions() {
         price_per_12months_ua: subscriptionData.price_per_12months_ua ?? 0,
       };
 
-      console.log("Processed Subscription:", processedSubscription);
-
       let response;
 
       if (isEditing) {
@@ -528,37 +526,32 @@ export default function Subscriptions() {
                       (term.priceEu != null && term.priceEu > 0) ||
                       (term.priceUa != null && term.priceUa > 0)
                   )
-                  .map(
-                    (term, index) => (
-                      console.log("Term:", term),
-                      (
-                        <div
-                          key={index}
-                          className="p-3 bg-gray-50 rounded-lg border"
-                        >
-                          <span className="font-semibold">{term.label}:</span>
-                          <div>
-                            {subscription.regions?.includes("en") && "$"}
-                            {term.price === 0 ? "" : term.price}{" "}
-                            {subscription.regions?.includes("en") &&
-                            subscription.regions?.includes("ua")
-                              ? "/ "
-                              : ""}
-                            {subscription.regions?.includes("de") &&
-                            subscription.regions?.includes("en")
-                              ? "/ "
-                              : ""}
-                            {term.priceEu === 0 ? "" : `€${term.priceEu}`}
-                            {subscription.regions?.includes("ua") &&
-                            subscription.regions?.includes("de")
-                              ? "/ "
-                              : ""}
-                            {term.priceUa === 0 ? "" : `₴${term.priceUa}`}
-                          </div>
-                        </div>
-                      )
-                    )
-                  )}
+                  .map((term, index) => (
+                    <div
+                      key={index}
+                      className="p-3 bg-gray-50 rounded-lg border"
+                    >
+                      <span className="font-semibold">{term.label}:</span>
+                      <div>
+                        {subscription.regions?.includes("en") && "$"}
+                        {term.price === 0 ? "" : term.price}{" "}
+                        {subscription.regions?.includes("en") &&
+                        subscription.regions?.includes("ua")
+                          ? "/ "
+                          : ""}
+                        {subscription.regions?.includes("de") &&
+                        subscription.regions?.includes("en")
+                          ? "/ "
+                          : ""}
+                        {term.priceEu === 0 ? "" : `€${term.priceEu}`}
+                        {subscription.regions?.includes("ua") &&
+                        subscription.regions?.includes("de")
+                          ? "/ "
+                          : ""}
+                        {term.priceUa === 0 ? "" : `₴${term.priceUa}`}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           ))}

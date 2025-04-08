@@ -5,7 +5,6 @@ import { unlink } from "fs/promises";
 
 export async function DELETE(req: NextRequest) {
   try {
-    // Get the image URL from the query parameters
     const { searchParams } = new URL(req.url);
     const imageUrl = searchParams.get("imageUrl");
 
@@ -16,16 +15,22 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    const filename = path.basename(imageUrl);
+    // Отримуємо ім'я файлу з URL
+    const filename = imageUrl.split("/").pop();
 
-    // Construct the full path to the file
-    const filePath = path.join(process.cwd(), "public", "uploads", filename);
+    if (!filename) {
+      return NextResponse.json(
+        { success: false, message: "Invalid image URL" },
+        { status: 400 }
+      );
+    }
 
-    // Check if the file exists
+    // Шлях до файлу
+    const filePath = path.join(process.cwd(), "uploads", filename);
+
+    // Перевіряємо чи існує файл і видаляємо
     if (fs.existsSync(filePath)) {
-      // Delete the file
       await unlink(filePath);
-      console.log(`File deleted: ${filePath}`);
 
       return NextResponse.json({
         success: true,

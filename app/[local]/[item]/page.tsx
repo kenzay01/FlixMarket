@@ -190,7 +190,7 @@ export default function ItemPage() {
         <div className="flex flex-col lg:flex-row">
           {/* Product Image */}
           <motion.div
-            className="w-full lg:w-1/2 p-6"
+            className="w-full lg:w-1/2 p-6 flex items-start justify-center"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}

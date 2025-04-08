@@ -1,27 +1,20 @@
+// api/upload-image/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { mkdir, writeFile } from "fs/promises";
-
-// Disable the default body parser
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 export async function POST(req: NextRequest) {
   try {
     console.log("Receiving file upload...");
 
-    // Create upload directory if it doesn't exist
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
+    // Створюємо директорію uploads поза public
+    const uploadDir = path.join(process.cwd(), "uploads");
     try {
       await mkdir(uploadDir, { recursive: true });
     } catch (err) {
       console.error("Error creating upload directory:", err);
     }
 
-    // Process the form data directly without formidable
     const formData = await req.formData();
     const imageFile = formData.get("image") as File;
 
@@ -32,22 +25,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create a unique filename
+    // Створюємо унікальне ім'я файлу
     const extension = path.extname(imageFile.name) || ".jpg";
     const newFilename = `subscription_${Date.now()}${extension}`;
     const newPath = path.join(uploadDir, newFilename);
 
-    // Convert File to ArrayBuffer, then to Buffer
+    // Конвертуємо File в Buffer
     const fileBuffer = Buffer.from(await imageFile.arrayBuffer());
 
-    // Write the file to disk
+    // Зберігаємо файл на диску
     await writeFile(newPath, fileBuffer);
-    console.log(`File saved to ${newPath}`);
 
-    // Return the path that can be used in the frontend
+    // Повертаємо шлях для використання у фронтенді
     return NextResponse.json({
       success: true,
-      imageUrl: `/uploads/${newFilename}`,
+      imageUrl: `/api/images/${newFilename}`, // Шлях до API для отримання зображення
     });
   } catch (error) {
     console.error("Upload error:", error);

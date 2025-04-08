@@ -6,7 +6,7 @@ export class SubscriptionPayment {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   status: string;
 
   @Column({ type: "date", nullable: true })
@@ -15,11 +15,11 @@ export class SubscriptionPayment {
   @Column({ type: "date", nullable: true })
   endDate?: Date;
 
-  @Column({ type: "decimal", precision: 10, scale: 2 })
-  price: number;
+  @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
+  price?: number;
 
-  @Column()
-  locale: string;
+  @Column({ nullable: true })
+  locale?: string;
 
   @ManyToOne(() => Subscription, (subscription) => subscription.payments, {
     onDelete: "CASCADE",

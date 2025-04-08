@@ -72,7 +72,6 @@ const authOptions: AuthOptions = {
           where: { email: credentials.email },
           select: ["id", "name", "email", "password", "role"],
         });
-        console.log("User found:", user);
 
         if (!user) {
           return null;
