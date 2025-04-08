@@ -29,7 +29,6 @@ export default function HowItWorks() {
   const params = useParams();
   const locale = (params.local as "en" | "ua" | "de") || "en";
   const stepTitle = useClientTranslation("step");
-  const btnTitle = useClientTranslation("try_now");
   const mainTitle = useClientTranslation("how_it_works");
   const currentSteps = steps?.[locale] ?? [];
 
@@ -46,7 +45,13 @@ export default function HowItWorks() {
           transition={{ duration: 0.3 }}
           viewport={{ once: true, amount: 0.2 }}
         >
-          <div className="w-full h-32 bg-amber-950"></div>
+          <div className="w-full">
+            <img
+              src="/howItWorks.png"
+              alt="Як це працює"
+              className="w-full aspect-[13/9] object-cover"
+            />
+          </div>
         </motion.div>
         <motion.div
           className="p-6 flex-5"
@@ -73,9 +78,6 @@ export default function HowItWorks() {
               );
             })}
           </div>
-          <button className="mt-4 px-6 py-2 bg-indigo-600 border-2 border-indigo-600 text-white text-lg rounded-3xl hover:bg-transparent transition hover:text-indigo-600 cursor-pointer">
-            {btnTitle}
-          </button>
         </motion.div>
       </div>
     </section>

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
 import type { Subscription } from "../../../types/subscriptions";
 import { useSubscriptions } from "@/context/hooks";
-
+import { getMonthsUa } from "@/app/funcs/getMonthsUa";
 export default function ItemPage() {
   const { subscriptions } = useSubscriptions();
   const params = useParams();
@@ -196,7 +196,12 @@ export default function ItemPage() {
             transition={{ duration: 0.5 }}
           >
             {subscription.imageUrl ? (
-              <img src={subscription.imageUrl} alt="" className="max-w-2xl" />
+              <img
+                src={subscription.imageUrl}
+                alt="Subscription Image"
+                className="w-full max-w-full sm:max-w-md md:max-w-lg lg:max-w-2xl rounded-xl object-cover"
+                loading="lazy"
+              />
             ) : (
               <div className="bg-gray-800 h-80 w-full rounded-xl flex items-center justify-center">
                 <span className="text-white text-xl">
@@ -234,7 +239,9 @@ export default function ItemPage() {
                         : "border-gray-300 hover:border-indigo-600 text-gray-700"
                     }`}
                   >
-                    {months} {monthsText}
+                    {locale === "ua"
+                      ? `${months} ${getMonthsUa(months)}`
+                      : `${months} ${monthsText}`}
                   </button>
                 ))}
               </div>
@@ -258,10 +265,12 @@ export default function ItemPage() {
               </ul>
             </div>
 
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col md:flex-row gap-2 md:gap-0 md:items-center justify-between mb-8">
               <div>
                 <p className="text-gray-500 text-sm">
-                  {selectedPlan} {monthsText} plan
+                  {locale === "ua"
+                    ? `${selectedPlan} ${getMonthsUa(selectedPlan)}`
+                    : `${selectedPlan} ${monthsText}`}
                 </p>
                 <p className="text-3xl font-bold text-indigo-600">
                   {getCurrencySymbol()}

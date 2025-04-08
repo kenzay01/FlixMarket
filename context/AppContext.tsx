@@ -69,11 +69,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
         const data = await response.json();
         if (data.success) {
           setIsDbInitialized(true);
-          await Promise.all([
-            fetchUsers(),
-            fetchSubscriptions(),
-            fetchSubscriptionPayments(),
-          ]);
+
+          await fetchUsers();
+          await fetchSubscriptions();
+          await fetchSubscriptionPayments();
         } else {
           console.error("Database initialization API failed:", data.error);
         }

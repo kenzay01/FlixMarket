@@ -4,7 +4,7 @@ import { FaCheck } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
 import { useRouter, useParams } from "next/navigation";
-
+import { getMonthsUa } from "@/app/funcs/getMonthsUa";
 export default function PopularItem({
   item,
   index,
@@ -96,7 +96,7 @@ export default function PopularItem({
     <section
       className={`flex flex-col ${
         isEven ? "md:flex-row" : "md:flex-row-reverse"
-      } justify-between bg-white md:p-6 gap-8`}
+      } justify-between bg-white md:p-6 gap-8  hover:bg-gray-100 rounded-3xl transition-colors duration-200`}
     >
       <motion.div
         className="w-full md:w-1/2 pt-8"
@@ -106,13 +106,13 @@ export default function PopularItem({
         viewport={{ once: true, amount: 0.2 }}
       >
         {item.imageUrl ? (
-          <img src={item.imageUrl} alt="" />
+          <img src={item.imageUrl} alt="" className="rounded-3xl" />
         ) : (
           <div className="w-full h-48 bg-gray-800"></div>
         )}
       </motion.div>
       <motion.div
-        className="w-full md:w-1/2 p-6"
+        className={`w-full md:w-1/2 p-6 ${isEven ? "text-left" : "text-right"}`}
         initial={{ opacity: 0, x: isEven ? 200 : -200 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
@@ -120,18 +120,34 @@ export default function PopularItem({
       >
         <h3 className="text-2xl font-bold mb-4">{displayTitle}</h3>
         <p className="text-gray-700 mb-4">{displayDescription}</p>
-        <ul className="list-none space-y-2 text-gray-600">
+        <ul
+          className={`list-none space-y-2 text-gray-600 
+            ${isEven ? "text-left" : "text-right"}
+          `}
+        >
           {displayBenefits?.map((benefit, index) => (
-            <li key={index} className="flex items-center gap-2">
+            <li
+              key={index}
+              className={`flex items-center gap-2 ${
+                isEven ? "justify-start" : "justify-end"
+              }`}
+            >
               <FaCheck className="text-green-500" /> {benefit}
             </li>
           ))}
         </ul>
 
-        <div className="mt-6 flex items-center space-x-4">
+        <div
+          className={`mt-6 flex items-center space-x-4 ${
+            isEven ? "justify-start" : "justify-end"
+          }`}
+        >
           <span className="text-pink-600 text-2xl font-bold">
             {currencySymbol}
-            {price} / {duration} {monthsText}
+            {price} /
+            {locale === "ua"
+              ? ` ${duration} ${getMonthsUa(duration)}`
+              : ` ${duration} ${monthsText}`}
           </span>
         </div>
 
@@ -139,7 +155,7 @@ export default function PopularItem({
           onClick={() => {
             router.push(`/${locale}/item${item.id}`);
           }}
-          className="mt-4 px-6 py-2 bg-indigo-600 border-2 border-indigo-600 text-white text-lg rounded-3xl hover:bg-transparent transition hover:text-indigo-600 cursor-pointer"
+          className="mt-4 px-6 py-2 bg-indigo-600 border-2 border-indigo-600 text-white text-lg rounded-3xl hover:bg-white transition hover:text-indigo-600 cursor-pointer"
         >
           {btnTitle}
         </button>

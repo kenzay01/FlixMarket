@@ -40,24 +40,14 @@ const authOptions: AuthOptions = {
 
         // Спеціальна логіка для адміна
         if (
-          credentials.email === "admin@gmail.com" &&
-          credentials.password === "adminPassword"
+          credentials.email === "flixmarketadmin@gmail.com" &&
+          credentials.password === "vVsssv636v"
         ) {
           return {
             id: "1",
             name: "Admin",
-            email: "admin@gmail.com",
+            email: "flixmarketadmin@gmail.com",
             role: "admin",
-          } as CustomUser;
-        } else if (
-          credentials.email === "test@gmail.com" &&
-          credentials.password === "test"
-        ) {
-          return {
-            id: "2",
-            name: "Test",
-            email: "test@gmail.com",
-            role: "test",
           } as CustomUser;
         }
 

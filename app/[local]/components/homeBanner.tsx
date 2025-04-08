@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useClientTranslation } from "../../hooks/useTranslate";
 import { useParams, useRouter } from "next/navigation";
 import { useSubscriptions } from "@/context/hooks";
-
+import { getMonthsUa } from "../../funcs/getMonthsUa";
 const backGroundColors = [
   "bg-gradient-to-r from-indigo-500 to-indigo-500",
   "bg-gradient-to-r from-green-500 to-indigo-500",
@@ -20,6 +20,51 @@ export default function HomeBanner() {
   const locale = (params.local as "en" | "de" | "ua") || "en";
   const noSubscriptions = useClientTranslation("no_subscriptions");
   const loadingText = useClientTranslation("loading") || "Loading...";
+
+  const getBestPriceOption = (subscription) => {
+    const prices = {
+      "3":
+        locale === "en"
+          ? subscription.price_per_3months
+          : locale === "ua"
+          ? subscription.price_per_3months_ua
+          : subscription.price_per_3months_eu,
+      "1":
+        locale === "en"
+          ? subscription.price_per_month
+          : locale === "ua"
+          ? subscription.price_per_month_ua
+          : subscription.price_per_month_eu,
+      "6":
+        locale === "en"
+          ? subscription.price_per_6months
+          : locale === "ua"
+          ? subscription.price_per_6months_ua
+          : subscription.price_per_6months_eu,
+      "12":
+        locale === "en"
+          ? subscription.price_per_12months
+          : locale === "ua"
+          ? subscription.price_per_12months_ua
+          : subscription.price_per_12months_eu,
+    };
+
+    const priorityOrder = ["1", "3", "6", "12"];
+
+    for (const duration of priorityOrder) {
+      if (prices[duration] > 0) {
+        return {
+          price: prices[duration],
+          duration,
+        };
+      }
+    }
+
+    return {
+      price: prices["3"] || 0,
+      duration: "3",
+    };
+  };
 
   useEffect(() => {
     const loadSubscriptions = async () => {
@@ -135,14 +180,25 @@ export default function HomeBanner() {
                     : subscription.description_de}
                 </p>
                 <div className="mb-8">
-                  <span className="text-3xl font-bold">
-                    {locale === "en"
-                      ? "$" + subscription.price_per_month
-                      : locale === "ua"
-                      ? "₴" + subscription.price_per_month_ua
-                      : "€" + subscription.price_per_month_eu}{" "}
-                  </span>
-                  <span className="ml-2 opacity-80">/1 {titleMonth}</span>
+                  {(() => {
+                    const { price, duration } =
+                      getBestPriceOption(subscription);
+                    const currencySymbol =
+                      locale === "en" ? "$" : locale === "ua" ? "₴" : "€";
+
+                    return (
+                      <span className="text-3xl font-bold">
+                        {currencySymbol}
+                        {price}
+                        <span className="ml-2 opacity-80">
+                          /
+                          {locale === "ua"
+                            ? `${duration} ${getMonthsUa(duration)}`
+                            : `${duration} ${titleMonth}`}
+                        </span>
+                      </span>
+                    );
+                  })()}
                 </div>
                 <button
                   onClick={() => {

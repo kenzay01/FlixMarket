@@ -3,7 +3,7 @@
 import PopularItem from "./popularItem";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
 import { useParams } from "next/navigation";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useEffect, useState, Fragment } from "react";
 import { useSubscriptions } from "@/context/hooks";
 import { Subscription as UISubscription } from "@/types/subscriptions";
 import { Subscription as EntitySubscription } from "@/entities/Subscription";
@@ -62,11 +62,12 @@ export default function PopularItems() {
     content = (
       <div>
         {filteredSubscriptions.map((item, index) => (
-          <PopularItem
-            key={index}
-            item={adaptSubscription(item)}
-            index={index}
-          />
+          <Fragment key={index}>
+            <PopularItem item={adaptSubscription(item)} index={index} />
+            {index < filteredSubscriptions.length - 1 && (
+              <div className="border-b-2 border-gray-200 my-4"></div>
+            )}
+          </Fragment>
         ))}
       </div>
     );
