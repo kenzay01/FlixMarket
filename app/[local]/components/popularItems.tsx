@@ -8,8 +8,11 @@ import { useSubscriptions } from "@/context/hooks";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> f6752e1 (done loading images from admin page)
+=======
+>>>>>>> 94a1d3490881610771c584fa46bfc6e5b3f0e033
 import { Subscription as UISubscription } from "@/types/subscriptions";
 import { Subscription as EntitySubscription } from "@/entities/Subscription";
 
@@ -235,6 +238,7 @@ export default function PopularItems() {
             item={adaptSubscription(item)}
             index={index}
           />
+<<<<<<< HEAD
 =======
     // Показувати підписки тільки якщо вони є
 =======
@@ -252,6 +256,8 @@ export default function PopularItems() {
             index={index}
           />
 >>>>>>> f6752e1 (done loading images from admin page)
+=======
+>>>>>>> 94a1d3490881610771c584fa46bfc6e5b3f0e033
         ))}
       </div>
     );

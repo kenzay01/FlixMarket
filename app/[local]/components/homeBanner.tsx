@@ -15,12 +15,16 @@ export default function HomeBanner() {
   const { subscriptions, fetchSubscriptions } = useSubscriptions();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   console.log("Subscriptions:", subscriptions);
 =======
 >>>>>>> 75318fb (done admin subscrioption)
 =======
   console.log("Subscriptions:", subscriptions);
 >>>>>>> f6752e1 (done loading images from admin page)
+=======
+  console.log("Subscriptions:", subscriptions);
+>>>>>>> 94a1d3490881610771c584fa46bfc6e5b3f0e033
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
