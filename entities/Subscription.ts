@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { SubscriptionPayment } from "./SubscriptionPayment";
 
-@Entity()
+@Entity("subscriptions")
 export class Subscription {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -78,6 +78,6 @@ export class Subscription {
   @Column("simple-array", { nullable: true })
   regions?: string[];
 
-  @OneToMany(() => SubscriptionPayment, (payment) => payment.subscription)
-  payments: SubscriptionPayment[];
+  // @OneToMany(() => SubscriptionPayment, (payment) => payment.subscription)
+  // payments: SubscriptionPayment[];
 }

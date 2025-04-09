@@ -70,5 +70,10 @@
   "faq": "FAQ",
   "term_conditions": "Geschäftsbedingungen",
   "no_subscriptions": "Für diese Region sind keine Abonnements verfügbar.",
-  "support": "Unterstützung"
+  "support": "Unterstützung",
+  "payment_success": "Zahlung erfolgreich!",
+  "payment_processing": "Zahlung wird bearbeitet...",
+  "payment_error": "Zahlungsfehler",
+  "valid_until": "Gültig bis",
+  "checking_status": "Status wird überprüft..."
 }

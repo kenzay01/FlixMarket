@@ -72,5 +72,10 @@
   "faq": "Часті питання",
   "term_conditions": "Правила і умови",
   "no_subscriptions": "Для цього регіону немає доступних підписок.",
-  "support": "Підтримка"
+  "support": "Підтримка",
+  "payment_success": "Платіж успішний!",
+  "payment_processing": "Обробка платежу...",
+  "payment_error": "Помилка платежу",
+  "valid_until": "Дійсний до",
+  "checking_status": "Перевірка статусу..."
 }

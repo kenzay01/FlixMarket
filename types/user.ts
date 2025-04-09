@@ -6,4 +6,5 @@ export interface User {
   role?: string;
   activeSubscriptions?: Subscription[] | null;
   totalSubscriptions?: number | null;
+  subscriptionPayments?: Subscription[] | null;
 }

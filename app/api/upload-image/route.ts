@@ -5,7 +5,7 @@ import { mkdir, writeFile } from "fs/promises";
 
 export async function POST(req: NextRequest) {
   try {
-    console.log("Receiving file upload...");
+    // console.log("Receiving file upload...");
 
     // Створюємо директорію uploads поза public
     const uploadDir = path.join(process.cwd(), "uploads");

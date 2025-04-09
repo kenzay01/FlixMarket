@@ -44,11 +44,11 @@ export async function POST(req: Request) {
 
     // Створюємо нову підписку
 
-    console.log("Creating subscription with data:", subscriptionData);
+    // console.log("Creating subscription with data:", subscriptionData);
 
     const newSubscription = subscriptionRepository.create(subscriptionData);
 
-    console.log("New subscription object:", newSubscription);
+    // console.log("New subscription object:", newSubscription);
 
     const savedSubscription = await subscriptionRepository.save(
       newSubscription

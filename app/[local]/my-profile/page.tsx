@@ -1,20 +1,94 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
-import type { SubscriptionPayment } from "../../../types/subscriptionPayment";
 import { useParams } from "next/navigation";
-import { useUsers } from "@/context/hooks";
+import {
+  useSubscriptionPayments,
+  useUsers,
+  useSubscriptions,
+} from "@/context/hooks";
+import { getMonthsUa } from "@/app/funcs/getMonthsUa";
 
 export default function MyProfile() {
   const { data: session, update } = useSession();
   const { users, fetchUsers } = useUsers();
+  const { subscriptions } = useSubscriptions();
+  const { subscriptionPayments: fetchedSubscriptionPayments } =
+    useSubscriptionPayments();
   const currentUser = users.find((user) => user.id === session?.user.id);
 
-  const [subscriptionPayments, setSubscriptionPayments] = useState<
-    SubscriptionPayment[]
-  >([]);
+  const filteredSubscriptionPayments = fetchedSubscriptionPayments.filter(
+    (payment) => payment.userId === currentUser?.id
+  );
+
+  const successfulPayments = filteredSubscriptionPayments.filter(
+    (payment) => payment.status === "success"
+  );
+
+  const subscriptionPayments = useMemo(() => {
+    return successfulPayments.map((payment) => {
+      // Знаходимо відповідну підписку за id
+      const subscription = subscriptions.find(
+        (sub) => sub.id === payment.subscriptionId
+      );
+
+      return {
+        id: payment.id,
+        status: payment.endDate != new Date() ? "active" : "completed",
+        price: payment.price,
+        startDate: payment.startDate,
+        endDate: payment.endDate,
+        duration: payment.duration,
+        locale: payment.locale,
+        subscriptionId: payment.subscriptionId,
+        // Додаємо об'єкт підписки для зручного доступу
+        subscription: subscription || {
+          id: payment.subscriptionId,
+          title: "Unknown Subscription",
+          title_ua: "Невідома підписка",
+          title_de: "Unbekanntes Abonnement",
+        },
+      };
+    });
+  }, [filteredSubscriptionPayments, subscriptions]);
+
+  console.log("subscriptionPayments", subscriptionPayments);
+
+  const allPayments = useMemo(() => {
+    return filteredSubscriptionPayments
+      .filter((payment) => {
+        return payment.status === "success" || payment.status === "failure";
+      })
+      .map((payment) => {
+        // Знаходимо відповідну підписку за id
+        const subscription = subscriptions.find(
+          (sub) => sub.id === payment.subscriptionId
+        );
+
+        return {
+          id: payment.id,
+          status: payment.status,
+          price: payment.price,
+          startDate: payment.startDate,
+          endDate: payment.endDate,
+          duration: payment.duration,
+          locale: payment.locale,
+          subscriptionId: payment.subscriptionId,
+          // Додаємо об'єкт підписки для зручного доступу
+          subscription: subscription || {
+            id: payment.subscriptionId,
+            title: "Unknown Subscription",
+            title_ua: "Невідома підписка",
+            title_de: "Unbekanntes Abonnement",
+          },
+        };
+      });
+  }, [filteredSubscriptionPayments, subscriptions]);
+
+  console.log("allPayments", allPayments);
+
   const [activeTab, setActiveTab] = useState<"subscriptions" | "payments">(
     "subscriptions"
   );
@@ -39,7 +113,9 @@ export default function MyProfile() {
   const startDateText = useClientTranslation("startDate");
   const endDateText = useClientTranslation("endDate");
   const priceText = useClientTranslation("price");
-  const perMonthText = useClientTranslation("perMonth");
+  // const perMonthText = useClientTranslation("perMonth");
+  const monthText = useClientTranslation("month");
+  const monthsText = useClientTranslation("months");
   const activeText = useClientTranslation("active");
   const completedText = useClientTranslation("completed");
   const dateText = useClientTranslation("date");
@@ -62,156 +138,11 @@ export default function MyProfile() {
     }
   }, [session, users]);
 
-  useEffect(() => {
-    // Тут має бути запит до API
-    const mockSubscriptionPayments: SubscriptionPayment[] = [
-      {
-        id: "1",
-        status: "active",
-        startDate: "2025-02-15",
-        endDate: "2025-03-15",
-        price: 29.99,
-        locale: "en",
-        subscription: {
-          id: "1",
-          title: "Basic Plan",
-          title_de: "Basis-Plan",
-          title_ua: "Базовий план",
-        },
-        // user: {
-        //   id: "2",
-        //   name: "Test",
-        //   email: "test@gmail.com",
-        //   role: "user",
-        // },
-      },
-      {
-        id: "sub-comp-1",
-        status: "completed",
-        startDate: "2025-02-15",
-        endDate: "2025-03-15",
-        price: 29.99,
-        locale: "en",
-        subscription: {
-          id: "1",
-          title: "Basic Plan",
-          title_de: "Basis-Plan",
-          title_ua: "Базовий план",
-        },
-        // user: {
-        //   id: "2",
-        //   name: "Test",
-        //   email: "test@gmail.com",
-        //   role: "user",
-        // },
-      },
-      {
-        id: "sub-comp-2",
-        status: "completed",
-        startDate: "2024-11-10",
-        endDate: "2025-02-10",
-        price: 29.99,
-        locale: "en",
-        subscription: {
-          id: "2",
-          title: "Professional Plan",
-          title_de: "Profi-Plan",
-          title_ua: "Професійний план",
-        },
-        // user: {
-        //   id: "2",
-        //   name: "Test",
-        //   email: "test@gmail.com",
-        //   role: "user",
-        // },
-      },
-      {
-        id: "pay-1",
-        status: "successful",
-        date: "2025-02-15",
-        price: 29.99,
-        locale: "en",
-        subscription: {
-          id: "1",
-          title: "Basic Plan",
-          title_de: "Basis-Plan",
-          title_ua: "Базовий план",
-        },
-        // user: {
-        //   id: "2",
-        //   name: "Test",
-        //   email: "test@gmail.com",
-        //   role: "user",
-        // },
-      },
-      {
-        id: "pay-2",
-        status: "successful",
-        date: "2025-01-10",
-        price: 29.99,
-        locale: "en",
-        subscription: {
-          id: "1",
-          title: "Basic Plan",
-          title_de: "Basis-Plan",
-          title_ua: "Базовий план",
-        },
-        // user: {
-        //   id: "2",
-        //   name: "Test",
-        //   email: "test@gmail.com",
-        //   role: "user",
-        // },
-      },
-      {
-        id: "pay-3",
-        status: "successful",
-        date: "2024-12-10",
-        price: 29.99,
-        locale: "en",
-        subscription: {
-          id: "1",
-          title: "Basic Plan",
-          title_de: "Basis-Plan",
-          title_ua: "Базовий план",
-        },
-        // user: {
-        //   id: "2",
-        //   name: "Test",
-        //   email: "test@gmail.com",
-        //   role: "user",
-        // },
-      },
-      {
-        id: "pay-4",
-        status: "successful",
-        date: "2024-11-10",
-        price: 29.99,
-        locale: "en",
-        subscription: {
-          id: "1",
-          title: "Basic Plan",
-          title_de: "Basis-Plan",
-          title_ua: "Базовий план",
-        },
-        // user: {
-        //   id: "2",
-        //   name: "Test",
-        //   email: "test@gmail.com",
-        //   role: "user",
-        // },
-      },
-    ];
-
-    setSubscriptionPayments(mockSubscriptionPayments);
-  }, []);
-
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: Date) => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
 
-  // Зберегти зміни в профілі користувача
   // Зберегти зміни в профілі користувача
   const handleSaveProfile = async () => {
     try {
@@ -383,8 +314,8 @@ export default function MyProfile() {
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
                             {startDateText}:{" "}
-                            {formatDate(subscription.startDate!)} |{endDateText}
-                            : {formatDate(subscription.endDate!)}
+                            {formatDate(subscription.startDate!)} |{" "}
+                            {endDateText}: {formatDate(subscription.endDate!)}
                           </div>
                         </div>
                         <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
@@ -398,7 +329,12 @@ export default function MyProfile() {
                           : subscription.locale === "ua"
                           ? "₴"
                           : "€"}
-                        {subscription.price} {perMonthText}
+                        {subscription.price} / {subscription.duration}{" "}
+                        {locale === "ua"
+                          ? getMonthsUa(subscription.duration)
+                          : Number(subscription.duration) === 1
+                          ? monthText
+                          : monthsText}
                       </div>
                     </div>
                   ))}
@@ -431,8 +367,8 @@ export default function MyProfile() {
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
                             {startDateText}:{" "}
-                            {formatDate(subscription.startDate!)} |{endDateText}
-                            : {formatDate(subscription.endDate!)}
+                            {formatDate(subscription.startDate!)} |{" "}
+                            {endDateText}: {formatDate(subscription.endDate!)}
                           </div>
                         </div>
                         <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
@@ -446,7 +382,12 @@ export default function MyProfile() {
                           : subscription.locale === "ua"
                           ? "₴"
                           : "€"}
-                        {subscription.price} {perMonthText}
+                        {subscription.price} / {subscription.duration}{" "}
+                        {locale === "ua"
+                          ? getMonthsUa(subscription.duration)
+                          : Number(subscription.duration) === 1
+                          ? monthText
+                          : monthsText}
                       </div>
                     </div>
                   ))}
@@ -460,7 +401,7 @@ export default function MyProfile() {
         {activeTab === "payments" && (
           <div>
             <h3 className="text-lg font-semibold mb-3">{paymentHistoryText}</h3>
-            {subscriptionPayments.filter((pay) => pay.date).length > 0 ? (
+            {allPayments.filter((pay) => pay.startDate).length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white">
                   <thead>
@@ -480,12 +421,12 @@ export default function MyProfile() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {subscriptionPayments
-                      .filter((pay) => pay.date)
+                    {allPayments
+                      .filter((pay) => pay.startDate)
                       .map((payment) => (
                         <tr key={payment.id} className="hover:bg-gray-50">
                           <td className="py-3 px-4 text-sm">
-                            {formatDate(payment.date!)}
+                            {formatDate(payment.startDate!)}
                           </td>
                           <td className="py-3 px-4 text-sm">
                             {locale === "en"
@@ -505,18 +446,18 @@ export default function MyProfile() {
                           <td className="py-3 px-4 text-sm">
                             <span
                               className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                                payment.status === "successful"
+                                payment.status === "success"
                                   ? "bg-green-100 text-green-800"
-                                  : payment.status === "pending"
-                                  ? "bg-yellow-100 text-yellow-800"
-                                  : "bg-red-100 text-red-800"
+                                  : payment.status === "failure"
+                                  ? "bg-red-100 text-red-800"
+                                  : "bg-yellow-100 text-yellow-800"
                               }`}
                             >
-                              {payment.status === "successful"
+                              {payment.status === "success"
                                 ? successfulText
-                                : payment.status === "pending"
-                                ? pendingText
-                                : failedText}
+                                : payment.status === "failure"
+                                ? failedText
+                                : pendingText}
                             </span>
                           </td>
                         </tr>

@@ -2,14 +2,23 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { FaCheck, FaArrowLeft } from "react-icons/fa6";
+import { FaCheck, FaArrowLeft, FaSpinner } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
 import type { Subscription } from "../../../types/subscriptions";
 import { useSubscriptions } from "@/context/hooks";
 import { getMonthsUa } from "@/app/funcs/getMonthsUa";
+import { useSession } from "next-auth/react";
+import { useUsers } from "@/context/hooks";
+// import { useAuth } from "@/context/auth";
+
 export default function ItemPage() {
   const { subscriptions } = useSubscriptions();
+  const { data: session } = useSession();
+  const { users } = useUsers();
+  const user = users.find((user) => user.id === session?.user.id);
+  // console.log("user", user.id);
+  // const { user } = useAuth(); // Отримуємо дані про користувача
   const params = useParams();
   const router = useRouter();
   const locale = params.local as string;
@@ -23,8 +32,12 @@ export default function ItemPage() {
   const selectPlanText = useClientTranslation("select_plan");
   const backText = useClientTranslation("back");
   const featuresText = useClientTranslation("features") || "Features";
+  const processingText =
+    // useClientTranslation("processing") ||
+    "Processing...";
 
   const [selectedPlan, setSelectedPlan] = useState<"1" | "3" | "6" | "12">("1");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const getLocalizedContent = (field: string, fallback: string) => {
     if (!subscription) return fallback;
@@ -98,14 +111,46 @@ export default function ItemPage() {
     return monthTermin;
   };
 
-  const handlePurchase = () => {
-    console.log(
-      `Purchasing ${selectedPlan} month plan for ${getLocalizedContent(
-        "title",
-        ""
-      )}`
-    );
-    // router.push(`/${locale}/checkout?plan=${selectedPlan}&item=${itemId}`);
+  const handlePurchase = async () => {
+    if (!subscription) return;
+
+    try {
+      setIsProcessing(true);
+
+      // Створюємо запит до нашого API для ініціалізації платежу
+      const response = await fetch("/api/payment/monobank/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subscriptionId: subscription.id,
+          selectedPlan,
+          locale,
+          userId: user?.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create payment");
+      }
+
+      // Перенаправляємо користувача на сторінку оплати Monobank
+      window.location.href = data.pageUrl;
+    } catch (error) {
+      console.error("Payment error:", error);
+      alert(
+        locale === "ua"
+          ? "Помилка при створенні платежу. Спробуйте пізніше."
+          : locale === "de"
+          ? "Fehler bei der Zahlungserstellung. Bitte versuchen Sie es später erneut."
+          : "Error creating payment. Please try again later."
+      );
+
+      setIsProcessing(false);
+    }
   };
 
   const getPriceForSelectedPlan = () => {
@@ -151,15 +196,6 @@ export default function ItemPage() {
   const getCurrencySymbol = () => {
     return locale === "de" ? "€" : locale === "ua" ? "₴" : "$";
   };
-
-  // if (isLoading) {
-  //   return (
-  //     <div className="flex justify-center items-center h-96">
-  //       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
-  //       <span className="ml-3">{loadingText}</span>
-  //     </div>
-  //   );
-  // }
 
   if (!subscription) {
     return (
@@ -212,9 +248,13 @@ export default function ItemPage() {
           </motion.div>
 
           <motion.div
-            className="w-full lg:w-1/2 p-6 lg:p-12"
+            // className="w-full lg:w-1/2 p-6 lg:p-12"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
+            // transition={{ duration: 0.5 }}
+            className="w-full lg:w-1/2 p-6 lg:p-12"
+            // initial={{ opacity: 0, x: 50 }}
+            // animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h1 className="text-3xl font-bold mb-4">
@@ -238,6 +278,7 @@ export default function ItemPage() {
                         ? "border-indigo-600 bg-indigo-600 text-white"
                         : "border-gray-300 hover:border-indigo-600 text-gray-700"
                     }`}
+                    disabled={isProcessing}
                   >
                     {locale === "ua"
                       ? `${months} ${getMonthsUa(months)}`
@@ -280,9 +321,20 @@ export default function ItemPage() {
 
               <button
                 onClick={handlePurchase}
-                className="px-8 py-3 bg-indigo-600 text-white text-lg rounded-3xl hover:bg-indigo-700 transition shadow-md hover:shadow-lg transform hover:-translate-y-1 cursor-pointer"
+                disabled={isProcessing}
+                className={`px-8 py-3 bg-indigo-600 text-white text-lg rounded-3xl transition shadow-md flex items-center justify-center gap-2 ${
+                  isProcessing
+                    ? "opacity-70 cursor-not-allowed"
+                    : "hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-1 cursor-pointer"
+                }`}
               >
-                {buyNowText}
+                {isProcessing ? (
+                  <>
+                    <FaSpinner className="animate-spin" /> {processingText}
+                  </>
+                ) : (
+                  buyNowText
+                )}
               </button>
             </div>
           </motion.div>

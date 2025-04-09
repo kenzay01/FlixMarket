@@ -1,7 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { SubscriptionPayment } from "./SubscriptionPayment";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity()
+@Entity("users")
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -17,11 +16,4 @@ export class User {
 
   @Column({ nullable: true })
   password: string;
-
-  @OneToMany(() => SubscriptionPayment, (payment) => payment.subscription, {
-    // Update the relation here
-    cascade: true,
-    eager: false,
-  })
-  subscriptionPayments?: SubscriptionPayment[];
 }

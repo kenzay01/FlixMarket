@@ -48,7 +48,6 @@ export async function POST(request: NextRequest) {
       role: "user", // За замовчуванням роль "user"
     });
 
-
     await userRepository.save(newUser);
 
     // Повертаємо успішну відповідь

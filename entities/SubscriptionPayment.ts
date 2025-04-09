@@ -1,13 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Subscription } from "./Subscription";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity()
+@Entity("subscription_payments")
 export class SubscriptionPayment {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column({ nullable: true })
   status: string;
+
+  @Column({ nullable: true })
+  userId: string;
 
   @Column({ type: "date", nullable: true })
   startDate?: Date;
@@ -21,9 +23,15 @@ export class SubscriptionPayment {
   @Column({ nullable: true })
   locale?: string;
 
-  @ManyToOne(() => Subscription, (subscription) => subscription.payments, {
-    onDelete: "CASCADE",
-    eager: false,
-  })
-  subscription: Subscription;
+  @Column({ nullable: true })
+  invoiceId?: string;
+
+  @Column({ nullable: true })
+  duration?: string;
+
+  // @ManyToOne("Subscription", (subscription) => subscription.payments, {
+  //   onDelete: "CASCADE",
+  // })
+  // subscription: Subscription;
+  subscriptionId: string;
 }

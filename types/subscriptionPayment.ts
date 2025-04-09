@@ -1,11 +1,13 @@
-import { Subscription } from "./subscriptions";
+// import { Subscription } from "./subscriptions";
 export interface SubscriptionPayment {
   id: string;
   status: "active" | "completed" | "successful" | "pending" | "failed";
+  userId: string;
   startDate?: string;
   endDate?: string;
-  date?: string;
+  duration?: string;
   price: number;
-  subscription: Subscription;
+  // subscription: Subscription;
+  subscriptionId: string;
   locale: "en" | "de" | "ua";
 }

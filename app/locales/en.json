@@ -72,5 +72,10 @@
   "faq": "FAQ",
   "term_conditions": "Terms and Conditions",
   "no_subscriptions": "No subscriptions available for this region.",
-  "support": "Support"
+  "support": "Support",
+  "payment_success": "Payment successful!",
+  "payment_processing": "Payment processing...",
+  "payment_error": "Payment error",
+  "valid_until": "Valid until",
+  "checking_status": "Checking status..."
 }

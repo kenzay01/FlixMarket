@@ -1,8 +1,15 @@
 import { DataSource } from "typeorm";
+// import { AddInvoiceIdToSubscriptionPayment1744200331629 } from "./migrations/1744200331629-AddInvoiceIdToSubscriptionPayment";
 import config from "../ormconfig";
 
 export const AppDataSource =
-  typeof window === "undefined" ? new DataSource(config) : null;
+  typeof window === "undefined"
+    ? new DataSource({
+        ...config,
+        // migrations: [__dirname + "/migrations/*.ts"],
+        // migrationsTableName: "migrations",
+      })
+    : null;
 
 export const initializeDatabase = async () => {
   if (!AppDataSource) return;
@@ -10,7 +17,7 @@ export const initializeDatabase = async () => {
   try {
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
-      console.log("Database connected successfully");
+      // console.log("Database connected successfully");
     }
   } catch (error) {
     console.error("Error connecting to database:", error);
