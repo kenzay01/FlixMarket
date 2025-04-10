@@ -75,5 +75,15 @@
   "payment_processing": "Zahlung wird bearbeitet...",
   "payment_error": "Zahlungsfehler",
   "valid_until": "Gültig bis",
-  "checking_status": "Status wird überprüft..."
+  "checking_status": "Status wird überprüft...",
+
+  "phone": "Telefon",
+  "time": "Zeit",
+  "submit": "Einreichen",
+  "submit_success": "Erfolgreich eingereicht",
+  "fill_form": "Bitte füllen Sie das Formular aus",
+  "payment_failure": "Zahlung fehlgeschlagen",
+  "processing": "Wird bearbeitet...",
+  "invalid_email": "Ungültiges E-Mail-Format",
+  "invalid_phone": "Ungültiges Telefonnummernformat"
 }

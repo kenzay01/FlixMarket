@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { FaCheck, FaArrowLeft, FaSpinner } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useClientTranslation } from "@/app/hooks/useTranslate";
-import type { Subscription } from "../../../types/subscriptions";
+import type { Subscription } from "../../../../types/subscriptions";
 import { useSubscriptions } from "@/context/hooks";
 import { getMonthsUa } from "@/app/funcs/getMonthsUa";
 import { useSession } from "next-auth/react";
@@ -27,14 +27,24 @@ export default function ItemPage() {
     (sub) => sub.id === itemId.replace("item", "")
   );
 
-  const buyNowText = useClientTranslation("buy_now");
-  const monthsText = useClientTranslation("months");
-  const selectPlanText = useClientTranslation("select_plan");
-  const backText = useClientTranslation("back");
-  const featuresText = useClientTranslation("features") || "Features";
+  const buyNowTextFetch = useClientTranslation("buy_now");
+  const buyNowText =
+    buyNowTextFetch === "buy_now" ? "Buy Now" : buyNowTextFetch;
+  const monthsTextFetch = useClientTranslation("months");
+  const monthsText = monthsTextFetch === "months" ? "Months" : monthsTextFetch;
+  const selectPlanTextFetch = useClientTranslation("select_plan");
+  const selectPlanText =
+    selectPlanTextFetch === "select_plan" ? "Select Plan" : selectPlanTextFetch;
+  const backTextFetch = useClientTranslation("back");
+  const backText = backTextFetch === "back" ? "Back" : backTextFetch;
+  const featuresTextFetch = useClientTranslation("features");
+  const featuresText =
+    featuresTextFetch === "features" ? "Features" : featuresTextFetch;
+  const processingTextFetch = useClientTranslation("processing");
   const processingText =
-    // useClientTranslation("processing") ||
-    "Processing...";
+    processingTextFetch === "processing"
+      ? "Processing..."
+      : processingTextFetch;
 
   const [selectedPlan, setSelectedPlan] = useState<"1" | "3" | "6" | "12">("1");
   const [isProcessing, setIsProcessing] = useState(false);

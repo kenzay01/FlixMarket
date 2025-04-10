@@ -29,9 +29,6 @@ export class SubscriptionPayment {
   @Column({ nullable: true })
   duration?: string;
 
-  // @ManyToOne("Subscription", (subscription) => subscription.payments, {
-  //   onDelete: "CASCADE",
-  // })
-  // subscription: Subscription;
+  @Column({ nullable: true })
   subscriptionId: string;
 }

@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
-import { useClientTranslation } from "../../hooks/useTranslate";
+import { useClientTranslation } from "../../../hooks/useTranslate";
 import { useParams, useRouter } from "next/navigation";
 import { useSubscriptions } from "@/context/hooks";
-import { getMonthsUa } from "../../funcs/getMonthsUa";
+import { getMonthsUa } from "../../../funcs/getMonthsUa";
 const backGroundColors = [
   "bg-gradient-to-r from-indigo-500 to-indigo-500",
   "bg-gradient-to-r from-green-500 to-indigo-500",

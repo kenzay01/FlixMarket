@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Subscription } from "../../../../types/subscriptions";
+import { Subscription } from "../../../../../types/subscriptions";
 import { Eye, EyeOff, Upload, X, Image as ImageIcon } from "lucide-react";
 // interface EditableSubscription extends Partial<Subscription> {
 //   imageFile?: File | null;

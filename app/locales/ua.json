@@ -77,5 +77,15 @@
   "payment_processing": "Обробка платежу...",
   "payment_error": "Помилка платежу",
   "valid_until": "Дійсний до",
-  "checking_status": "Перевірка статусу..."
+  "checking_status": "Перевірка статусу...",
+
+  "phone": "Телефон",
+  "time": "Час",
+  "submit": "Відправити",
+  "submit_success": "Успішно надіслано",
+  "fill_form": "Будь ласка, заповніть форму",
+  "payment_failure": "Платіж не вдався",
+  "processing": "Обробка...",
+  "invalid_email": "Неправильний формат електронної пошти",
+  "invalid_phone": "Неправильний формат номера телефону"
 }

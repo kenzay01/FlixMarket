@@ -100,7 +100,6 @@ export async function POST(request: NextRequest) {
       currencyCode = 840;
     }
 
-    // Створення запису про платіж
     const paymentRepo = AppDataSource.getRepository(SubscriptionPayment);
     const payment = new SubscriptionPayment();
     payment.status = "pending";
@@ -109,11 +108,10 @@ export async function POST(request: NextRequest) {
     payment.duration = selectedPlan;
     payment.startDate = new Date();
     payment.userId = userId || null;
-    payment.subscriptionId = subscriptionId; // Замість об'єкта subscription тепер використовуємо просто ID
+    payment.subscriptionId = subscriptionId;
     await paymentRepo.save(payment);
 
-    // Формування даних для запиту до Monobank
-    const amount = Math.round(price * 100); // Monobank використовує копійки/центи
+    const amount = Math.round(price * 100);
     const title =
       locale === "ua"
         ? subscription.title_ua || subscription.title
@@ -129,7 +127,12 @@ export async function POST(request: NextRequest) {
       ccy: currencyCode,
       merchantPaymInfo: {
         reference: payment.id,
-        destination: `Оплата підписки: ${title} (${selectedPlan} міс.)`,
+        destination:
+          locale === "ua"
+            ? `Оплата підписки: ${title} (${selectedPlan} міс.)`
+            : locale === "de"
+            ? `Abonnementzahlung: ${title} (${selectedPlan} Monate)`
+            : `Subscription payment: ${title} (${selectedPlan} months)`,
         basketOrder: [
           {
             name: title,

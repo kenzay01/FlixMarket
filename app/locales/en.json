@@ -77,5 +77,15 @@
   "payment_processing": "Payment processing...",
   "payment_error": "Payment error",
   "valid_until": "Valid until",
-  "checking_status": "Checking status..."
+  "checking_status": "Checking status...",
+
+  "phone": "Phone",
+  "time": "Time",
+  "submit": "Submit",
+  "submit_success": "Successfully submitted",
+  "fill_form": "Please fill out the form",
+  "payment_failure": "Payment failed",
+  "processing": "Processing...",
+  "invalid_email": "Invalid email format",
+  "invalid_phone": "Invalid phone number format"
 }
