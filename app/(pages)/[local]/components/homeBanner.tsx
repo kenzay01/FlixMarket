@@ -5,10 +5,27 @@ import { useParams, useRouter } from "next/navigation";
 import { useSubscriptions } from "@/context/hooks";
 import { getMonthsUa } from "../../../funcs/getMonthsUa";
 const backGroundColors = [
-  "bg-gradient-to-r from-indigo-500 to-indigo-500",
+  "bg-gradient-to-r from-indigo-600 to-indigo-500",
   "bg-gradient-to-r from-green-500 to-indigo-500",
   "bg-gradient-to-r from-yellow-500 to-red-500",
+  "bg-gradient-to-r from-purple-600 to-blue-500",
+  "bg-gradient-to-r from-pink-500 to-orange-400",
 ];
+
+// Визначаємо логотипи для різних сервісів
+const serviceLogos = {
+  netflix:
+    "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/227_Netflix_logo-512.png",
+  "sweet.tv":
+    "https://assol.in.ua/image/cache/catalog/assol/17934/servisy-assol-serv-s-p-dpiska-sweet-tv-1-445x445.jpg",
+  "sweet tv":
+    "https://assol.in.ua/image/cache/catalog/assol/17934/servisy-assol-serv-s-p-dpiska-sweet-tv-1-445x445.jpg",
+  disney:
+    "https://seeklogo.com/images/D/Disney-logo-847839C4FF-seeklogo.com.png",
+  spotify: "https://cdn-icons-png.flaticon.com/512/174/174872.png",
+  youtube: "https://cdn-icons-png.flaticon.com/512/174/174883.png",
+  vpn: "https://cdn-icons-png.flaticon.com/256/8017/8017361.png",
+};
 
 export default function HomeBanner() {
   const router = useRouter();
@@ -127,6 +144,23 @@ export default function HomeBanner() {
     );
   };
 
+  // Функція для визначення логотипу для підписки на основі її назви
+  const getServiceLogo = (title) => {
+    if (!title) return null;
+
+    // Перетворюємо заголовок на нижній регістр для пошуку
+    const lowerTitle = title.toLowerCase();
+
+    // Перевіряємо, чи містить заголовок ключові слова сервісів
+    for (const service of Object.keys(serviceLogos)) {
+      if (lowerTitle.includes(service)) {
+        return serviceLogos[service];
+      }
+    }
+
+    return null;
+  };
+
   const titleMonth = useClientTranslation("months").toLowerCase();
   const btnTitle = useClientTranslation("try_now");
 
@@ -152,69 +186,83 @@ export default function HomeBanner() {
   return (
     <section className="w-full h-screen max-h-screen relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-        {filteredSubscriptions.map((subscription, index) => (
-          <div
-            key={subscription.id}
-            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ${
-              index === currentSlide
-                ? "opacity-100"
-                : "opacity-0 pointer-events-none"
-            }`}
-          >
-            <div
-              className={`absolute top-0 left-0 w-full h-full ${
-                backGroundColors[index % backGroundColors.length]
-              }`}
-            ></div>
-            <div className="flex flex-col justify-center h-full max-w-5xl mx-auto px-4 md:px-8 relative z-10">
-              <div className=" w-full text-white">
-                <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                  {locale === "en"
-                    ? subscription.title
-                    : locale === "ua"
-                    ? subscription.title_ua
-                    : subscription.title_de}
-                </h1>
-                <p className="text-xs md:text-sm mb-8 opacity-90 whitespace-pre-line">
-                  {locale === "en"
-                    ? subscription.description
-                    : locale === "ua"
-                    ? subscription.description_ua
-                    : subscription.description_de}
-                </p>
-                <div className="mb-8">
-                  {(() => {
-                    const { price, duration } =
-                      getBestPriceOption(subscription);
-                    const currencySymbol =
-                      locale === "en" ? "$" : locale === "ua" ? "₴" : "€";
+        {filteredSubscriptions.map((subscription, index) => {
+          const title =
+            locale === "en"
+              ? subscription.title
+              : locale === "ua"
+              ? subscription.title_ua
+              : subscription.title_de;
 
-                    return (
-                      <span className="text-2xl md:text-3xl font-bold">
-                        {currencySymbol}
-                        {price}
-                        <span className="ml-2 opacity-80">
-                          /
-                          {locale === "ua"
-                            ? `${duration} ${getMonthsUa(duration)}`
-                            : `${duration} ${titleMonth}`}
+          const logoUrl = getServiceLogo(title);
+
+          return (
+            <div
+              key={subscription.id}
+              className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ${
+                index === currentSlide
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <div
+                className={`absolute top-0 left-0 w-full h-full ${
+                  backGroundColors[index % backGroundColors.length]
+                }`}
+              ></div>
+              <div className="flex flex-col justify-center h-full max-w-5xl mx-auto px-4 md:px-8 relative z-10">
+                <div className="w-full text-white">
+                  <div className="flex items-center gap-3 mb-4 relative">
+                    {logoUrl && (
+                      <img
+                        src={logoUrl}
+                        alt="Service logo"
+                        className="w-8 h-8 object-contain absolute top-1 -left-10"
+                      />
+                    )}
+                    <h1 className="text-3xl md:text-4xl font-bold">{title}</h1>
+                  </div>
+                  <p className="text-xs md:text-sm mb-8 opacity-90 whitespace-pre-line">
+                    {locale === "en"
+                      ? subscription.description
+                      : locale === "ua"
+                      ? subscription.description_ua
+                      : subscription.description_de}
+                  </p>
+                  <div className="mb-8">
+                    {(() => {
+                      const { price, duration } =
+                        getBestPriceOption(subscription);
+                      const currencySymbol =
+                        locale === "en" ? "$" : locale === "ua" ? "₴" : "€";
+
+                      return (
+                        <span className="text-2xl md:text-3xl font-bold">
+                          {currencySymbol}
+                          {price}
+                          <span className="ml-2 opacity-80">
+                            /
+                            {locale === "ua"
+                              ? `${duration} ${getMonthsUa(duration)}`
+                              : `${duration} ${titleMonth}`}
+                          </span>
                         </span>
-                      </span>
-                    );
-                  })()}
+                      );
+                    })()}
+                  </div>
+                  <button
+                    onClick={() => {
+                      router.push(`/${locale}/item${subscription.id}`);
+                    }}
+                    className="bg-white text-indigo-900 py-3 px-8 rounded-md font-semibold hover:bg-opacity-90 transition-all duration-300 cursor-pointer"
+                  >
+                    {btnTitle}
+                  </button>
                 </div>
-                <button
-                  onClick={() => {
-                    router.push(`/${locale}/item${subscription.id}`);
-                  }}
-                  className="bg-white text-indigo-900 py-3 px-8 rounded-md font-semibold hover:bg-opacity-90 transition-all duration-300 cursor-pointer"
-                >
-                  {btnTitle}
-                </button>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {filteredSubscriptions.length > 1 && (

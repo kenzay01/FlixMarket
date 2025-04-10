@@ -115,7 +115,7 @@ export default function PopularItem({
         )}
       </motion.div>
       <motion.div
-        className={`w-full md:w-1/2 p-6 ${isEven ? "text-left" : "text-right"}`}
+        className={`w-full md:w-1/2 p-6 `}
         initial={{ opacity: 0, x: isEven ? 200 : -200 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
@@ -127,26 +127,17 @@ export default function PopularItem({
         </p>
         <ul
           className={`list-none space-y-2 text-gray-600 
-            ${isEven ? "text-left" : "text-right"}
+    
           `}
         >
           {displayBenefits?.map((benefit, index) => (
-            <li
-              key={index}
-              className={`flex items-center gap-2 ${
-                isEven ? "justify-start" : "justify-end"
-              }`}
-            >
+            <li key={index} className={`flex items-center gap-2 `}>
               <FaCheck className="text-green-500" /> {benefit}
             </li>
           ))}
         </ul>
 
-        <div
-          className={`mt-6 flex items-center space-x-4 ${
-            isEven ? "justify-start" : "justify-end"
-          }`}
-        >
+        <div className={`mt-6 flex items-center space-x-4 `}>
           <span className="text-pink-600 text-2xl font-bold">
             {currencySymbol}
             {price} /
