@@ -32,7 +32,7 @@ export default function AdminDashboard() {
   const { subscriptions: fetchedSubscriptions } = useSubscriptions();
   const { subscriptionPayments: fetchedSubscriptionPayments } =
     useSubscriptionPayments();
-  console.log("fetchedSubscriptionPayments", fetchedSubscriptionPayments);
+  // console.log("fetchedSubscriptionPayments", fetchedSubscriptionPayments);
 
   useEffect(() => {
     if (fetchedUsers && fetchedSubscriptionPayments && fetchedSubscriptions) {
@@ -119,7 +119,7 @@ export default function AdminDashboard() {
   }, [fetchedUsers, fetchedSubscriptionPayments, fetchedSubscriptions]);
 
   const [users, setUsers] = useState<EnhancedUser[]>([]);
-  console.log("users", users);
+  // console.log("users", users);
   // const [totalUsers, setTotalUsers] = useState(0);
   return (
     <div className="p-6">

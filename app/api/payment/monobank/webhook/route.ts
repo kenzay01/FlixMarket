@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     const payload = (await request.json()) as MonobankWebhookPayload;
-    console.log("Monobank webhook received:", payload);
+    // console.log("Monobank webhook received:", payload);
 
     const { reference, status } = payload;
 
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     // Обробка різних статусів платежу
     // Документація Monobank: https://api.monobank.ua/docs/acquiring.html
 
-    console.log(`Processing status: ${status}`);
+    // console.log(`Processing status: ${status}`);
     switch (status) {
       case "success":
         // Успішний платіж
@@ -89,9 +89,9 @@ export async function POST(request: NextRequest) {
         // await paymentRepo.save(payment);
         break;
     }
-    console.log(`Updating payment ${payment.id} to status: ${payment.status}`);
+    // console.log(`Updating payment ${payment.id} to status: ${payment.status}`);
     await paymentRepo.save(payment);
-    console.log(`Payment update completed`);
+    // console.log(`Payment update completed`);
 
     // Підтвердження отримання вебхуку
     return NextResponse.json({ success: true });

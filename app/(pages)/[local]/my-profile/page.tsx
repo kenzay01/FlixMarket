@@ -54,7 +54,7 @@ export default function MyProfile() {
     });
   }, [filteredSubscriptionPayments, subscriptions]);
 
-  console.log("subscriptionPayments", subscriptionPayments);
+  // console.log("subscriptionPayments", subscriptionPayments);
 
   const allPayments = useMemo(() => {
     return filteredSubscriptionPayments
@@ -87,7 +87,7 @@ export default function MyProfile() {
       });
   }, [filteredSubscriptionPayments, subscriptions]);
 
-  console.log("allPayments", allPayments);
+  // console.log("allPayments", allPayments);
 
   const [activeTab, setActiveTab] = useState<"subscriptions" | "payments">(
     "subscriptions"

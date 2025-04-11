@@ -37,7 +37,7 @@ export async function DELETE(req: NextRequest) {
         message: "Image file deleted successfully",
       });
     } else {
-      console.log(`File not found: ${filePath}`);
+      // console.log(`File not found: ${filePath}`);
       return NextResponse.json(
         { success: false, message: "Image file not found" },
         { status: 404 }

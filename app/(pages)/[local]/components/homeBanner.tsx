@@ -16,10 +16,8 @@ const backGroundColors = [
 const serviceLogos = {
   netflix:
     "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/227_Netflix_logo-512.png",
-  "sweet.tv":
-    "https://assol.in.ua/image/cache/catalog/assol/17934/servisy-assol-serv-s-p-dpiska-sweet-tv-1-445x445.jpg",
-  "sweet tv":
-    "https://assol.in.ua/image/cache/catalog/assol/17934/servisy-assol-serv-s-p-dpiska-sweet-tv-1-445x445.jpg",
+  "sweet.tv": "/sweet_tv.png",
+  "sweet tv": "/sweet_tv.png",
   disney:
     "https://seeklogo.com/images/D/Disney-logo-847839C4FF-seeklogo.com.png",
   spotify: "https://cdn-icons-png.flaticon.com/512/174/174872.png",

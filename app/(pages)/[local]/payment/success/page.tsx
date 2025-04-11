@@ -153,7 +153,7 @@ export default function PaymentSuccessPage() {
       options.hour12 = false;
     }
 
-    console.log("Input date in UTC:", date.toISOString());
+    // console.log("Input date in UTC:", date.toISOString());
     return new Intl.DateTimeFormat(localeValue, options).format(date);
   };
 
@@ -273,7 +273,7 @@ export default function PaymentSuccessPage() {
         }),
       });
       const responseData = await response.json();
-      console.log("Response from /api/send-telegram:", responseData);
+      // console.log("Response from /api/send-telegram:", responseData);
 
       if (response.ok) {
         setFormSubmitted(true);

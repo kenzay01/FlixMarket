@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     });
 
     const telegramResponseText = await response.text();
-    console.log("Telegram response text:", telegramResponseText);
+    // console.log("Telegram response text:", telegramResponseText);
 
     if (!response.ok) {
       console.error("Telegram API error:", telegramResponseText);
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = JSON.parse(telegramResponseText);
-    console.log("Telegram data:", data);
+    // console.log("Telegram data:", data);
     return NextResponse.json({ success: true, data });
   } catch (error) {
     console.error("Error sending Telegram message:", error);
