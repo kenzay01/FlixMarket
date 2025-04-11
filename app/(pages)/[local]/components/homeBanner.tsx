@@ -210,7 +210,7 @@ export default function HomeBanner() {
                   backGroundColors[index % backGroundColors.length]
                 }`}
               ></div>
-              <div className="flex flex-col justify-center h-full max-w-5xl mx-auto px-4 md:px-8 relative z-10">
+              <div className="flex flex-col justify-center h-full max-w-5xl mx-auto px-13 md:px-8 relative z-10">
                 <div className="w-full text-white">
                   <div className="flex items-center gap-3 mb-4 relative">
                     {logoUrl && (
@@ -220,7 +220,7 @@ export default function HomeBanner() {
                         className="w-8 h-8 object-contain absolute top-1 -left-10"
                       />
                     )}
-                    <h1 className="text-3xl md:text-4xl font-bold">{title}</h1>
+                    <h1 className="text-2xl md:text-4xl font-bold">{title}</h1>
                   </div>
                   <p className="text-xs md:text-sm mb-8 opacity-90 whitespace-pre-line">
                     {locale === "en"
@@ -237,7 +237,7 @@ export default function HomeBanner() {
                         locale === "en" ? "$" : locale === "ua" ? "₴" : "€";
 
                       return (
-                        <span className="text-2xl md:text-3xl font-bold">
+                        <span className="text-xl md:text-3xl font-bold">
                           {currencySymbol}
                           {price}
                           <span className="ml-2 opacity-80">
