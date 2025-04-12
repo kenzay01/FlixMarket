@@ -272,8 +272,6 @@ export default function PaymentSuccessPage() {
           message: messageText,
         }),
       });
-      const responseData = await response.json();
-      // console.log("Response from /api/send-telegram:", responseData);
 
       if (response.ok) {
         setFormSubmitted(true);
