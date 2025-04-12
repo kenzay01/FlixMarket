@@ -37,7 +37,7 @@ export default function Header() {
       ? "How it works"
       : howItWorksTranslation;
   const comments =
-    commentsTranslation === "comments" ? "Comments" : commentsTranslation;
+    commentsTranslation === "comments" ? "Reviews" : commentsTranslation;
   const faq = faqTranslation === "faq" ? "FAQ" : faqTranslation;
   const logIn = logInTranslation === "log_in" ? "Log In" : logInTranslation;
   const logOut =
