@@ -289,6 +289,33 @@ export default function ReviewsContainer() {
     }
   };
 
+  // Banner translations
+  const bannerTranslations = {
+    ua: {
+      users: "10 000+",
+      usersText: "АКТИВНИХ КОРИСТУВАЧІВ ПЛАТФОРМИ",
+      savings: "4300 грн",
+      savingsText: "СЕРЕДНЯ ЕКОНОМІЯ НА РІК",
+    },
+    en: {
+      users: "10,000+",
+      usersText: "ACTIVE PLATFORM USERS",
+      savings: "$180",
+      savingsText: "AVERAGE YEARLY SAVINGS",
+    },
+    de: {
+      users: "10.000+",
+      usersText: "AKTIVE PLATTFORMNUTZER",
+      savings: "€180",
+      savingsText: "DURCHSCHNITTLICHE JÄHRLICHE EINSPARUNG",
+    },
+  };
+
+  const getBannerContent = () => {
+    return bannerTranslations[locale] || bannerTranslations["en"];
+  };
+
+  const bannerContent = getBannerContent();
   const reviews = getLocalizedReviews();
 
   const getItemsPerSlide = () => {
@@ -319,6 +346,28 @@ export default function ReviewsContainer() {
 
   return (
     <>
+      <section className="w-full bg-cyan-500 min-h-54 md:min-h-44 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16">
+        <div>
+          <div className="flex justify-center items-baseline space-x-4 mb-2">
+            <span className="text-4xl md:text-5xl font-bold text-white">
+              {bannerContent.users}
+            </span>
+          </div>
+          <p className="text-sm text-black uppercase font-bold">
+            {bannerContent.usersText}
+          </p>
+        </div>
+        <div>
+          <div className="flex justify-center items-baseline space-x-4 mb-2">
+            <span className="text-4xl md:text-5xl font-bold text-white">
+              {bannerContent.savings}
+            </span>
+          </div>
+          <p className="text-sm text-black uppercase font-bold">
+            {bannerContent.savingsText}
+          </p>
+        </div>
+      </section>
       <section
         className="w-full mx-auto flex flex-col items-center justify-center overflow-hidden py-12 px-4 bg-gray-50 pt-24"
         id="comments"

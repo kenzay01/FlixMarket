@@ -194,6 +194,54 @@ export default function TermsPage() {
           ],
         },
       },
+      privacyPolicy: {
+        title: "Privacy Policy",
+        intro: [
+          "The EasyPlay service team prioritizes the security of user data. We strictly adhere to this Privacy Policy to ensure you don’t have to worry about what happens to your personal information provided to the platform during registration.",
+          "By registering on the EasyPlay platform, you consent to the processing of all data entered for registration purposes to properly provide services in accordance with the Public Offer.",
+          "By registering on the platform, you also confirm that you have reviewed your rights as a data subject under Article 8 of the Ukrainian Law 'On Personal Data Protection'. This document is available at: http://zakon2.rada.gov.ua/laws/show/2297-17.",
+        ],
+        sections: {
+          collection: {
+            title: "1. Collection of Personal Information",
+            content: [
+              "1.1 During registration on the EasyPlay platform, we ask you to provide the necessary personal information to the extent required for the full provision of services. If necessary, the platform reserves the right to request additional personal information.",
+              "1.2 Our team may collect information about your visits to the EasyPlay platform, such as your IP address, browser type and language, and the date and time of the request.",
+              "1.3 Some services offered by the EasyPlay platform are linked to other websites. Personal information provided by such websites may be transferred to us for service provision. The platform also processes such information in accordance with this Privacy Policy.",
+              "1.4 This document guarantees that anonymous reviews left on our website remain fully confidential and will not be accessible to third parties, including other platform users.",
+              "1.5 The EasyPlay platform may process personal information on servers in Ukraine as well as in other countries.",
+            ],
+          },
+          access: {
+            title: "2. Access to Information",
+            content: [
+              "2.1 Your personal information may be shared with third parties only under the following circumstances:",
+              "2.1.1 You have personally given consent for this. Your explicit consent is required for the transfer of any sensitive information.",
+              "2.1.2 To comply with Ukrainian legislation, including providing information upon request from individuals, legal entities, institutions, organizations of any ownership form, or government bodies authorized to receive such information under Ukrainian law.",
+              "2.1.3 To investigate potential violations of the Public Offer, which may involve providing information about you in response to a duly submitted legal request regarding violations.",
+              "2.1.4 To detect and prevent fraudulent activities, as well as to address security issues and resolve technical problems.",
+            ],
+          },
+          protection: {
+            title: "3. Protection of Information",
+            content: [
+              "3.1 The EasyPlay team takes all necessary measures to protect your data from unauthorized access. These measures include internal reviews of data collection, storage, and processing processes, as well as security measures to prevent unauthorized access.",
+            ],
+          },
+          modification: {
+            title: "4. Access to and Modification of Personal Information",
+            content: [
+              "4.1 The EasyPlay platform makes every effort to provide you with access to your personal data, allowing you to make changes if the data is incorrect or to delete it upon your request. Before processing such requests, we ask users to verify their identity and specify the information they wish to access, modify, or delete.",
+            ],
+          },
+          changes: {
+            title: "5. Changes to This Privacy Policy",
+            content: [
+              "5.1 This Privacy Policy may be updated periodically. Changes to the Privacy Policy will be published on this page.",
+            ],
+          },
+        },
+      },
     },
     ua: {
       pageTitle: "Правила і умови",
@@ -379,6 +427,54 @@ export default function TermsPage() {
           content: [
             "19.1 Якщо Вам потрібно зв'язатися з нами у зв'язку з цими Умовами користування, напишіть нам на електронну адресу easyplaysup@fsubs.info, в Телеграм-аккаунт @kinomanage.",
           ],
+        },
+      },
+      privacyPolicy: {
+        title: "Політика конфіденційності",
+        intro: [
+          "Команда сервісу EasyPlay піклується про безпеку даних користувачів. Ми суворо дотримуємося цієї Політики конфіденційності, щоб Ви не турбувалися про те, що відбувається з Вашими персональними даними, наданими платформі під час реєстрації.",
+          "Реєструючись на платформі EasyPlay, Ви надаєте свою згоду на обробку всіх введених для реєстрації даних з метою належного надання послуг відповідно до Публічної оферти.",
+          "Реєструючись на платформі, Ви також підтверджуєте, що ознайомилися з переліком своїх прав як суб'єкта даних згідно зі статтею 8 Закону України 'Про захист персональних даних'. Цей документ доступний за посиланням: http://zakon2.rada.gov.ua/laws/show/2297-17.",
+        ],
+        sections: {
+          collection: {
+            title: "1. Збір особистої інформації",
+            content: [
+              "1.1 У момент реєстрації на платформі EasyPlay ми просимо Вас повідомити необхідну особисту інформацію в обсязі, необхідному для повноцінного надання послуг. За необхідності, платформа залишає за собою право запитувати додаткову особисту інформацію.",
+              "1.2 Наша команда може збирати інформацію про відвідування платформи EasyPlay, таку як IP-адресу, тип і мову браузера, дату і час запиту.",
+              "1.3 Деякі послуги, які пропонує платформа EasyPlay, пов'язані з іншими сайтами. Особиста інформація, що надається такими сайтами, може бути передана нам для надання послуг. Платформа також проводить обробку інформації такого роду відповідно до цієї Політики конфіденційності.",
+              "1.4 Цим документом платформа гарантує, що анонімні відгуки, залишені на нашому сайті, залишаються повністю конфіденційними та не будуть доступні третім особам, включаючи інших користувачів платформи.",
+              "1.5 Платформа EasyPlay може обробляти особисту інформацію як на серверах в Україні, так і в інших країнах.",
+            ],
+          },
+          access: {
+            title: "2. Доступ до інформації",
+            content: [
+              "2.1 Передача Вашої особистої інформації третім особам можлива тільки за таких обставин:",
+              "2.1.1 Ви особисто дали на це дозвіл. Для передачі будь-якої конфіденційної інформації потрібна Ваша згода.",
+              "2.1.2 Для дотримання законодавства України, в тому числі надання інформації на вимогу фізичних та юридичних осіб, установ, організацій будь-якої форми власності або державних органів, які мають право на отримання такої інформації згідно із законодавством України.",
+              "2.1.3 Для розслідування потенційних порушень Публічної оферти, що передбачає надання інформації про Вас у відповідь на належно оформлений адвокатський запит з інформацією про порушення.",
+              "2.1.4 Для виявлення та запобігання шахрайським діям, а також вирішення проблем безпеки та усунення технічних несправностей.",
+            ],
+          },
+          protection: {
+            title: "3. Захист інформації",
+            content: [
+              "3.1 Команда EasyPlay вживає всіх необхідних заходів для захисту Ваших даних від неавторизованого доступу. До цих заходів відносяться, зокрема, внутрішня перевірка процесів збору, зберігання та обробки даних і заходи безпеки для запобігання несанкціонованому доступу.",
+            ],
+          },
+          modification: {
+            title: "4. Доступ до особистої інформації та її зміна",
+            content: [
+              "4.1 Платформа EasyPlay робить все необхідне, щоб надавати Вам доступ до Ваших особистих даних. Вносити зміни, якщо вони невірні, або видалити за Вашим запитом. Перед обробкою запитів ми просимо користувачів підтвердити свою особу та інформацію, яку вони хочуть отримати, виправити або видалити.",
+            ],
+          },
+          changes: {
+            title: "5. Зміна цієї політики конфіденційності",
+            content: [
+              "5.1 Ця Політика конфіденційності може періодично змінюватися. Зміни, що вносяться до Політики конфіденційності, будуть опубліковані на цій сторінці.",
+            ],
+          },
         },
       },
     },
@@ -570,6 +666,55 @@ export default function TermsPage() {
           ],
         },
       },
+      privacyPolicy: {
+        title: "Datenschutzrichtlinie",
+        intro: [
+          "Das Team des EasyPlay-Dienstes legt großen Wert auf die Sicherheit der Nutzerdaten. Wir halten diese Datenschutzrichtlinie strikt ein, damit Sie sich keine Sorgen darüber machen müssen, was mit Ihren persönlichen Daten geschieht, die Sie der Plattform bei der Registrierung bereitstellen.",
+          "Durch die Registrierung auf der EasyPlay-Plattform stimmen Sie der Verarbeitung aller für die Registrierung eingegebenen Daten zu, um die Dienstleistungen gemäß dem öffentlichen Angebot ordnungsgemäß zu erbringen.",
+          "Durch die Registrierung auf der Plattform bestätigen Sie außerdem, dass Sie Ihre Rechte als betroffene Person gemäß Artikel 8 des ukrainischen Gesetzes 'Über den Schutz personenbezogener Daten' zur Kenntnis genommen haben. Dieses Dokument ist unter folgendem Link verfügbar: http://zakon2.rada.gov.ua/laws/show/2297-17.",
+        ],
+        sections: {
+          collection: {
+            title: "1. Erhebung personenbezogener Informationen",
+            content: [
+              "1.1 Bei der Registrierung auf der EasyPlay-Plattform bitten wir Sie, die notwendigen persönlichen Informationen in dem Umfang anzugeben, der für die vollständige Erbringung der Dienstleistungen erforderlich ist. Bei Bedarf behält sich die Plattform das Recht vor, zusätzliche persönliche Informationen anzufordern.",
+              "1.2 Unser Team kann Informationen über Ihre Besuche auf der EasyPlay-Plattform sammeln, wie z. B. Ihre IP-Adresse, den Browser-Typ und die Sprache sowie das Datum und die Uhrzeit der Anfrage.",
+              "1.3 Einige von der EasyPlay-Plattform angebotene Dienstleistungen sind mit anderen Websites verknüpft. Persönliche Informationen, die von solchen Websites bereitgestellt werden, können an uns zur Erbringung der Dienstleistungen übermittelt werden. Die Plattform verarbeitet derartige Informationen ebenfalls in Übereinstimmung mit dieser Datenschutzrichtlinie.",
+              "1.4 Mit diesem Dokument garantiert die Plattform, dass anonyme Bewertungen, die auf unserer Website abgegeben werden, vollständig vertraulich bleiben und Dritten, einschließlich anderer Plattformnutzer, nicht zugänglich gemacht werden.",
+              "1.5 Die EasyPlay-Plattform kann persönliche Informationen sowohl auf Servern in der Ukraine als auch in anderen Ländern verarbeiten.",
+            ],
+          },
+          access: {
+            title: "2. Zugriff auf Informationen",
+            content: [
+              "2.1 Ihre persönlichen Informationen können Dritten nur unter folgenden Umständen weitergegeben werden:",
+              "2.1.1 Sie haben Ihre ausdrückliche Zustimmung dazu gegeben. Für die Weitergabe sensibler Informationen ist Ihre Zustimmung erforderlich.",
+              "2.1.2 Zur Einhaltung der ukrainischen Gesetzgebung, einschließlich der Bereitstellung von Informationen auf Anfrage von natürlichen oder juristischen Personen, Institutionen, Organisationen jeglicher Eigentumsform oder staatlichen Behörden, die gemäß ukrainischem Recht berechtigt sind, solche Informationen zu erhalten.",
+              "2.1.3 Zur Untersuchung potenzieller Verstöße gegen das öffentliche Angebot, was die Bereitstellung von Informationen über Sie als Reaktion auf eine ordnungsgemäß gestellte anwaltliche Anfrage bezüglich Verstößen beinhalten kann.",
+              "2.1.4 Zur Erkennung und Verhinderung betrügerischer Aktivitäten sowie zur Lösung von Sicherheitsproblemen und technischen Störungen.",
+            ],
+          },
+          protection: {
+            title: "3. Schutz der Informationen",
+            content: [
+              "3.1 Das EasyPlay-Team ergreift alle notwendigen Maßnahmen, um Ihre Daten vor unbefugtem Zugriff zu schützen. Zu diesen Maßnahmen gehören unter anderem interne Überprüfungen der Prozesse zur Datenerfassung, -speicherung und -verarbeitung sowie Sicherheitsmaßnahmen zur Verhinderung unbefugten Zugriffs.",
+            ],
+          },
+          modification: {
+            title:
+              "4. Zugriff auf und Änderung personenbezogener Informationen",
+            content: [
+              "4.1 Die EasyPlay-Plattform tut alles Notwendige, um Ihnen Zugriff auf Ihre personenbezogenen Daten zu gewähren, Änderungen vorzunehmen, falls diese unrichtig sind, oder sie auf Ihren Wunsch hin zu löschen. Vor der Bearbeitung solcher Anfragen bitten wir die Nutzer, ihre Identität und die Informationen, die sie abrufen, korrigieren oder löschen möchten, zu bestätigen.",
+            ],
+          },
+          changes: {
+            title: "5. Änderungen an dieser Datenschutzrichtlinie",
+            content: [
+              "5.1 Diese Datenschutzrichtlinie kann regelmäßig aktualisiert werden. Änderungen an der Datenschutzrichtlinie werden auf dieser Seite veröffentlicht.",
+            ],
+          },
+        },
+      },
     },
   };
 
@@ -603,6 +748,27 @@ export default function TermsPage() {
               </ul>
             </div>
           ))}
+
+          <h2 className="text-2xl font-semibold mb-3">
+            {t.privacyPolicy.title}
+          </h2>
+          <div className="mb-4">
+            {t.privacyPolicy.intro.map((item, idx) => (
+              <p key={idx} className="mb-2">
+                {item}
+              </p>
+            ))}
+            {Object.values(t.privacyPolicy.sections).map((section, index) => (
+              <div key={index} className="mb-4">
+                <h3 className="text-xl font-medium mb-2">{section.title}</h3>
+                <ul className="list-disc pl-6 space-y-1">
+                  {section.content.map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="border-t pt-6">
