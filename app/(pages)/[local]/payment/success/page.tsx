@@ -13,6 +13,7 @@ interface PaymentStatus {
     title?: string;
     title_ua?: string;
     title_de?: string;
+    title_cs?: string;
   };
   price?: number;
   startDate?: string;
@@ -127,6 +128,8 @@ export default function PaymentSuccessPage() {
       ? paymentStatus.subscription.title_ua || paymentStatus.subscription.title
       : locale === "de"
       ? paymentStatus.subscription.title_de || paymentStatus.subscription.title
+      : locale === "cz"
+      ? paymentStatus.subscription.title_cs || paymentStatus.subscription.title
       : paymentStatus.subscription.title;
   };
 
@@ -138,7 +141,13 @@ export default function PaymentSuccessPage() {
     if (isNaN(date.getTime())) return "Невалідна дата";
 
     const localeValue =
-      locale === "ua" ? "uk-UA" : locale === "de" ? "de-DE" : "en-US";
+      locale === "ua"
+        ? "uk-UA"
+        : locale === "de"
+        ? "de-DE"
+        : locale === "cz"
+        ? "cs-CZ"
+        : "en-US";
 
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
@@ -181,6 +190,8 @@ export default function PaymentSuccessPage() {
           ? "Введіть ім'я"
           : locale === "de"
           ? "Bitte geben Sie Ihren Namen ein"
+          : locale === "cz"
+          ? "Zadejte své jméno"
           : "Please enter your name";
     }
 
@@ -213,7 +224,14 @@ export default function PaymentSuccessPage() {
     const subscriptionTitle = getSubscriptionTitle();
     const validUntil = formatDate(paymentStatus?.endDate, false);
     const price = paymentStatus?.price || 0;
-    const currency = locale === "ua" ? "грн" : locale === "de" ? "€" : "$";
+    const currency =
+      locale === "ua"
+        ? "грн"
+        : locale === "de"
+        ? "€"
+        : locale === "cz"
+        ? "Kč "
+        : "$";
     const currentTime = new Date().toISOString();
 
     try {
@@ -251,16 +269,24 @@ export default function PaymentSuccessPage() {
       const messageText = `
       🔔 *Нова успішна підписка*
 
-    📌 *Деталі підписки:*
-    \\- Тип: ${escapeMarkdown(subscriptionTitle)}
-    \\- Термін дії до: ${escapeMarkdown(validUntil)}
-    \\- Сума: ${price} ${currency}\\.
-    👤 *Інформація про користувача:*
-    \\- Ім'я: ${escapeMarkdown(formData.name)}
-    \\- Телефон: ${escapeMarkdown(formData.phone)}
-    \\- Email: ${escapeMarkdown(formData.email)}
-    \\- Час: ${escapeMarkdown(formatDate(currentTime, true))}
-    \\- Країна: ${locale === "ua" ? "UA" : locale === "de" ? "DE" : "EN"}
+        📌 *Деталі підписки:*
+        \\- Тип: ${escapeMarkdown(subscriptionTitle)}
+        \\- Термін дії до: ${escapeMarkdown(validUntil)}
+        \\- Сума: ${price} ${currency}\\.
+        👤 *Інформація про користувача:*
+        \\- Ім'я: ${escapeMarkdown(formData.name)}
+        \\- Телефон: ${escapeMarkdown(formData.phone)}
+        \\- Email: ${escapeMarkdown(formData.email)}
+        \\- Час: ${escapeMarkdown(formatDate(currentTime, true))}
+        \\- Країна: ${
+          locale === "ua"
+            ? "UA"
+            : locale === "de"
+            ? "DE"
+            : locale === "cz"
+            ? "CZ"
+            : "EN"
+        }
       `.trim();
 
       const response = await fetch("/api/send-telegram", {
@@ -415,6 +441,8 @@ export default function PaymentSuccessPage() {
               ? "Не вдалося отримати інформацію про платіж"
               : locale === "de"
               ? "Zahlungsinformationen konnten nicht abgerufen werden"
+              : locale === "cz"
+              ? "Nepodařilo se získat informace o platbě"
               : "Could not retrieve payment information"}
           </p>
         </div>
@@ -464,6 +492,8 @@ export default function PaymentSuccessPage() {
                 ? "Ваш платіж обробляється. Це може зайняти кілька хвилин."
                 : locale === "de"
                 ? "Ihre Zahlung wird bearbeitet. Dies kann einige Minuten dauern."
+                : locale === "cz"
+                ? "Vaše platba se zpracovává. Může to trvat několik minut."
                 : "Your payment is being processed. This may take a few minutes."}
             </p>
           </div>
@@ -479,6 +509,8 @@ export default function PaymentSuccessPage() {
                 ? "На жаль, ваш платіж не вдалося обробити."
                 : locale === "de"
                 ? "Leider konnte Ihre Zahlung nicht bearbeitet werden."
+                : locale === "cz"
+                ? "Bohužel se vaši platbu nepodařilo zpracovat."
                 : "Unfortunately, your payment could not be processed."}
             </p>
           </div>
@@ -494,6 +526,8 @@ export default function PaymentSuccessPage() {
                 ? "Статус платежу: " + paymentStatus.status
                 : locale === "de"
                 ? "Zahlungsstatus: " + paymentStatus.status
+                : locale === "cz"
+                ? "Stav platby: " + paymentStatus.status
                 : "Payment status: " + paymentStatus.status}
             </p>
           </div>

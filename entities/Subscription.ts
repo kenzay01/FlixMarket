@@ -16,6 +16,9 @@ export class Subscription {
   title_ua?: string;
 
   @Column({ nullable: true })
+  title_cs?: string; // Додано для чеської мови
+
+  @Column({ nullable: true })
   imageUrl?: string;
 
   @Column({ nullable: true })
@@ -30,6 +33,9 @@ export class Subscription {
   @Column("simple-array", { nullable: true })
   benefitsList_ua?: string[];
 
+  @Column("simple-array", { nullable: true })
+  benefitsList_cs?: string[]; // Додано для чеської мови
+
   @Column({ nullable: true })
   description?: string;
 
@@ -38,6 +44,9 @@ export class Subscription {
 
   @Column({ nullable: true })
   description_ua?: string;
+
+  @Column({ nullable: true })
+  description_cs?: string; // Додано для чеської мови
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   price_per_month?: number;
@@ -49,6 +58,9 @@ export class Subscription {
   price_per_month_ua?: number;
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
+  price_per_month_cz?: number; // Додано для CZK
+
+  @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   price_per_3months?: number;
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
@@ -56,6 +68,9 @@ export class Subscription {
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   price_per_3months_ua?: number;
+
+  @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
+  price_per_3months_cz?: number; // Додано для CZK
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   price_per_6months?: number;
@@ -67,6 +82,9 @@ export class Subscription {
   price_per_6months_ua?: number;
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
+  price_per_6months_cz?: number; // Додано для CZK
+
+  @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   price_per_12months?: number;
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
@@ -74,6 +92,9 @@ export class Subscription {
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
   price_per_12months_ua?: number;
+
+  @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
+  price_per_12months_cz?: number; // Додано для CZK
 
   @Column("simple-array", { nullable: true })
   regions?: string[];

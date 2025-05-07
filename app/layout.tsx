@@ -63,6 +63,7 @@ export const metadata: Metadata = {
       "en-US": "https://easyplay.com/en",
       "uk-UA": "https://easyplay.com/ua",
       "de-DE": "https://easyplay.com/de",
+      "cz-CZ": "https://easyplay.com/cz",
     },
   },
 

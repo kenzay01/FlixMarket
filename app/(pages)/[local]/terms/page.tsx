@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 
 export default function TermsPage() {
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
 
   const translations = {
     en: {
@@ -711,6 +711,242 @@ export default function TermsPage() {
             title: "5. Änderungen an dieser Datenschutzrichtlinie",
             content: [
               "5.1 Diese Datenschutzrichtlinie kann regelmäßig aktualisiert werden. Änderungen an der Datenschutzrichtlinie werden auf dieser Seite veröffentlicht.",
+            ],
+          },
+        },
+      },
+    },
+    cz: {
+      pageTitle: "Obchodní podmínky",
+      paymentTitle: "Platba a doručení",
+      termsTitle: "Obchodní podmínky",
+      serviceProvided:
+        "Služba je poskytnuta kupujícímu do 24 hodin po zaplacení.",
+      goodsSent:
+        "Zboží je zasíláno přes messengery WhatsApp/Telegram nebo e-mailem.",
+      payment: "Platba je možná na webu kartou, Apple Pay nebo Google Pay.",
+      refundTitle: "Zásady vrácení peněz",
+      refundPolicy:
+        "Vrácení peněz je možné pouze v případě, že službu nelze připojit. Z jiných důvodů není vrácení digitálního produktu možné.",
+      contactTitle: "Kontaktní informace",
+      storeName: 'Online obchod "Easy Play"',
+      tin: "IČ: 3736606793",
+      address: "Cherson, ulice Forštadská 26",
+      phone: "Telefonní číslo: 0954638612",
+      email: "E-mail: easyplaysup@fsubs.info",
+      terms: {
+        welcome: {
+          title: "1. Vítejte",
+          content: [
+            "1.1 EasyPlay je platforma, která umožňuje uživatelům zakoupit skupinová předplatná různých služeb za nižší cenu. Zpracování plateb probíhá přes naši webovou stránku easyplayy.com.",
+          ],
+        },
+        warnings: {
+          title:
+            "2. Důležitá upozornění ohledně sdílení přístupu k online službám",
+          content: [
+            "2.1 Tým EasyPlay vás požádá o potvrzení, že jste si přečetli a dodržujete podmínky použití platné pro online službu, kterou chcete využívat.",
+            "2.2 Jste odpovědní za dodržování platných podmínek použití. Nebudeme nést odpovědnost za žádné ztráty, které vám mohou vzniknout, pokud vám bude zablokován přístup k online službě kvůli nedodržení jejích podmínek použití nebo používání platformy způsobem, který tyto podmínky porušuje.",
+            "2.3 Platforma může okamžitě pozastavit nebo ukončit váš přístup, pokud budeme mít podezření, že využíváte online službu v rozporu s jejími podmínkami.",
+          ],
+        },
+        relationship: {
+          title: "3. Vztah s platformou",
+          content: [
+            "3.1 Tento dokument stanovuje pravidla, která řídí váš vztah s námi. Je důležité, abyste si tyto podmínky přečetli a porozuměli jim před použitím platformy EasyPlay.",
+            "3.2 Přístupem nebo používáním platformy EasyPlay souhlasíte s těmito podmínkami použití. Pokud s nimi nesouhlasíte, platformu EasyPlay prosím nepoužívejte.",
+          ],
+        },
+        personalInfo: {
+          title: "4. Osobní údaje",
+          content: [
+            "4.1 Vaše soukromí je pro nás důležité. Přečtěte si prosím naše Zásady ochrany osobních údajů, abyste pochopili, jak shromažďujeme, používáme a sdílíme vaše údaje.",
+          ],
+        },
+        access: {
+          title: "5. Přístup k platformě EasyPlay",
+          content: [
+            "5.1 Abyste mohli platformu EasyPlay používat, musíte být starší 18 let a právně způsobilí uzavřít veřejnou nabídku ve vaší zemi bydliště.",
+          ],
+        },
+        rights: {
+          title: "6. Právo na používání platformy EasyPlay",
+          content: [
+            "6.1 Veškeré materiály a obsah na platformě EasyPlay patří výhradně platformě nebo jejím důvěryhodným poskytovatelům licencí. Je vám udělena licence k používání tohoto obsahu pouze v souladu s těmito podmínkami.",
+            "6.2 Vaše právo používat EasyPlay je osobní a nepřenositelné.",
+            "6.3 Souhlasíte, že nebudete:",
+            " • 6.3.1 Kopírovat žádnou část platformy EasyPlay;",
+            " • 6.3.2 Prodávat nebo sdílet žádnou část platformy EasyPlay s jinými;",
+            " • 6.3.3 Jakkoliv upravovat žádnou část platformy EasyPlay;",
+            " • 6.3.4 Přistupovat k jakékoli části kódu platformy EasyPlay, která není veřejně sdílena.",
+            "6.4 Veškeré důvěrné informace, autorská práva a práva duševního vlastnictví patří výhradně platformě EasyPlay nebo licencovaným třetím stranám.",
+            "6.5 Souhlasíte, že nemáte žádná práva k jakékoli části platformy kromě práva ji používat podle těchto podmínek.",
+          ],
+        },
+        paymentSystem: {
+          title: "7. Platební systém",
+          content: [
+            "7.1 Pokračováním v používání platformy EasyPlay souhlasíte s dodržováním smlouvy o poskytování služeb MonoBank. Souhlasíte s poskytnutím přesných a úplných informací a povolujete použití vašich údajů a informací o transakcích.",
+          ],
+        },
+        fees: {
+          title: "8. Poplatky a platby",
+          content: [
+            "8.1 Při přihlášení k odběru musíte poskytnout platné, aktuální a úplné údaje o kreditní nebo debetní kartě. Zakoupením předplatného opravňujete platformu k účtování poplatků z vaší karty a potvrzujete přesnost vašich údajů.",
+            "8.2 Jste odpovědní za udržování aktuálních platebních údajů ve vašem osobním účtu.",
+          ],
+        },
+        refunds: {
+          title: "9. Vrácení peněz",
+          content: [
+            "9.1 Nárok na vrácení peněz je na uvážení EasyPlay na základě dostupných informací.",
+            "9.2 Vrácení peněz je prováděno na původní kartu použitou k platbě.",
+          ],
+        },
+        yourContent: {
+          title: "10. Váš obsah",
+          content: [
+            "10.1 Potvrzujete, že jakýkoli obsah (text, obrázky, veřejné komentáře), který nahrajete, je v souladu s těmito podmínkami.",
+            "10.2 Nečiníme si nárok na vlastnictví vašeho obsahu, ale udělujete nám celosvětovou, nevýhradní, bezplatnou a trvalou licenci k používání, kopírování, reprodukci, distribuci, úpravě a sdílení vašeho obsahu pro služby EasyPlay.",
+            "10.3 Musíte zajistit, že máte práva sdílet jakýkoli obsah třetích stran zahrnutý ve vašem uživatelském obsahu.",
+            "10.4 Poskytnutím zpětné vazby souhlasíte, že ji můžeme používat bez omezení nebo kompenzace.",
+            "10.5 Naše práva na váš obsah neovlivňují vaše práva na ochranu soukromí. Přečtěte si naše Zásady ochrany osobních údajů.",
+          ],
+        },
+        acceptableUse: {
+          title: "11. Zásady přijatelného používání",
+          content: [
+            "11.1 Tato část popisuje konkrétní pravidla pro používání platformy EasyPlay.",
+            "11.2 Nesmíte:",
+            " • 11.2.1 Obcházet nebo narušovat bezpečnostní funkce;",
+            " • 11.2.2 Porušovat tyto podmínky;",
+            " • 11.2.3 Používat platformu, pokud jste byli pozastaveni nebo zakázáni;",
+            " • 11.2.4 Propagovat nebo inzerovat na platformě;",
+            " • 11.2.5 Odesílat nevyžádané marketingové zprávy;",
+            " • 11.2.6 Upravovat nebo hackovat platformu;",
+            " • 11.2.7 Zavádět malware nebo škodlivé materiály;",
+            " • 11.2.8 Shromažďovat data v rozporu s těmito podmínkami;",
+            " • 11.2.9 Zveřejňovat obsah, který nevlastníte nebo porušuje práva třetích stran;",
+            " • 11.2.10 Používat automatizované systémy k přetížení platformy.",
+            "11.3 Porušení podmínek může vést k:",
+            " • 11.3.1 Okamžitému nebo trvalému pozastavení;",
+            " • 11.3.2 Varování.",
+            "11.4 Tento seznam není vyčerpávající a mohou být přijata další opatření.",
+          ],
+        },
+        takedown: {
+          title: "12. Zásady stažení obsahu",
+          content: [
+            "12.1 Pokud se domníváte, že nějaký obsah porušuje vaše práva, kontaktujte naši podporu prostřednictvím e-mailu (easyplaysup@fsubs.info), Telegramu nebo vašeho osobního účtu. Uveďte:",
+            " • 12.1.1 Vaše jméno a kontaktní údaje;",
+            " • 12.1.2 Podrobné vysvětlení porušení;",
+            " • 12.1.3 Odkaz nebo identifikátor sporného obsahu.",
+            "12.2 Odpovíme do 24 hodin s plánovaným postupem.",
+          ],
+        },
+        termination: {
+          title: "13. Ukončení",
+          content: [
+            "13.1 Pokud nesouhlasíte s těmito podmínkami nebo budoucími změnami, přestaňte službu okamžitě používat.",
+            "13.2 Pro uzavření vašeho účtu kontaktujte podporu na easyplaysup@fsubs.info nebo přes Telegram.",
+            "13.3 Můžeme váš přístup okamžitě ukončit, pokud porušíte tyto podmínky nebo jiná klíčová pravidla.",
+            "13.4 Služby mohou být také ukončeny s předchozím oznámením.",
+          ],
+        },
+        liability: {
+          title: "14. Odpovědnost platformy",
+          content: [
+            "14.1 I když usilujeme o vysoké standardy, některé funkce závisí na sítích třetích stran.",
+            "14.2 EasyPlay nenese odpovědnost za obsah třetích stran nebo problémy s přístupem ke službám, včetně:",
+            " • 14.2.1 Akcí uživatelů (např. neúspěšné platby nebo porušení pravidel);",
+            " • 14.2.2 Nedostupnosti služby.",
+            "14.3 EasyPlay je poskytován 'tak, jak je' a 'jak je dostupný'. Negarantujeme nepřetržité nebo bezchybné používání.",
+            "14.4 V případě nároku nepřesáhne naše odpovědnost administrativní poplatky, které jste zaplatili za posledních 12 měsíců. Pokud jste neprovedli žádnou platbu, neneseme odpovědnost.",
+            "14.5 Nejsme odpovědní za nepředvídatelné škody nebo škody způsobené vaším porušením podmínek.",
+          ],
+        },
+        disputes: {
+          title: "15. Řešení sporů",
+          content: [
+            "15.1 Pokud vznikne spor, kontaktujte nás prostřednictvím e-mailu nebo Telegramu k neformálnímu vyřešení.",
+            "15.2 Pokud se spor nevyřeší neformálně, budeme s vámi spolupracovat na nalezení nejlepšího způsobu řešení.",
+          ],
+        },
+        platformChanges: {
+          title: "16. Změny na platformě",
+          content: [
+            "16.1 Pravidelně aktualizujeme a vylepšujeme EasyPlay, abychom přidali nové funkce a služby.",
+            "16.2 Aktualizace mohou změnit funkce nebo obsah a mohou vést k resetování nebo odstranění dat.",
+            "16.3 Pokračováním v používání platformy po aktualizacích souhlasíte se změnami. Používání můžete kdykoli ukončit.",
+          ],
+        },
+        termsChanges: {
+          title: "17. Změny podmínek",
+          content: [
+            "17.1 Tyto podmínky mohou být příležitostně aktualizovány, přičemž nejnovější verze je vždy dostupná na této stránce.",
+            "17.2 Změny mohou být způsobeny novými funkcemi, právními aktualizacemi nebo objasněním.",
+            "17.3 Snažíme se uživatele předem informovat, ale okamžité změny mohou nastat bez předchozího upozornění.",
+          ],
+        },
+        agreement: {
+          title: "18. Právní dohoda",
+          content: [
+            "18.1 Tyto podmínky tvoří úplnou dohodu mezi vámi a EasyPlay.",
+            "18.2 Pokud je některá část nevymahatelná, zůstává zbytek platný.",
+            "18.3 Pokud EasyPlay nejedná okamžitě v případě porušení, zachovává si právo jednat později.",
+          ],
+        },
+        contact: {
+          title: "19. Kontakt",
+          content: [
+            "19.1 Pro dotazy týkající se těchto podmínek nás kontaktujte na easyplaysup@fsubs.info.",
+          ],
+        },
+      },
+      privacyPolicy: {
+        title: "Zásady ochrany osobních údajů",
+        intro: [
+          "Tým služby EasyPlay klade velký důraz na bezpečnost údajů uživatelů. Striktně dodržujeme tyto Zásady ochrany osobních údajů, abyste se nemuseli obávat, co se děje s vašimi osobními údaji poskytnutými platformě během registrace.",
+          "Registrací na platformě EasyPlay souhlasíte se zpracováním všech údajů zadaných pro účely registrace, aby byly služby poskytovány řádně v souladu s veřejnou nabídkou.",
+          "Registrací na platformě také potvrzujete, že jste se seznámili se svými právy jako subjektu údajů podle článku 8 ukrajinského zákona 'O ochraně osobních údajů'. Tento dokument je dostupný na: http://zakon2.rada.gov.ua/laws/show/2297-17.",
+        ],
+        sections: {
+          collection: {
+            title: "1. Shromažďování osobních údajů",
+            content: [
+              "1.1 Během registrace na platformě EasyPlay vás žádáme o poskytnutí nezbytných osobních údajů v rozsahu potřebném pro plné poskytování služeb. V případě potřeby si platforma vyhrazuje právo požadovat další osobní údaje.",
+              "1.2 Náš tým může shromažďovat informace o vašich návštěvách platformy EasyPlay, jako je IP adresa, typ a jazyk prohlížeče a datum a čas požadavku.",
+              "1.3 Některé služby nabízené platformou EasyPlay jsou propojeny s jinými webovými stránkami. Osobní údaje poskytnuté těmito stránkami mohou být předány nám pro poskytování služeb. Platforma také zpracovává tyto údaje v souladu s těmito Zásadami ochrany osobních údajů.",
+              "1.4 Tento dokument zaručuje, že anonymní recenze zanechané na našem webu zůstávají plně důvěrné a nebudou přístupné třetím stranám, včetně jiných uživatelů platformy.",
+              "1.5 Platforma EasyPlay může zpracovávat osobní údaje na serverech na Ukrajině i v jiných zemích.",
+            ],
+          },
+          access: {
+            title: "2. Přístup k informacím",
+            content: [
+              "2.1 Vaše osobní údaje mohou být sdíleny s třetími stranami pouze za následujících okolností:",
+              "2.1.1 Pokud jste k tomu dali výslovný souhlas. Pro předání jakýchkoli citlivých informací je vyžadován váš souhlas.",
+              "2.1.2 Pro dodržování ukrajinské legislativy, včetně poskytování informací na žádost fyzických nebo právnických osob, institucí, organizací jakékoli formy vlastnictví nebo státních orgánů oprávněných tyto informace získat podle ukrajinského práva.",
+              "2.1.3 Pro vyšetřování potenciálních porušení veřejné nabídky, což může zahrnovat poskytnutí informací o vás v reakci na řádně podaný právní požadavek týkající se porušení.",
+              "2.1.4 Pro odhalování a prevenci podvodných aktivit, řešení bezpečnostních problémů a odstraňování technických poruch.",
+            ],
+          },
+          protection: {
+            title: "3. Ochrana informací",
+            content: [
+              "3.1 Tým EasyPlay přijímá všechna nezbytná opatření k ochraně vašich údajů před neoprávněným přístupem. Tato opatření zahrnují interní kontroly procesů shromažďování, ukládání a zpracování údajů a bezpečnostní opatření k prevenci neoprávněného přístupu.",
+            ],
+          },
+          modification: {
+            title: "4. Přístup k osobním údajům a jejich úprava",
+            content: [
+              "4.1 Platforma EasyPlay vynakládá veškeré úsilí, aby vám poskytla přístup k vašim osobním údajům, umožnila provést změny, pokud jsou údaje nesprávné, nebo je na váš požadavek smazala. Před zpracováním takových požadavků žádáme uživatele, aby ověřili svou totožnost a specifikovali údaje, ke kterým chtějí přistupovat, které chtějí upravit nebo smazat.",
+            ],
+          },
+          changes: {
+            title: "5. Změny těchto Zásad ochrany osobních údajů",
+            content: [
+              "5.1 Tyto Zásady ochrany osobních údajů mohou být pravidelně aktualizovány. Změny budou zveřejněny na této stránce.",
             ],
           },
         },

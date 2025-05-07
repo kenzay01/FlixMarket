@@ -59,6 +59,8 @@ export default function AdminDashboard() {
                 title = subscription.title_ua;
               } else if (payment.locale === "de" && subscription.title_de) {
                 title = subscription.title_de;
+              } else if (payment.locale === "cz" && subscription.title_cs) {
+                title = subscription.title_cs;
               }
 
               const startDate = new Date(payment.startDate);
@@ -114,7 +116,6 @@ export default function AdminDashboard() {
       });
 
       setUsers(processedUsers);
-      // setTotalUsers(processedUsers.length);
     }
   }, [fetchedUsers, fetchedSubscriptionPayments, fetchedSubscriptions]);
 

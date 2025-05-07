@@ -14,7 +14,7 @@ export default function PopularItem({
 }) {
   const router = useRouter();
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
 
   const isEven = index % 2 === 0;
   const btnTitle = useClientTranslation("buy_now");
@@ -25,18 +25,24 @@ export default function PopularItem({
       ? item.title
       : locale === "ua"
       ? item.title_ua
+      : locale === "cz"
+      ? item.title_cs
       : item.title_de;
   const displayDescription =
     locale === "en"
       ? item.description
       : locale === "ua"
       ? item.description_ua
+      : locale === "cz"
+      ? item.description_cs
       : item.description_de;
   const displayBenefits =
     locale === "en"
       ? item.benefitsList
       : locale === "ua"
       ? item.benefitsList_ua
+      : locale === "cz"
+      ? item.benefitsList_cs
       : item.benefitsList_de;
 
   // Function to get the best available price and subscription duration
@@ -48,24 +54,32 @@ export default function PopularItem({
           ? item.price_per_3months
           : locale === "ua"
           ? item.price_per_3months_ua
+          : locale === "cz"
+          ? item.price_per_3months_cz
           : item.price_per_3months_eu,
       "1":
         locale === "en"
           ? item.price_per_month
           : locale === "ua"
           ? item.price_per_month_ua
+          : locale === "cz"
+          ? item.price_per_month_cz
           : item.price_per_month_eu,
       "6":
         locale === "en"
           ? item.price_per_6months
           : locale === "ua"
           ? item.price_per_6months_ua
+          : locale === "cz"
+          ? item.price_per_6months_cz
           : item.price_per_6months_eu,
       "12":
         locale === "en"
           ? item.price_per_12months
           : locale === "ua"
           ? item.price_per_12months_ua
+          : locale === "cz"
+          ? item.price_per_12months_cz
           : item.price_per_12months_eu,
     };
 
@@ -90,7 +104,14 @@ export default function PopularItem({
   };
 
   const { price, duration } = getBestPriceOption();
-  const currencySymbol = locale === "en" ? "$" : locale === "ua" ? "₴" : "€";
+  const currencySymbol =
+    locale === "en"
+      ? "$"
+      : locale === "ua"
+      ? "₴"
+      : locale === "cz"
+      ? "Kč "
+      : "€";
 
   return (
     <section

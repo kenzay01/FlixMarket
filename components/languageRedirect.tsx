@@ -2,13 +2,15 @@
 
 import { useEffect } from "react";
 
-type Locale = "en" | "ua" | "de";
+type Locale = "en" | "ua" | "de" | "cz";
 
 const COUNTRY_TO_LOCALE: Record<string, Locale> = {
   UA: "ua",
   US: "en",
   GB: "en",
   DE: "de",
+  CZ: "cz",
+  SK: "cz",
 };
 
 const LanguageRedirect = () => {

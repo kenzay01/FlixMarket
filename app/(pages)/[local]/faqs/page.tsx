@@ -103,6 +103,37 @@ const faqData: Record<string, FAQ[]> = {
       answer: "Так, гарантія діє протягом усього терміну підписки.",
     },
   ],
+  cz: [
+    {
+      question: "Kdo jsme?",
+      answer:
+        "EasyPlay je platforma, která vám umožňuje ušetřit na nákladech na předplatné populárních služeb, jako jsou Netflix, Spotify, Disney+, VPN a mnoho dalších. S naší platformou můžete bez námahy ušetřit až 70 % jejich ceny.",
+    },
+    {
+      question: "Jak zakoupit předplatné?",
+      answer:
+        "Chcete-li aktivovat předplatné, postupujte podle těchto kroků:\n1. Zaregistrujte se nebo se přihlaste na webu.\n2. Vyberte si požadované předplatné a jeho délku.\n3. Proveďte platbu.\n4. Po zaplacení vás bude kontaktovat manažer a aktivuje vaše předplatné (nejpozději do 24 hodin po zaplacení).",
+    },
+    {
+      question: "Co dělat, když předplatné nefunguje?",
+      answer:
+        "Po zaplacení budete mít přístup k chatu s manažerem, který vám pomůže vyřešit jakékoli problémy související s vaším předplatným.",
+    },
+    {
+      question: "Jaké platební metody jsou k dispozici?",
+      answer:
+        "Platit můžete kartou přímo na našem webu (Apple Pay/Google Pay).",
+    },
+    {
+      question: "Mohu předplatné používat na více zařízeních?",
+      answer:
+        "Počet podporovaných zařízení je uveden v popisu každého produktu.",
+    },
+    {
+      question: "Je na předplatné záruka?",
+      answer: "Ano, záruka platí po celou dobu trvání předplatného.",
+    },
+  ],
 };
 
 export default function Faqs() {

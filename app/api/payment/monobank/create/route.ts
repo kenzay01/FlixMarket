@@ -15,6 +15,30 @@ interface MonobankInvoiceResponse {
   pageUrl: string;
 }
 
+async function convertCzkToEur(czkAmount: number): Promise<number> {
+  try {
+    // Use Frankfurter API for CZK to EUR conversion
+    const response = await fetch(
+      "https://api.frankfurter.app/latest?from=CZK&to=EUR"
+    );
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    const data = await response.json();
+
+    const czkToEurRate = data.rates.EUR;
+    if (!czkToEurRate) {
+      throw new Error("CZK to EUR rate not found in Frankfurter API");
+    }
+
+    return czkAmount * czkToEurRate;
+  } catch (error) {
+    console.error(
+      "Error fetching CZK to EUR rate from Frankfurter API:",
+      error
+    );
+    throw error;
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Ініціалізація підключення до БД
@@ -82,6 +106,31 @@ export async function POST(request: NextRequest) {
           break;
       }
       currencyCode = 978;
+    } else if (locale == "cz") {
+      switch (selectedPlan) {
+        case "1":
+          price = await convertCzkToEur(
+            Number(subscription.price_per_month_cz)
+          );
+          break;
+        case "3":
+          price = await convertCzkToEur(
+            Number(subscription.price_per_3months_cz)
+          );
+          break;
+        case "6":
+          price = await convertCzkToEur(
+            Number(subscription.price_per_6months_cz)
+          );
+          break;
+        case "12":
+          price = await convertCzkToEur(
+            Number(subscription.price_per_12months_cz)
+          );
+          break;
+      }
+
+      currencyCode = 978;
     } else {
       switch (selectedPlan) {
         case "1":
@@ -117,6 +166,8 @@ export async function POST(request: NextRequest) {
         ? subscription.title_ua || subscription.title
         : locale === "de"
         ? subscription.title_de || subscription.title
+        : locale === "cz"
+        ? subscription.title_cs || subscription.title
         : subscription.title;
 
     const webhookCallbackUrl = `${REDIRECT_URL}/api/payment/monobank/webhook`;
@@ -132,6 +183,8 @@ export async function POST(request: NextRequest) {
             ? `Оплата підписки: ${title} (${selectedPlan} міс.)`
             : locale === "de"
             ? `Abonnementzahlung: ${title} (${selectedPlan} Monate)`
+            : locale === "cz"
+            ? `Platba za předplatné: ${title} (${selectedPlan} měsíců)`
             : `Subscription payment: ${title} (${selectedPlan} months)`,
         basketOrder: [
           {

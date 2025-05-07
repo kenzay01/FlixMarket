@@ -49,6 +49,7 @@ export default function MyProfile() {
           title: "Unknown Subscription",
           title_ua: "Невідома підписка",
           title_de: "Unbekanntes Abonnement",
+          title_cs: "Neznámé předplatné",
         },
       };
     });
@@ -82,6 +83,7 @@ export default function MyProfile() {
             title: "Unknown Subscription",
             title_ua: "Невідома підписка",
             title_de: "Unbekanntes Abonnement",
+            title_cs: "Neznámé předplatné",
           },
         };
       });
@@ -182,7 +184,7 @@ export default function MyProfile() {
   };
 
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -310,6 +312,8 @@ export default function MyProfile() {
                               ? subscription.subscription.title
                               : locale === "ua"
                               ? subscription.subscription.title_ua
+                              : locale === "cz"
+                              ? subscription.subscription.title_cs
                               : subscription.subscription.title_de}
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
@@ -328,6 +332,8 @@ export default function MyProfile() {
                           ? "$"
                           : subscription.locale === "ua"
                           ? "₴"
+                          : subscription.locale === "cz"
+                          ? "Kč "
                           : "€"}
                         {subscription.price} / {subscription.duration}{" "}
                         {locale === "ua"
@@ -363,6 +369,8 @@ export default function MyProfile() {
                               ? subscription.subscription.title
                               : locale === "ua"
                               ? subscription.subscription.title_ua
+                              : locale === "cz"
+                              ? subscription.subscription.title_cs
                               : subscription.subscription.title_de}
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
@@ -381,6 +389,8 @@ export default function MyProfile() {
                           ? "$"
                           : subscription.locale === "ua"
                           ? "₴"
+                          : subscription.locale === "cz"
+                          ? "Kč "
                           : "€"}
                         {subscription.price} / {subscription.duration}{" "}
                         {locale === "ua"
@@ -433,6 +443,8 @@ export default function MyProfile() {
                               ? payment.subscription.title
                               : locale === "ua"
                               ? payment.subscription.title_ua
+                              : locale === "cz"
+                              ? payment.subscription.title_cs
                               : payment.subscription.title_de}
                           </td>
                           <td className="py-3 px-4 text-sm">
@@ -440,6 +452,8 @@ export default function MyProfile() {
                               ? "$"
                               : payment.locale === "ua"
                               ? "₴"
+                              : payment.locale === "cz"
+                              ? "Kč "
                               : "€"}{" "}
                             {payment.price}
                           </td>

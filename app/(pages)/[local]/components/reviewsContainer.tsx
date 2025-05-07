@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 
 export default function ReviewsContainer() {
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -276,6 +276,94 @@ export default function ReviewsContainer() {
     },
   ];
 
+  // Translations for Czech
+  const czechReviews = [
+    {
+      id: 1,
+      email: "ivanov123@ukr.net",
+      rating: 4,
+      comment:
+        "Jeden z nejlepších servisů! Doporučili mi přátelé, ale je to prostě skvělé — předplatné je o 50-70 % levnější. Doporučuji vyzkoušet!",
+    },
+    {
+      id: 2,
+      username: "Marina",
+      rating: 5,
+      comment:
+        "Jsem velmi spokojená s předplatným. Podpora je výborná, rychle odpovídají a pomohli mi s připojením jednoho z nich v zahraničí. Nekonečně vděčná!!!",
+    },
+    {
+      id: 3,
+      email: "pavlo.d@gmail.com",
+      rating: 5,
+      comment:
+        "Jsem maximálně ohromen jejich laskavostí a ochotou řešit všechny komplikace! Takovou technickou podporu jsem ještě nezažil. Velmi vděčný!",
+    },
+    {
+      id: 4,
+      username: "Oleksii",
+      rating: 5,
+      comment:
+        "Vyzkoušel jsem různé služby, už několik měsíců používám GPT chat – je to nenahraditelné. Děkuji, že jste mi to zpřístupnili.",
+    },
+    {
+      id: 5,
+      email: "anna.petrenko@mail.com",
+      rating: 5,
+      comment:
+        "Jsem nadšená! Ušetřila jsem 300 UAH a sleduji Netflix doslova celý den) Děkuji 🤍",
+    },
+    {
+      id: 6,
+      username: "Vitalii",
+      rating: 5,
+      comment:
+        "Velké díky za vaši práci! Předplatné je skutečně levnější, vše je rychlé a pohodlné. Používám s radostí, vše funguje skvěle.",
+    },
+    {
+      id: 7,
+      email: "dmytro.levchuk@ukr.net",
+      rating: 5,
+      comment:
+        "Prostě díky za službu! Dříve jsem používal podobný způsob s přáteli, ale tady lze opravdu pěkně ušetřit. Upřímně děkuji a přeji úspěch!",
+    },
+    {
+      id: 8,
+      username: "Tetiana",
+      rating: 4,
+      comment:
+        "Služba, která mi šetří peníze. Pohodlné a efektivní. Těším se na rozšíření služeb dostupných pro předplatné.",
+    },
+    {
+      id: 9,
+      username: "Yuliia",
+      rating: 5,
+      comment:
+        "Nejlepší! Podpora na Telegramu je samostatná láska! Položila jsem 1000 otázek, na vše odpověděli a pomohli ♥️",
+    },
+    {
+      id: 10,
+      username: "Serhii",
+      rating: 5,
+      comment:
+        "Ani si nedokážu představit, jak jsem bez vás dříve fungoval) Doporučuji všem!",
+    },
+    {
+      id: 11,
+      username: "Olena",
+      rating: 5,
+      comment:
+        "Vaše služba je opravdu skvělý objev! Dostupné předplatné, vynikající kvalita a hlavně – značné úspory ) Teď ji používají i všichni moji přátelé!",
+    },
+    {
+      id: 12,
+      username: "Maksym",
+      rating: 5,
+      comment:
+        "Doporučil jsem vás přátelům, kteří kupovali Netflix přímo. Řekl jsem jim, že takto je to levnější! Teď to používáme všichni společně! Vše je skvělé!",
+    },
+  ];
+
   // Function to get reviews based on locale
   const getLocalizedReviews = () => {
     switch (locale) {
@@ -283,6 +371,8 @@ export default function ReviewsContainer() {
         return englishReviews;
       case "de":
         return germanReviews;
+      case "cz":
+        return czechReviews;
       case "ua":
       default:
         return originalReviews;
@@ -308,6 +398,12 @@ export default function ReviewsContainer() {
       usersText: "AKTIVE PLATTFORMNUTZER",
       savings: "€180",
       savingsText: "DURCHSCHNITTLICHE JÄHRLICHE EINSPARUNG",
+    },
+    cz: {
+      users: "10 000+",
+      usersText: "AKTIVNÍ UŽIVATELÉ PLATFORMA",
+      savings: "2300 Kč",
+      savingsText: "PRŮMĚRNÁ ROČNÍ ÚSPORA",
     },
   };
 

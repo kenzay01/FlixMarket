@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function SignIn() {
   const router = useRouter();
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
   const singIn = useClientTranslation("sign_in");
   const emailLabel = useClientTranslation("email");
   const passwordLabel = useClientTranslation("password");

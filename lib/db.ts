@@ -1,13 +1,18 @@
 import { DataSource } from "typeorm";
 // import { AddInvoiceIdToSubscriptionPayment1744200331629 } from "./migrations/1744200331629-AddInvoiceIdToSubscriptionPayment";
 import config from "../ormconfig";
+import { AddCzechLanguageAndCZKPrices1744200331630 } from "../migrations/1744200331630-AddCzechLanguageAndCZKPrices";
+import { AddPolandLanguageAndPlnPrices1745200331630 } from "../migrations/1745200331630-AddPolandLanguageAndPlnPrices";
 
 export const AppDataSource =
   typeof window === "undefined"
     ? new DataSource({
         ...config,
-        // migrations: [__dirname + "/migrations/*.ts"],
-        // migrationsTableName: "migrations",
+        migrations: [
+          AddCzechLanguageAndCZKPrices1744200331630,
+          AddPolandLanguageAndPlnPrices1745200331630,
+        ], // Додано шлях до міграцій
+        migrationsTableName: "migrations",
       })
     : null;
 

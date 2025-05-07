@@ -32,7 +32,7 @@ export default function HomeBanner() {
   const [isLoading, setIsLoading] = useState(true);
 
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
   const noSubscriptions = useClientTranslation("no_subscriptions");
   const loadingText = useClientTranslation("loading") || "Loading...";
 
@@ -43,24 +43,32 @@ export default function HomeBanner() {
           ? subscription.price_per_3months
           : locale === "ua"
           ? subscription.price_per_3months_ua
+          : locale === "cz"
+          ? subscription.price_per_3months_cz
           : subscription.price_per_3months_eu,
       "1":
         locale === "en"
           ? subscription.price_per_month
           : locale === "ua"
           ? subscription.price_per_month_ua
+          : locale === "cz"
+          ? subscription.price_per_month_cz
           : subscription.price_per_month_eu,
       "6":
         locale === "en"
           ? subscription.price_per_6months
           : locale === "ua"
           ? subscription.price_per_6months_ua
+          : locale === "cz"
+          ? subscription.price_per_6months_cz
           : subscription.price_per_6months_eu,
       "12":
         locale === "en"
           ? subscription.price_per_12months
           : locale === "ua"
           ? subscription.price_per_12months_ua
+          : locale === "cz"
+          ? subscription.price_per_12months_cz
           : subscription.price_per_12months_eu,
     };
 
@@ -190,6 +198,8 @@ export default function HomeBanner() {
               ? subscription.title
               : locale === "ua"
               ? subscription.title_ua
+              : locale === "cz"
+              ? subscription.title_cs
               : subscription.title_de;
 
           const logoUrl = getServiceLogo(title);
@@ -225,6 +235,8 @@ export default function HomeBanner() {
                       ? subscription.description
                       : locale === "ua"
                       ? subscription.description_ua
+                      : locale === "cz"
+                      ? subscription.description_cs
                       : subscription.description_de}
                   </p>
                   <div className="mb-8">
@@ -232,7 +244,13 @@ export default function HomeBanner() {
                       const { price, duration } =
                         getBestPriceOption(subscription);
                       const currencySymbol =
-                        locale === "en" ? "$" : locale === "ua" ? "₴" : "€";
+                        locale === "en"
+                          ? "$"
+                          : locale === "ua"
+                          ? "₴"
+                          : locale === "cz"
+                          ? "Kč "
+                          : "€";
 
                       return (
                         <span className="text-xl md:text-3xl font-bold">

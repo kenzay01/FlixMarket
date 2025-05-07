@@ -13,7 +13,7 @@ export default function MyProfileLayout({
   const { status } = useSession();
   const params = useParams();
   const router = useRouter();
-  const locale = (params.local as "en" | "de" | "ua") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
   const [showSignOutModal, setShowSignOutModal] = useState(false);
 
   const logOut = useClientTranslation("log_out");

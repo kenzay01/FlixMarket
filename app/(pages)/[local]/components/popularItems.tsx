@@ -42,7 +42,7 @@ export default function PopularItems() {
     }
   }, [fetchSubscriptions, subscriptions.length]);
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
   const noSubscriptions = useClientTranslation("no_subscriptions");
   const title = useClientTranslation("popular_items");
   const loadingText = useClientTranslation("loading") || "Loading...";

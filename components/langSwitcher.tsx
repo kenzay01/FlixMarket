@@ -6,17 +6,21 @@ export default function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
   const pathname = usePathname();
 
   const isHomePage =
-    pathname === "/en" || pathname === "/de" || pathname === "/ua";
+    pathname === "/en" ||
+    pathname === "/de" ||
+    pathname === "/ua" ||
+    pathname === "/cz";
   const currentLocale = pathname.split("/")[1];
 
   const locales = [
     { code: "en", name: "EN" },
     { code: "de", name: "DE" },
     { code: "ua", name: "UA" },
+    { code: "cz", name: "CZ" },
   ];
 
   const switchLanguage = (newLocale: string) => {
-    const newPath = `/${newLocale}${pathname.replace(/^\/(en|de|ua)/, "")}`;
+    const newPath = `/${newLocale}${pathname.replace(/^\/(en|de|ua|cz)/, "")}`;
     router.push(newPath);
   };
 

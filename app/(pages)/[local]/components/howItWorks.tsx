@@ -24,10 +24,18 @@ const steps = {
     "Ein Mitarbeiter wird Sie kontaktieren und Ihr Abonnement aktivieren",
     "Genießen Sie Qualitätsdienstleistungen während des bezahlten Zeitraums",
   ],
+  cz: [
+    "Přihlaste se nebo se registrujte na našem webu",
+    "Vyberte si požadované předplatné a jeho délku",
+    "Zaplaťte za svou objednávku",
+    "Manažer vás bude kontaktovat a aktivuje vaše předplatné",
+    "Užijte si kvalitní služby po dobu zaplaceného období",
+  ],
 };
+
 export default function HowItWorks() {
   const params = useParams();
-  const locale = (params.local as "en" | "ua" | "de") || "en";
+  const locale = (params.local as "en" | "ua" | "de" | "cz") || "en";
   const stepTitle = useClientTranslation("step");
   const mainTitle = useClientTranslation("how_it_works");
   const currentSteps = steps?.[locale] ?? [];
@@ -48,7 +56,7 @@ export default function HowItWorks() {
           <div className="w-full">
             <img
               src="/howItWorks.png"
-              alt="Як це працює"
+              alt="Jak to funguje"
               className="w-full aspect-[13/9] object-cover"
             />
           </div>
@@ -65,7 +73,7 @@ export default function HowItWorks() {
             {currentSteps.map((step, index) => {
               return (
                 <div key={index} className="flex gap-4 items-start my-8">
-                  <div className="w-16 h-16  bg-indigo-300 text-indigo-600 rounded-full flex items-center justify-center text-2xl">
+                  <div className="w-16 h-16 bg-indigo-300 text-indigo-600 rounded-full flex items-center justify-center text-2xl">
                     {index + 1}
                   </div>
                   <div className="p-2 flex-1">

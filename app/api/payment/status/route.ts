@@ -82,6 +82,7 @@ export async function GET(request: NextRequest) {
           title: subscription.title,
           title_ua: subscription.title_ua,
           title_de: subscription.title_de,
+          title_cs: subscription.title_cs,
         },
       });
     }
@@ -116,6 +117,7 @@ export async function GET(request: NextRequest) {
         title: subscription.title,
         title_ua: subscription.title_ua,
         title_de: subscription.title_de,
+        title_cs: subscription.title_cs,
       },
     });
   } catch (error) {

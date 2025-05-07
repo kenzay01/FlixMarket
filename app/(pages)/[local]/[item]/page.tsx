@@ -10,15 +10,12 @@ import { useSubscriptions } from "@/context/hooks";
 import { getMonthsUa } from "@/app/funcs/getMonthsUa";
 import { useSession } from "next-auth/react";
 import { useUsers } from "@/context/hooks";
-// import { useAuth } from "@/context/auth";
 
 export default function ItemPage() {
   const { subscriptions } = useSubscriptions();
   const { data: session } = useSession();
   const { users } = useUsers();
   const user = users.find((user) => user.id === session?.user.id);
-  // console.log("user", user.id);
-  // const { user } = useAuth(); // Отримуємо дані про користувача
   const params = useParams();
   const router = useRouter();
   const locale = params.local as string;
@@ -56,6 +53,8 @@ export default function ItemPage() {
       ? subscription[`${field}_de` as keyof Subscription]
       : locale === "ua" && subscription[`${field}_ua` as keyof Subscription]
       ? subscription[`${field}_ua` as keyof Subscription]
+      : locale === "cz" && subscription[`${field}_cs` as keyof Subscription]
+      ? subscription[`${field}_cs` as keyof Subscription]
       : subscription[field as keyof Subscription];
   };
 
@@ -65,6 +64,8 @@ export default function ItemPage() {
       ? subscription.benefitsList_de
       : locale === "ua"
       ? subscription.benefitsList_ua
+      : locale === "cz"
+      ? subscription.benefitsList_cs
       : subscription.benefitsList;
   };
 
@@ -73,28 +74,37 @@ export default function ItemPage() {
 
     const monthTermin = [];
     const isEuro = locale === "de";
+    const isCz = locale === "cz";
     const isUa = locale === "ua";
 
     const priceForMonth = isEuro
       ? subscription.price_per_month_eu
+      : isCz
+      ? subscription.price_per_month_cz
       : isUa
       ? subscription.price_per_month_ua
       : subscription.price_per_month;
 
     const priceFor3Months = isEuro
       ? subscription.price_per_3months_eu
+      : isCz
+      ? subscription.price_per_3months_cz
       : isUa
       ? subscription.price_per_3months_ua
       : subscription.price_per_3months;
 
     const priceFor6Months = isEuro
       ? subscription.price_per_6months_eu
+      : isCz
+      ? subscription.price_per_6months_cz
       : isUa
       ? subscription.price_per_6months_ua
       : subscription.price_per_6months;
 
     const priceFor12Months = isEuro
       ? subscription.price_per_12months_eu
+      : isCz
+      ? subscription.price_per_12months_cz
       : isUa
       ? subscription.price_per_12months_ua
       : subscription.price_per_12months;
@@ -127,6 +137,9 @@ export default function ItemPage() {
     try {
       setIsProcessing(true);
 
+      console.log("Selected plan:", selectedPlan);
+      console.log("Subscription ID:", subscription.id);
+      console.log("User ID:", user?.id);
       // Створюємо запит до нашого API для ініціалізації платежу
       const response = await fetch("/api/payment/monobank/create", {
         method: "POST",
@@ -156,6 +169,8 @@ export default function ItemPage() {
           ? "Помилка при створенні платежу. Спробуйте пізніше."
           : locale === "de"
           ? "Fehler bei der Zahlungserstellung. Bitte versuchen Sie es später erneut."
+          : locale === "cz"
+          ? "Chyba při vytváření platby. Zkuste to prosím znovu později."
           : "Error creating payment. Please try again later."
       );
 
@@ -167,36 +182,47 @@ export default function ItemPage() {
     if (!subscription) return 0;
 
     const isEuro = locale === "de";
+    const isCz = locale === "cz";
     const isUa = locale === "ua";
 
     switch (selectedPlan) {
       case "1":
         return isEuro
           ? subscription.price_per_month_eu
+          : isCz
+          ? subscription.price_per_month_cz
           : isUa
           ? subscription.price_per_month_ua
           : subscription.price_per_month;
       case "3":
         return isEuro
           ? subscription.price_per_3months_eu
+          : isCz
+          ? subscription.price_per_3months_cz
           : isUa
           ? subscription.price_per_3months_ua
           : subscription.price_per_3months;
       case "6":
         return isEuro
           ? subscription.price_per_6months_eu
+          : isCz
+          ? subscription.price_per_6months_cz
           : isUa
           ? subscription.price_per_6months_ua
           : subscription.price_per_6months;
       case "12":
         return isEuro
           ? subscription.price_per_12months_eu
+          : isCz
+          ? subscription.price_per_12months_cz
           : isUa
           ? subscription.price_per_12months_ua
           : subscription.price_per_12months;
       default:
         return isEuro
           ? subscription.price_per_3months_eu
+          : isCz
+          ? subscription.price_per_3months_cz
           : isUa
           ? subscription.price_per_3months_ua
           : subscription.price_per_3months;
@@ -204,7 +230,28 @@ export default function ItemPage() {
   };
 
   const getCurrencySymbol = () => {
-    return locale === "de" ? "€" : locale === "ua" ? "₴" : "$";
+    return locale === "de"
+      ? "€"
+      : locale === "ua"
+      ? "₴"
+      : locale === "cz"
+      ? "Kč "
+      : "$";
+  };
+
+  const getMonthsCz = (months: string) => {
+    switch (months) {
+      case "1":
+        return "měsíc";
+      case "3":
+        return "měsíce";
+      case "6":
+        return "měsíců";
+      case "12":
+        return "měsíců";
+      default:
+        return "měsíců";
+    }
   };
 
   if (!subscription) {
@@ -258,13 +305,9 @@ export default function ItemPage() {
           </motion.div>
 
           <motion.div
-            // className="w-full lg:w-1/2 p-6 lg:p-12"
+            className="w-full lg:w-1/2 p-6 lg:p-12"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            // transition={{ duration: 0.5 }}
-            className="w-full lg:w-1/2 p-6 lg:p-12"
-            // initial={{ opacity: 0, x: 50 }}
-            // animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h1 className="text-3xl font-bold mb-4">
@@ -292,6 +335,8 @@ export default function ItemPage() {
                   >
                     {locale === "ua"
                       ? `${months} ${getMonthsUa(months)}`
+                      : locale === "cz"
+                      ? `${months} ${getMonthsCz(months)}`
                       : `${months} ${monthsText}`}
                   </button>
                 ))}
@@ -321,6 +366,8 @@ export default function ItemPage() {
                 <p className="text-gray-500 text-sm">
                   {locale === "ua"
                     ? `${selectedPlan} ${getMonthsUa(selectedPlan)}`
+                    : locale === "cz"
+                    ? `${selectedPlan} ${getMonthsCz(selectedPlan)}`
                     : `${selectedPlan} ${monthsText}`}
                 </p>
                 <p className="text-3xl font-bold text-indigo-600">
