@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 
 export default function ReviewsContainer() {
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz" | "pl") || "en";
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -364,6 +364,93 @@ export default function ReviewsContainer() {
     },
   ];
 
+  const polishReviews = [
+    {
+      id: 1,
+      email: "ivanov123@ukr.net",
+      rating: 4,
+      comment:
+        "Jeden z najlepszych serwisów! Polecili mi znajomi, ale to po prostu rewelacja — subskrypcje są 50-70% tańsze. Polecam spróbować!",
+    },
+    {
+      id: 2,
+      username: "Marina",
+      rating: 5,
+      comment:
+        "Jestem bardzo zadowolona z subskrypcji. Wsparcie jest świetne, szybko odpowiadają i pomogli mi podłączyć jedną z nich za granicą. Ogromnie wdzięczna!!!",
+    },
+    {
+      id: 3,
+      email: "pavlo.d@gmail.com",
+      rating: 5,
+      comment:
+        "Jestem niezwykle pod wrażeniem ich życzliwości i gotowości do rozwiązania wszystkich problemów! Takiego wsparcia technicznego jeszcze nie spotkałem. Bardzo wdzięczny!",
+    },
+    {
+      id: 4,
+      username: "Oleksii",
+      rating: 5,
+      comment:
+        "Próbowałem różnych serwisów, od kilku miesięcy korzystam z czatu GPT — to niezastąpione. Dziękuję, że uczyniliście to dla mnie dostępnym.",
+    },
+    {
+      id: 5,
+      email: "anna.petrenko@mail.com",
+      rating: 5,
+      comment:
+        "Jestem zachwycona! Zaoszczędziłam 300 UAH i oglądam Netflix dosłownie cały dzień) Dziękuję 🤍",
+    },
+    {
+      id: 6,
+      username: "Vitalii",
+      rating: 5,
+      comment:
+        "Wielkie dzięki za waszą pracę! Subskrypcje są rzeczywiście tańsze, wszystko jest szybkie i wygodne. Korzystam z przyjemnością, wszystko działa doskonale.",
+    },
+    {
+      id: 7,
+      email: "dmytro.levchuk@ukr.net",
+      rating: 5,
+      comment:
+        "Po prostu dziękuję za serwis! Wcześniej korzystałem z podobnej metody z przyjaciółmi, ale tutaj można naprawdę sporo zaoszczędzić. Szczerze dziękuję i życzę sukcesów!",
+    },
+    {
+      id: 8,
+      username: "Tetiana",
+      rating: 4,
+      comment:
+        "Serwis, który pozwala mi oszczędzać pieniądze. Wygodny i skuteczny. Czekam na rozszerzenie usług dostępnych dla subskrypcji.",
+    },
+    {
+      id: 9,
+      username: "Yuliia",
+      rating: 5,
+      comment:
+        "Najlepsi! Wsparcie na Telegramie to osobna miłość! Zadałam 1000 pytań, na wszystkie odpowiedzieli i pomogli ♥️",
+    },
+    {
+      id: 10,
+      username: "Serhii",
+      rating: 5,
+      comment:
+        "Nawet nie wyobrażam sobie, jak radziłem sobie bez was wcześniej) Polecam wszystkim!",
+    },
+    {
+      id: 11,
+      username: "Olena",
+      rating: 5,
+      comment:
+        "Wasz serwis to naprawdę prawdziwe odkrycie! Dostępne subskrypcje, doskonała jakość i przede wszystkim — znaczne oszczędności ) Teraz wszyscy moi znajomi też z niego korzystają!",
+    },
+    {
+      id: 12,
+      username: "Maksym",
+      rating: 5,
+      comment:
+        "Poleciłem was znajomym, którzy kupowali Netflix bezpośrednio. Powiedziałem im, że tak jest taniej! Teraz wszyscy razem korzystamy! Wszystko jest świetne!",
+    },
+  ];
+
   // Function to get reviews based on locale
   const getLocalizedReviews = () => {
     switch (locale) {
@@ -373,6 +460,8 @@ export default function ReviewsContainer() {
         return germanReviews;
       case "cz":
         return czechReviews;
+      case "pl":
+        return polishReviews;
       case "ua":
       default:
         return originalReviews;
@@ -404,6 +493,12 @@ export default function ReviewsContainer() {
       usersText: "AKTIVNÍ UŽIVATELÉ PLATFORMA",
       savings: "2300 Kč",
       savingsText: "PRŮMĚRNÁ ROČNÍ ÚSPORA",
+    },
+    pl: {
+      users: "10 000+",
+      usersText: "AKTYWNYCH UŻYTKOWNIKÓW PLATFORMY",
+      savings: "430 zł",
+      savingsText: "ŚREDNIA ROCZNA OSZCZĘDNOŚĆ",
     },
   };
 

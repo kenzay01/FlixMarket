@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function SignUp() {
   const router = useRouter();
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz" | "pl") || "en";
 
   const signUp = useClientTranslation("sign_up");
   const nameLabel = useClientTranslation("name");

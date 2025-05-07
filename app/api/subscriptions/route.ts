@@ -25,7 +25,8 @@ export async function POST(req: Request) {
       (subscriptionData.regions?.includes("en") && subscriptionData.title) ||
       (subscriptionData.regions?.includes("de") && subscriptionData.title_de) ||
       (subscriptionData.regions?.includes("ua") && subscriptionData.title_ua) ||
-      (subscriptionData.regions?.includes("cz") && subscriptionData.title_cs);
+      (subscriptionData.regions?.includes("cz") && subscriptionData.title_cs) ||
+      (subscriptionData.regions?.includes("pl") && subscriptionData.title_pl);
 
     if (!hasAnyTitle) {
       return NextResponse.json(

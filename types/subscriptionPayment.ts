@@ -9,5 +9,5 @@ export interface SubscriptionPayment {
   price: number;
   // subscription: Subscription;
   subscriptionId: string;
-  locale: "en" | "de" | "ua" | "cz";
+  locale: "en" | "de" | "ua" | "cz" | "pl";
 }

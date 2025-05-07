@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 
 export default function TermsPage() {
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz" | "pl") || "en";
 
   const translations = {
     en: {
@@ -947,6 +947,243 @@ export default function TermsPage() {
             title: "5. Změny těchto Zásad ochrany osobních údajů",
             content: [
               "5.1 Tyto Zásady ochrany osobních údajů mohou být pravidelně aktualizovány. Změny budou zveřejněny na této stránce.",
+            ],
+          },
+        },
+      },
+    },
+    pl: {
+      pageTitle: "Regulamin",
+      paymentTitle: "Płatność i dostawa",
+      termsTitle: "Regulamin",
+      serviceProvided:
+        "Usługa jest świadczona kupującemu w ciągu 24 godzin od momentu dokonania płatności.",
+      goodsSent:
+        "Produkty są wysyłane za pośrednictwem komunikatorów WhatsApp/Telegram lub e-mailem.",
+      payment:
+        "Płatność jest możliwa na stronie internetowej za pomocą karty, Apple Pay lub Google Pay.",
+      refundTitle: "Polityka zwrotów",
+      refundPolicy:
+        "Zwrot jest możliwy tylko w przypadku braku możliwości podłączenia usługi. Z innych powodów zwrot produktu cyfrowego nie jest możliwy.",
+      contactTitle: "Informacje kontaktowe",
+      storeName: 'Sklep internetowy "Easy Play"',
+      tin: "NIP: 3736606793",
+      address: "Chersoń, ulica Forsztedzka 26",
+      phone: "Numer telefonu: 0954638612",
+      email: "E-mail: easyplaysup@fsubs.info",
+      terms: {
+        welcome: {
+          title: "1. Witamy",
+          content: [
+            "1.1 EasyPlay to platforma, która umożliwia użytkownikom zakup grupowych subskrypcji różnych usług po niższej cenie. Przetwarzanie płatności odbywa się za pośrednictwem naszej strony internetowej easyplayy.com.",
+          ],
+        },
+        warnings: {
+          title:
+            "2. Ważne ostrzeżenia dotyczące współdzielenia dostępu do usług online",
+          content: [
+            "2.1 Zespół EasyPlay poprosi Cię o potwierdzenie, że zapoznałeś się i przestrzegasz warunków użytkowania obowiązujących dla usługi online, z której chcesz korzystać.",
+            "2.2 Odpowiadasz za przestrzeganie obowiązujących warunków użytkowania. Nie ponosimy odpowiedzialności za jakiekolwiek straty, które możesz ponieść, jeśli dostęp do usługi online zostanie zablokowany z powodu nieprzestrzegania jej warunków użytkowania lub korzystania z platformy w sposób, który może naruszać te warunki.",
+            "2.3 Platforma może natychmiast zawiesić lub zakończyć Twój dostęp, jeśli podejrzewamy, że używasz usługi online z naruszeniem jej warunków.",
+          ],
+        },
+        relationship: {
+          title: "3. Relacje z platformą",
+          content: [
+            "3.1 Niniejszy dokument określa zasady regulujące Twoje relacje z nami. Ważne jest, abyś przeczytał i zrozumiał te warunki przed rozpoczęciem korzystania z platformy EasyPlay.",
+            "3.2 Korzystając z platformy EasyPlay lub uzyskując do niej dostęp, zgadzasz się na niniejsze warunki użytkowania. Jeśli nie zgadzasz się z nimi, prosimy, nie korzystaj z EasyPlay.",
+          ],
+        },
+        personalInfo: {
+          title: "4. Dane osobowe",
+          content: [
+            "4.1 Twoja prywatność jest dla nas ważna. Prosimy, zapoznaj się z naszą Polityką prywatności, aby zrozumieć, jak zbieramy, używamy i udostępniamy Twoje dane.",
+          ],
+        },
+        access: {
+          title: "5. Dostęp do platformy EasyPlay",
+          content: [
+            "5.1 Aby korzystać z platformy EasyPlay, musisz mieć co najmniej 18 lat i być prawnie zdolnym do zawarcia umowy oferty publicznej w kraju swojego zamieszkania.",
+          ],
+        },
+        rights: {
+          title: "6. Prawo do korzystania z platformy EasyPlay",
+          content: [
+            "6.1 Wszystkie materiały i treści na platformie EasyPlay należą wyłącznie do platformy lub jej zaufanych licencjodawców. Otrzymujesz licencję na korzystanie z tych treści tylko zgodnie z niniejszymi warunkami.",
+            "6.2 Twoje prawo do korzystania z EasyPlay jest osobiste i nieprzenoszalne.",
+            "6.3 Zgadzasz się, że nie będziesz:",
+            " • 6.3.1 Kopiować żadnej części platformy EasyPlay;",
+            " • 6.3.2 Sprzedawać ani udostępniać żadnej części platformy EasyPlay innym osobom;",
+            " • 6.3.3 Modyfikować żadnej części platformy EasyPlay w jakikolwiek sposób;",
+            " • 6.3.4 Uzyskiwać dostępu do kodu żadnej części platformy EasyPlay, który nie został publicznie udostępniony.",
+            "6.4 Wszystkie poufne informacje, prawa autorskie i prawa własności intelektualnej należą wyłącznie do EasyPlay lub licencjonowanych osób trzecich.",
+            "6.5 Zgadzasz się, że nie masz żadnych praw do jakiejkolwiek części platformy poza prawem do jej używania zgodnie z niniejszymi warunkami.",
+          ],
+        },
+        paymentSystem: {
+          title: "7. System płatności",
+          content: [
+            "7.1 Kontynuując korzystanie z platformy EasyPlay, zgadzasz się przestrzegać umowy o świadczenie usług MonoBank. Zgadzasz się dostarczyć dokładne i pełne informacje oraz zezwalasz na wykorzystanie Twoich danych i informacji o transakcjach.",
+          ],
+        },
+        fees: {
+          title: "8. Opłaty i płatności",
+          content: [
+            "8.1 Podczas subskrypcji musisz podać ważne, aktualne i pełne dane karty kredytowej lub debetowej. Kupując subskrypcję, upoważniasz platformę do obciążenia Twojej karty i potwierdzasz dokładność podanych danych.",
+            "8.2 Odpowiadasz za aktualizowanie swoich danych płatniczych w swoim koncie osobistym.",
+          ],
+        },
+        refunds: {
+          title: "9. Zwroty",
+          content: [
+            "9.1 Uprawnienie do zwrotu pozostaje w gestii EasyPlay na podstawie dostępnych informacji.",
+            "9.2 Zwroty są dokonywane na oryginalną kartę użytą do płatności.",
+          ],
+        },
+        yourContent: {
+          title: "10. Twoje treści",
+          content: [
+            "10.1 Potwierdzasz, że wszelkie treści (teksty, obrazy, publiczne komentarze), które przesyłasz, są zgodne z niniejszymi warunkami.",
+            "10.2 Nie rościmy sobie prawa własności do Twoich treści, ale udzielasz nam ogólnoświatowej, niewyłącznej, nieodpłatnej, wieczystej licencji na korzystanie, kopiowanie, reprodukowanie, dystrybucję, modyfikowanie i udostępnianie Twoich treści w celu świadczenia usług EasyPlay.",
+            "10.3 Musisz upewnić się, że posiadasz prawa do udostępniania jakichkolwiek treści osób trzecich zawartych w Twoich treściach użytkownika.",
+            "10.4 Przesyłając opinie, zgadzasz się, że możemy z nich korzystać bez ograniczeń i bez wynagrodzenia.",
+            "10.5 Nasze prawa do Twoich treści nie wpływają na Twoje prawa do prywatności. Prosimy, zapoznaj się z naszą Polityką prywatności.",
+          ],
+        },
+        acceptableUse: {
+          title: "11. Polityka dopuszczalnego użytkowania",
+          content: [
+            "11.1 Niniejsza sekcja określa konkretne zasady korzystania z platformy EasyPlay.",
+            "11.2 Nie wolno Ci:",
+            " • 11.2.1 Omijać ani zakłócać funkcji bezpieczeństwa platformy;",
+            " • 11.2.2 Naruszać niniejszych warunków;",
+            " • 11.2.3 Korzystać z platformy, jeśli Twój dostęp został zawieszony lub zakazany;",
+            " • 11.2.4 Promować ani reklamować na platformie;",
+            " • 11.2.5 Wysyłać niezamówionych wiadomości marketingowych;",
+            " • 11.2.6 Modyfikować ani hakować platformy;",
+            " • 11.2.7 Wprowadzać złośliwego oprogramowania lub szkodliwych materiałów;",
+            " • 11.2.8 Gromadzić danych w sposób niezgodny z niniejszymi warunkami;",
+            " • 11.2.9 Publikować treści, do których nie masz praw lub które naruszają prawa osób trzecich;",
+            " • 11.2.10 Używać automatycznych systemów do przeciążania platformy.",
+            "11.3 Naruszenie warunków może skutkować:",
+            " • 11.3.1 Natychmiastowym lub trwałym zawieszeniem;",
+            " • 11.3.2 Ostrzeżeniem.",
+            "11.4 Lista ta nie jest wyczerpująca, możliwe są inne działania.",
+          ],
+        },
+        takedown: {
+          title: "12. Polityka usuwania treści",
+          content: [
+            "12.1 Jeśli uważasz, że jakiekolwiek treści naruszają Twoje prawa, skontaktuj się z naszym wsparciem za pośrednictwem e-maila (easyplaysup@fsubs.info), Telegramu lub swojego konta osobistego. Podaj:",
+            " • 12.1.1 Swoje imię i dane kontaktowe;",
+            " • 12.1.2 Szczegółowe wyjaśnienie naruszenia;",
+            " • 12.1.3 Link lub identyfikator spornej treści.",
+            "12.2 Odpowiemy w ciągu 24 godzin z planowanym działaniem.",
+          ],
+        },
+        termination: {
+          title: "13. Zakończenie",
+          content: [
+            "13.1 Jeśli nie zgadzasz się z niniejszymi warunkami lub przyszłymi zmianami, natychmiast przestań korzystać z usługi.",
+            "13.2 Aby zamknąć swoje konto, skontaktuj się z wsparciem pod adresem easyplaysup@fsubs.info lub przez Telegram.",
+            "13.3 Możemy natychmiast zakończyć Twój dostęp, jeśli naruszysz niniejsze warunki lub inne kluczowe zasady.",
+            "13.4 Usługi mogą również zostać zakończone po uprzednim powiadomieniu.",
+          ],
+        },
+        liability: {
+          title: "14. Odpowiedzialność platformy",
+          content: [
+            "14.1 Chociaż dążymy do wysokich standardów, niektóre funkcje zależą od sieci osób trzecich.",
+            "14.2 EasyPlay nie ponosi odpowiedzialności za treści osób trzecich ani problemy z dostępem do usług, w tym:",
+            " • 14.2.1 Działania użytkowników (np. nieudane płatności lub naruszenia zasad);",
+            " • 14.2.2 Niedostępność usługi.",
+            "14.3 EasyPlay jest dostarczany 'tak, jak jest' i 'w miarę dostępności'. Nie gwarantujemy nieprzerwanego ani bezbłędnego użytkowania.",
+            "14.4 W przypadku roszczenia nasza odpowiedzialność nie przekroczy opłat administracyjnych, które zapłaciłeś w ciągu ostatnich 12 miesięcy. Jeśli nie dokonano żadnej płatności, nie ponosimy odpowiedzialności.",
+            "14.5 Nie odpowiadamy za nieprzewidywalne szkody ani szkody spowodowane Twoim naruszeniem warunków.",
+          ],
+        },
+        disputes: {
+          title: "15. Rozwiązywanie sporów",
+          content: [
+            "15.1 Jeśli pojawi się spór, skontaktuj się z nami za pośrednictwem e-maila lub Telegramu, aby spróbować rozwiązać go nieformalnie.",
+            "15.2 W mało prawdopodobnym przypadku braku nieformalnego rozwiązania, będziemy współpracować z Tobą, aby znaleźć najlepszy sposób rozwiązania sporu.",
+          ],
+        },
+        platformChanges: {
+          title: "16. Zmiany na platformie",
+          content: [
+            "16.1 Regularnie aktualizujemy i ulepszamy EasyPlay, aby dodawać nowe funkcje i usługi.",
+            "16.2 Aktualizacje mogą zmieniać funkcje lub treści i mogą prowadzić do resetowania lub usuwania danych.",
+            "16.3 Kontynuując korzystanie z platformy po aktualizacjach, zgadzasz się na zmiany. Możesz przestać korzystać z usługi w dowolnym momencie.",
+          ],
+        },
+        termsChanges: {
+          title: "17. Zmiany warunków",
+          content: [
+            "17.1 Niniejsze warunki mogą być okresowo aktualizowane, a najnowsza wersja jest zawsze dostępna na tej stronie.",
+            "17.2 Zmiany mogą wynikać z nowych funkcji, aktualizacji prawnych lub wyjaśnień.",
+            "17.3 Staramy się powiadamiać użytkowników z wyprzedzeniem, ale natychmiastowe zmiany mogą nastąpić bez powiadomienia.",
+          ],
+        },
+        agreement: {
+          title: "18. Umowa prawna",
+          content: [
+            "18.1 Niniejsze warunki stanowią pełną umowę między Tobą a EasyPlay.",
+            "18.2 Jeśli jakakolwiek część jest niewykonalna, reszta pozostaje ważna.",
+            "18.3 Jeśli EasyPlay nie podejmie natychmiastowych działań w przypadku naruszenia, zachowuje prawo do działania później.",
+          ],
+        },
+        contact: {
+          title: "19. Kontakt",
+          content: [
+            "19.1 W przypadku pytań dotyczących niniejszych warunków skontaktuj się z nami pod adresem easyplaysup@fsubs.info.",
+          ],
+        },
+      },
+      privacyPolicy: {
+        title: "Polityka prywatności",
+        intro: [
+          "Zespół serwisu EasyPlay dba o bezpieczeństwo danych użytkowników. Ściśle przestrzegamy niniejszej Polityki prywatności, abyś nie musiał martwić się o to, co dzieje się z Twoimi danymi osobowymi podanymi platformie podczas rejestracji.",
+          "Rejestrując się na platformie EasyPlay, wyrażasz zgodę na przetwarzanie wszystkich danych wprowadzonych w celu rejestracji, aby zapewnić prawidłowe świadczenie usług zgodnie z ofertą publiczną.",
+          "Rejestrując się na platformie, potwierdzasz również, że zapoznałeś się z listą swoich praw jako podmiotu danych zgodnie z artykułem 8 ukraińskiej ustawy 'O ochronie danych osobowych'. Dokument ten jest dostępny pod adresem: http://zakon2.rada.gov.ua/laws/show/2297-17.",
+        ],
+        sections: {
+          collection: {
+            title: "1. Zbieranie danych osobowych",
+            content: [
+              "1.1 Podczas rejestracji na platformie EasyPlay prosimy o podanie niezbędnych danych osobowych w zakresie potrzebnym do pełnego świadczenia usług. W razie potrzeby platforma zastrzega sobie prawo do żądania dodatkowych danych osobowych.",
+              "1.2 Nasz zespół może zbierać informacje o Twoich wizytach na platformie EasyPlay, takie jak adres IP, typ i język przeglądarki, data i godzina żądania.",
+              "1.3 Niektóre usługi oferowane przez platformę EasyPlay są powiązane z innymi stronami internetowymi. Dane osobowe dostarczone przez takie strony mogą być przekazywane nam w celu świadczenia usług. Platforma przetwarza takie informacje zgodnie z niniejszą Polityką prywatności.",
+              "1.4 Niniejszy dokument gwarantuje, że anonimowe opinie pozostawione na naszej stronie pozostają całkowicie poufne i nie będą dostępne dla osób trzecich, w tym innych użytkowników platformy.",
+              "1.5 Platforma EasyPlay może przetwarzać dane osobowe na serwerach na Ukrainie, a także w innych krajach.",
+            ],
+          },
+          access: {
+            title: "2. Dostęp do informacji",
+            content: [
+              "2.1 Twoje dane osobowe mogą być udostępniane osobom trzecim tylko w następujących okolicznościach:",
+              "2.1.1 Wyraziłeś na to wyraźną zgodę. Do przekazania jakichkolwiek wrażliwych informacji wymagana jest Twoja zgoda.",
+              "2.1.2 W celu przestrzegania ukraińskiego prawa, w tym dostarczania informacji na żądanie osób fizycznych, prawnych, instytucji, organizacji dowolnej formy własności lub organów państwowych uprawnionych do otrzymywania takich informacji na mocy ukraińskiego prawa.",
+              "2.1.3 W celu zbadania potencjalnych naruszeń oferty publicznej, co może obejmować przekazanie informacji o Tobie w odpowiedzi na należycie złożony wniosek prawny dotyczący naruszeń.",
+              "2.1.4 W celu wykrywania i zapobiegania oszustwom, a także rozwiązywania problemów bezpieczeństwa i usuwania usterek technicznych.",
+            ],
+          },
+          protection: {
+            title: "3. Ochrona informacji",
+            content: [
+              "3.1 Zespół EasyPlay podejmuje wszelkie niezbędne środki w celu ochrony Twoich danych przed nieautoryzowanym dostępem. Środki te obejmują między innymi wewnętrzne przeglądy procesów gromadzenia, przechowywania i przetwarzania danych oraz środki bezpieczeństwa w celu zapobiegania nieautoryzowanemu dostępowi.",
+            ],
+          },
+          modification: {
+            title: "4. Dostęp do danych osobowych i ich modyfikacja",
+            content: [
+              "4.1 Platforma EasyPlay dokłada wszelkich starań, aby zapewnić Ci dostęp do Twoich danych osobowych, umożliwiając wprowadzanie zmian, jeśli są one nieprawidłowe, lub usunięcie ich na Twoje żądanie. Przed przetworzeniem takich żądań prosimy użytkowników o zweryfikowanie swojej tożsamości i określenie danych, do których chcą uzyskać dostęp, które chcą poprawić lub usunąć.",
+            ],
+          },
+          changes: {
+            title: "5. Zmiany w niniejszej Polityce prywatności",
+            content: [
+              "5.1 Niniejsza Polityka prywatności może być okresowo aktualizowana. Zmiany w Polityce prywatności będą publikowane na tej stronie.",
             ],
           },
         },

@@ -22,7 +22,7 @@ export default function Header() {
   const { data: session } = useSession();
   const currentUser = users.find((user) => user.id === session?.user?.id);
   const pathParts = path.split("/").filter(Boolean);
-  const currentLang = ["en", "de", "ua", "cz"].includes(pathParts[0])
+  const currentLang = ["en", "de", "ua", "cz", "pl"].includes(pathParts[0])
     ? pathParts[0]
     : "en";
   const isHome = pathParts.length === 1;

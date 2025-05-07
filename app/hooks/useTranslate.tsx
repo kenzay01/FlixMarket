@@ -4,9 +4,10 @@ import en from "../locales/en.json";
 import de from "../locales/de.json";
 import ua from "../locales/ua.json";
 import cz from "../locales/cz.json";
+import pl from "../locales/pl.json";
 import { useParams } from "next/navigation";
 
-const translations: Record<string, typeof en> = { en, de, ua, cz };
+const translations: Record<string, typeof en> = { en, de, ua, cz, pl };
 export function getTranslation(
   key: keyof typeof en,
   locale: keyof typeof translations

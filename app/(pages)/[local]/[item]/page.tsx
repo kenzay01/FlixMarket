@@ -55,6 +55,8 @@ export default function ItemPage() {
       ? subscription[`${field}_ua` as keyof Subscription]
       : locale === "cz" && subscription[`${field}_cs` as keyof Subscription]
       ? subscription[`${field}_cs` as keyof Subscription]
+      : locale === "pl" && subscription[`${field}_pl` as keyof Subscription]
+      ? subscription[`${field}_pl` as keyof Subscription]
       : subscription[field as keyof Subscription];
   };
 
@@ -66,6 +68,8 @@ export default function ItemPage() {
       ? subscription.benefitsList_ua
       : locale === "cz"
       ? subscription.benefitsList_cs
+      : locale === "pl"
+      ? subscription.benefitsList_pl
       : subscription.benefitsList;
   };
 
@@ -76,6 +80,7 @@ export default function ItemPage() {
     const isEuro = locale === "de";
     const isCz = locale === "cz";
     const isUa = locale === "ua";
+    const isPl = locale === "pl";
 
     const priceForMonth = isEuro
       ? subscription.price_per_month_eu
@@ -83,6 +88,8 @@ export default function ItemPage() {
       ? subscription.price_per_month_cz
       : isUa
       ? subscription.price_per_month_ua
+      : isPl
+      ? subscription.price_per_month_pl
       : subscription.price_per_month;
 
     const priceFor3Months = isEuro
@@ -91,6 +98,8 @@ export default function ItemPage() {
       ? subscription.price_per_3months_cz
       : isUa
       ? subscription.price_per_3months_ua
+      : isPl
+      ? subscription.price_per_3months_pl
       : subscription.price_per_3months;
 
     const priceFor6Months = isEuro
@@ -99,6 +108,8 @@ export default function ItemPage() {
       ? subscription.price_per_6months_cz
       : isUa
       ? subscription.price_per_6months_ua
+      : isPl
+      ? subscription.price_per_6months_pl
       : subscription.price_per_6months;
 
     const priceFor12Months = isEuro
@@ -107,6 +118,8 @@ export default function ItemPage() {
       ? subscription.price_per_12months_cz
       : isUa
       ? subscription.price_per_12months_ua
+      : isPl
+      ? subscription.price_per_12months_pl
       : subscription.price_per_12months;
 
     if (priceForMonth > 0) {
@@ -171,6 +184,8 @@ export default function ItemPage() {
           ? "Fehler bei der Zahlungserstellung. Bitte versuchen Sie es später erneut."
           : locale === "cz"
           ? "Chyba při vytváření platby. Zkuste to prosím znovu později."
+          : locale === "pl"
+          ? "Błąd podczas tworzenia płatności. Spróbuj ponownie później."
           : "Error creating payment. Please try again later."
       );
 
@@ -184,6 +199,7 @@ export default function ItemPage() {
     const isEuro = locale === "de";
     const isCz = locale === "cz";
     const isUa = locale === "ua";
+    const isPl = locale === "pl";
 
     switch (selectedPlan) {
       case "1":
@@ -193,6 +209,8 @@ export default function ItemPage() {
           ? subscription.price_per_month_cz
           : isUa
           ? subscription.price_per_month_ua
+          : isPl
+          ? subscription.price_per_month_pl
           : subscription.price_per_month;
       case "3":
         return isEuro
@@ -201,6 +219,8 @@ export default function ItemPage() {
           ? subscription.price_per_3months_cz
           : isUa
           ? subscription.price_per_3months_ua
+          : isPl
+          ? subscription.price_per_3months_pl
           : subscription.price_per_3months;
       case "6":
         return isEuro
@@ -209,6 +229,8 @@ export default function ItemPage() {
           ? subscription.price_per_6months_cz
           : isUa
           ? subscription.price_per_6months_ua
+          : isPl
+          ? subscription.price_per_6months_pl
           : subscription.price_per_6months;
       case "12":
         return isEuro
@@ -217,6 +239,8 @@ export default function ItemPage() {
           ? subscription.price_per_12months_cz
           : isUa
           ? subscription.price_per_12months_ua
+          : isPl
+          ? subscription.price_per_12months_pl
           : subscription.price_per_12months;
       default:
         return isEuro
@@ -225,6 +249,8 @@ export default function ItemPage() {
           ? subscription.price_per_3months_cz
           : isUa
           ? subscription.price_per_3months_ua
+          : isPl
+          ? subscription.price_per_3months_pl
           : subscription.price_per_3months;
     }
   };
@@ -236,6 +262,8 @@ export default function ItemPage() {
       ? "₴"
       : locale === "cz"
       ? "Kč "
+      : locale === "pl"
+      ? "zł"
       : "$";
   };
 

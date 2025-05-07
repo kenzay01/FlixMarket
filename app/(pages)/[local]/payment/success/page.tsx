@@ -14,6 +14,7 @@ interface PaymentStatus {
     title_ua?: string;
     title_de?: string;
     title_cs?: string;
+    title_pl?: string;
   };
   price?: number;
   startDate?: string;

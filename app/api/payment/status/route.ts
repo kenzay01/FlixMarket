@@ -83,6 +83,7 @@ export async function GET(request: NextRequest) {
           title_ua: subscription.title_ua,
           title_de: subscription.title_de,
           title_cs: subscription.title_cs,
+          title_pl: subscription.title_pl,
         },
       });
     }
@@ -118,6 +119,7 @@ export async function GET(request: NextRequest) {
         title_ua: subscription.title_ua,
         title_de: subscription.title_de,
         title_cs: subscription.title_cs,
+        title_pl: subscription.title_pl,
       },
     });
   } catch (error) {

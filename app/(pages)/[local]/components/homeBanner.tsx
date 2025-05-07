@@ -32,7 +32,7 @@ export default function HomeBanner() {
   const [isLoading, setIsLoading] = useState(true);
 
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz" | "pl") || "en";
   const noSubscriptions = useClientTranslation("no_subscriptions");
   const loadingText = useClientTranslation("loading") || "Loading...";
 
@@ -45,6 +45,8 @@ export default function HomeBanner() {
           ? subscription.price_per_3months_ua
           : locale === "cz"
           ? subscription.price_per_3months_cz
+          : locale === "pl"
+          ? subscription.price_per_3months_pl
           : subscription.price_per_3months_eu,
       "1":
         locale === "en"
@@ -53,6 +55,8 @@ export default function HomeBanner() {
           ? subscription.price_per_month_ua
           : locale === "cz"
           ? subscription.price_per_month_cz
+          : locale === "pl"
+          ? subscription.price_per_month_pl
           : subscription.price_per_month_eu,
       "6":
         locale === "en"
@@ -61,6 +65,8 @@ export default function HomeBanner() {
           ? subscription.price_per_6months_ua
           : locale === "cz"
           ? subscription.price_per_6months_cz
+          : locale === "pl"
+          ? subscription.price_per_6months_pl
           : subscription.price_per_6months_eu,
       "12":
         locale === "en"
@@ -69,6 +75,8 @@ export default function HomeBanner() {
           ? subscription.price_per_12months_ua
           : locale === "cz"
           ? subscription.price_per_12months_cz
+          : locale === "pl"
+          ? subscription.price_per_12months_pl
           : subscription.price_per_12months_eu,
     };
 
@@ -200,6 +208,8 @@ export default function HomeBanner() {
               ? subscription.title_ua
               : locale === "cz"
               ? subscription.title_cs
+              : locale === "pl"
+              ? subscription.title_pl
               : subscription.title_de;
 
           const logoUrl = getServiceLogo(title);
@@ -237,6 +247,8 @@ export default function HomeBanner() {
                       ? subscription.description_ua
                       : locale === "cz"
                       ? subscription.description_cs
+                      : locale === "pl"
+                      ? subscription.description_pl
                       : subscription.description_de}
                   </p>
                   <div className="mb-8">
@@ -250,6 +262,8 @@ export default function HomeBanner() {
                           ? "₴"
                           : locale === "cz"
                           ? "Kč "
+                          : locale === "pl"
+                          ? "zł"
                           : "€";
 
                       return (

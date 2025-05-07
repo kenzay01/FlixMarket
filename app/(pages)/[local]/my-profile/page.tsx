@@ -50,6 +50,7 @@ export default function MyProfile() {
           title_ua: "Невідома підписка",
           title_de: "Unbekanntes Abonnement",
           title_cs: "Neznámé předplatné",
+          title_pl: "Nieznana subskrypcja",
         },
       };
     });
@@ -84,6 +85,7 @@ export default function MyProfile() {
             title_ua: "Невідома підписка",
             title_de: "Unbekanntes Abonnement",
             title_cs: "Neznámé předplatné",
+            title_pl: "Nieznana subskrypcja",
           },
         };
       });
@@ -184,7 +186,7 @@ export default function MyProfile() {
   };
 
   const params = useParams();
-  const locale = (params.local as "en" | "de" | "ua" | "cz") || "en";
+  const locale = (params.local as "en" | "de" | "ua" | "cz" | "pl") || "en";
 
   return (
     <div className="p-6 max-w-4xl mx-auto">

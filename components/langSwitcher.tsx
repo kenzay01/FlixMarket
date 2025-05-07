@@ -9,7 +9,8 @@ export default function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
     pathname === "/en" ||
     pathname === "/de" ||
     pathname === "/ua" ||
-    pathname === "/cz";
+    pathname === "/cz" ||
+    pathname === "/pl";
   const currentLocale = pathname.split("/")[1];
 
   const locales = [
@@ -17,10 +18,14 @@ export default function LanguageSwitcher({ scrolled }: { scrolled: boolean }) {
     { code: "de", name: "DE" },
     { code: "ua", name: "UA" },
     { code: "cz", name: "CZ" },
+    { code: "pl", name: "PL" },
   ];
 
   const switchLanguage = (newLocale: string) => {
-    const newPath = `/${newLocale}${pathname.replace(/^\/(en|de|ua|cz)/, "")}`;
+    const newPath = `/${newLocale}${pathname.replace(
+      /^\/(en|de|ua|cz|pl)/,
+      ""
+    )}`;
     router.push(newPath);
   };
 

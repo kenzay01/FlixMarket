@@ -39,6 +39,30 @@ async function convertCzkToEur(czkAmount: number): Promise<number> {
   }
 }
 
+async function convertPlnToEur(plnAmount: number): Promise<number> {
+  try {
+    // Use Frankfurter API for PLN to EUR conversion
+    const response = await fetch(
+      "https://api.frankfurter.app/latest?from=PLN&to=EUR"
+    );
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    const data = await response.json();
+
+    const plnToEurRate = data.rates.EUR;
+    if (!plnToEurRate) {
+      throw new Error("PLN to EUR rate not found in Frankfurter API");
+    }
+
+    return plnAmount * plnToEurRate;
+  } catch (error) {
+    console.error(
+      "Error fetching PLN to EUR rate from Frankfurter API:",
+      error
+    );
+    throw error;
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Ініціалізація підключення до БД
@@ -106,7 +130,7 @@ export async function POST(request: NextRequest) {
           break;
       }
       currencyCode = 978;
-    } else if (locale == "cz") {
+    } else if (locale === "cz") {
       switch (selectedPlan) {
         case "1":
           price = await convertCzkToEur(
@@ -129,7 +153,30 @@ export async function POST(request: NextRequest) {
           );
           break;
       }
-
+      currencyCode = 978;
+    } else if (locale === "pl") {
+      switch (selectedPlan) {
+        case "1":
+          price = await convertPlnToEur(
+            Number(subscription.price_per_month_pl)
+          );
+          break;
+        case "3":
+          price = await convertPlnToEur(
+            Number(subscription.price_per_3months_pl)
+          );
+          break;
+        case "6":
+          price = await convertPlnToEur(
+            Number(subscription.price_per_6months_pl)
+          );
+          break;
+        case "12":
+          price = await convertPlnToEur(
+            Number(subscription.price_per_12months_pl)
+          );
+          break;
+      }
       currencyCode = 978;
     } else {
       switch (selectedPlan) {
@@ -168,6 +215,8 @@ export async function POST(request: NextRequest) {
         ? subscription.title_de || subscription.title
         : locale === "cz"
         ? subscription.title_cs || subscription.title
+        : locale === "pl"
+        ? subscription.title_pl || subscription.title
         : subscription.title;
 
     const webhookCallbackUrl = `${REDIRECT_URL}/api/payment/monobank/webhook`;
@@ -185,6 +234,8 @@ export async function POST(request: NextRequest) {
             ? `Abonnementzahlung: ${title} (${selectedPlan} Monate)`
             : locale === "cz"
             ? `Platba za předplatné: ${title} (${selectedPlan} měsíců)`
+            : locale === "pl"
+            ? `Płatność za subskrypcję: ${title} (${selectedPlan} miesięcy)`
             : `Subscription payment: ${title} (${selectedPlan} months)`,
         basketOrder: [
           {

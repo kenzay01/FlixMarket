@@ -61,6 +61,8 @@ export default function AdminDashboard() {
                 title = subscription.title_de;
               } else if (payment.locale === "cz" && subscription.title_cs) {
                 title = subscription.title_cs;
+              } else if (payment.locale === "pl" && subscription.title_pl) {
+                title = subscription.title_pl;
               }
 
               const startDate = new Date(payment.startDate);

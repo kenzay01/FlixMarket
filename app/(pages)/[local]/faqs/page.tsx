@@ -134,6 +134,37 @@ const faqData: Record<string, FAQ[]> = {
       answer: "Ano, záruka platí po celou dobu trvání předplatného.",
     },
   ],
+  pl: [
+    {
+      question: "Kim jesteśmy?",
+      answer:
+        "EasyPlay to platforma, która pozwala oszczędzać na kosztach subskrypcji popularnych usług, takich jak Netflix, Spotify, Disney+, VPN i wielu innych. Dzięki naszej platformie możesz bez wysiłku zaoszczędzić do 70% ich ceny.",
+    },
+    {
+      question: "Jak kupić subskrypcję?",
+      answer:
+        "Aby aktywować subskrypcję, wykonaj następujące kroki:\n1. Zarejestruj się lub zaloguj na stronie.\n2. Wybierz potrzebną subskrypcję i preferowany okres.\n3. Dokonaj płatności.\n4. Po dokonaniu płatności skontaktuje się z Tobą menedżer i aktywuje subskrypcję (nie później niż w ciągu 24 godzin od płatności).",
+    },
+    {
+      question: "Co zrobić, jeśli subskrypcja nie działa?",
+      answer:
+        "Po dokonaniu płatności uzyskasz dostęp do czatu z menedżerem, który pomoże rozwiązać wszelkie problemy związane z Twoją subskrypcją.",
+    },
+    {
+      question: "Jakie metody płatności są dostępne?",
+      answer:
+        "Możesz zapłacić kartą bezpośrednio na naszej stronie (Apple Pay/Google Pay).",
+    },
+    {
+      question: "Czy mogę używać subskrypcji na wielu urządzeniach?",
+      answer:
+        "Liczba obsługiwanych urządzeń jest określona w opisie każdego produktu.",
+    },
+    {
+      question: "Czy na subskrypcję jest gwarancja?",
+      answer: "Tak, gwarancja obowiązuje przez cały okres subskrypcji.",
+    },
+  ],
 };
 
 export default function Faqs() {

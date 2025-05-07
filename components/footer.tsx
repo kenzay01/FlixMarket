@@ -11,7 +11,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
-  const locale = pathname.split("/")[1] as "en" | "de" | "ua" | "cz";
+  const locale = pathname.split("/")[1] as "en" | "de" | "ua" | "cz" | "pl";
   const termsTitle = useClientTranslation("term_conditions");
   const supportTitle = useClientTranslation("support");
   const socials = [

@@ -3,9 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Subscription } from "../../../../../types/subscriptions";
 import { Eye, EyeOff, Upload, X, Image as ImageIcon } from "lucide-react";
-// interface EditableSubscription extends Partial<Subscription> {
-//   imageFile?: File | null;
-// }
 
 export default function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -19,6 +16,7 @@ export default function Subscriptions() {
   const [newBenefit_de, setNewBenefit_de] = useState("");
   const [newBenefit_ua, setNewBenefit_ua] = useState("");
   const [newBenefit_cs, setNewBenefit_cs] = useState("");
+  const [newBenefit_pl, setNewBenefit_pl] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -79,6 +77,14 @@ export default function Subscriptions() {
             updatedSub.price_per_3months_cz = 0;
             updatedSub.price_per_6months_cz = 0;
             updatedSub.price_per_12months_cz = 0;
+          } else if (region === "pl") {
+            updatedSub.title_pl = "";
+            updatedSub.description_pl = "";
+            updatedSub.benefitsList_pl = [];
+            updatedSub.price_per_month_pl = 0;
+            updatedSub.price_per_3months_pl = 0;
+            updatedSub.price_per_6months_pl = 0;
+            updatedSub.price_per_12months_pl = 0;
           }
           return updatedSub;
         });
@@ -132,7 +138,7 @@ export default function Subscriptions() {
     }
   };
 
-  const handleAddBenefit = (lang: "en" | "de" | "ua" | "cz") => {
+  const handleAddBenefit = (lang: "en" | "de" | "ua" | "cz" | "pl") => {
     const benefit =
       lang === "en"
         ? newBenefit
@@ -140,7 +146,9 @@ export default function Subscriptions() {
         ? newBenefit_de
         : lang === "ua"
         ? newBenefit_ua
-        : newBenefit_cs;
+        : lang === "cz"
+        ? newBenefit_cs
+        : newBenefit_pl;
     const key =
       lang === "en"
         ? "benefitsList"
@@ -148,7 +156,9 @@ export default function Subscriptions() {
         ? "benefitsList_de"
         : lang === "ua"
         ? "benefitsList_ua"
-        : "benefitsList_cs";
+        : lang === "cz"
+        ? "benefitsList_cs"
+        : "benefitsList_pl";
 
     if (benefit.trim()) {
       setCurrentSubscription((prev) => ({
@@ -164,12 +174,14 @@ export default function Subscriptions() {
         setNewBenefit_ua("");
       } else if (lang === "cz") {
         setNewBenefit_cs("");
+      } else if (lang === "pl") {
+        setNewBenefit_pl("");
       }
     }
   };
 
   const handleRemoveBenefit = (
-    lang: "en" | "de" | "ua" | "cz",
+    lang: "en" | "de" | "ua" | "cz" | "pl",
     index: number
   ) => {
     const key =
@@ -179,7 +191,9 @@ export default function Subscriptions() {
         ? "benefitsList_de"
         : lang === "ua"
         ? "benefitsList_ua"
-        : "benefitsList_cs";
+        : lang === "cz"
+        ? "benefitsList_cs"
+        : "benefitsList_pl";
     setCurrentSubscription((prev) => ({
       ...prev,
       [key]: (prev[key] || []).filter((_, i) => i !== index),
@@ -221,18 +235,22 @@ export default function Subscriptions() {
         price_per_month_eu: subscriptionData.price_per_month_eu ?? 0,
         price_per_month_ua: subscriptionData.price_per_month_ua ?? 0,
         price_per_month_cz: subscriptionData.price_per_month_cz ?? 0,
+        price_per_month_pl: subscriptionData.price_per_month_pl ?? 0,
         price_per_3months: subscriptionData.price_per_3months ?? 0,
         price_per_3months_eu: subscriptionData.price_per_3months_eu ?? 0,
         price_per_3months_ua: subscriptionData.price_per_3months_ua ?? 0,
         price_per_3months_cz: subscriptionData.price_per_3months_cz ?? 0,
+        price_per_3months_pl: subscriptionData.price_per_3months_pl ?? 0,
         price_per_6months: subscriptionData.price_per_6months ?? 0,
         price_per_6months_eu: subscriptionData.price_per_6months_eu ?? 0,
         price_per_6months_ua: subscriptionData.price_per_6months_ua ?? 0,
         price_per_6months_cz: subscriptionData.price_per_6months_cz ?? 0,
+        price_per_6months_pl: subscriptionData.price_per_6months_pl ?? 0,
         price_per_12months: subscriptionData.price_per_12months ?? 0,
         price_per_12months_eu: subscriptionData.price_per_12months_eu ?? 0,
         price_per_12months_ua: subscriptionData.price_per_12months_ua ?? 0,
         price_per_12months_cz: subscriptionData.price_per_12months_cz ?? 0,
+        price_per_12months_pl: subscriptionData.price_per_12months_pl ?? 0,
       };
 
       let response;
@@ -357,6 +375,7 @@ export default function Subscriptions() {
     setNewBenefit_de("");
     setNewBenefit_ua("");
     setNewBenefit_cs("");
+    setNewBenefit_pl("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -387,47 +406,7 @@ export default function Subscriptions() {
   const isDe = selectedRegions.includes("de");
   const isUa = selectedRegions.includes("ua");
   const isCz = selectedRegions.includes("cz");
-
-  // const getLocalizedText = () => {
-  //   return {
-  //     title: "Управління підписками",
-  //     existingSubscriptions: "Існуючі підписки",
-  //     editOrAdd: isEditing ? "Редагування підписки" : "Додати нову підписку",
-  //     clear: "Очистити",
-  //     subscriptionImage: "Зображення підписки",
-  //     uploadImage: "Завантажити зображення",
-  //     selectRegions: "Виберіть регіони",
-  //     description: "Опис",
-  //     benefits: "Переваги",
-  //     addBenefit: "Додати бенефіт",
-  //     remove: "Видалити",
-  //     edit: "Редагувати",
-  //     delete: "Видалити",
-  //     confirmDelete: "Ви впевнені?",
-  //     confirmDeleteMessage: "Цю дію не можна скасувати.",
-  //     cancel: "Скасувати",
-  //     confirm: "Видалити",
-  //     updateSubscription: "Оновити підписку",
-  //     addSubscription: "Додати підписку",
-  //     selectedRegions: "Вибрані регіони",
-  //     month: "місяць",
-  //     error: "Помилка",
-  //     titleEn: "Назва (Англійська)",
-  //     titleDe: "Назва (Німецька)",
-  //     titleUa: "Назва (Українська)",
-  //     titleCz: "Назва (Чеська)",
-  //     descEn: "Опис (Англійська)",
-  //     descDe: "Опис (Німецька)",
-  //     descUa: "Опис (Українська)",
-  //     descCz: "Опис (Чеська)",
-  //     benefitEn: "Додати бенефіт (Англійська)",
-  //     benefitDe: "Додати бенефіт (Німецька)",
-  //     benefitUa: "Додати бенефіт (Українська)",
-  //     benefitCz: "Додати бенефіт (Чеська)",
-  //   };
-  // };
-
-  // const text = getLocalizedText();
+  const isPl = selectedRegions.includes("pl");
 
   if (error) return <div className="p-6 text-red-500">Error: {error}</div>;
 
@@ -463,7 +442,15 @@ export default function Subscriptions() {
                     subscription.regions?.includes("ua"))
                     ? "/"
                     : ""}{" "}
-                  {subscription.title_cs}
+                  {subscription.title_cs}{" "}
+                  {subscription.regions?.includes("pl") &&
+                  (subscription.regions?.includes("en") ||
+                    subscription.regions?.includes("de") ||
+                    subscription.regions?.includes("ua") ||
+                    subscription.regions?.includes("cz"))
+                    ? "/"
+                    : ""}{" "}
+                  {subscription.title_pl}
                 </span>
                 <div className="flex space-x-2">
                   <button
@@ -529,6 +516,11 @@ export default function Subscriptions() {
                     Чех. {subscription.description_cs}
                   </p>
                 )}
+                {subscription.regions?.includes("pl") && (
+                  <p className="text-gray-600 whitespace-pre-line">
+                    Пол. {subscription.description_pl}
+                  </p>
+                )}
               </div>
 
               <div className="mb-3">
@@ -562,6 +554,13 @@ export default function Subscriptions() {
                       )}
                     </li>
                   ))}
+                  {subscription.benefitsList_pl?.map((benefit, index) => (
+                    <li key={index} className="bg-gray-100 p-2 rounded-lg">
+                      {subscription.regions?.includes("pl") && (
+                        <div className="text-gray-800">Пол. {benefit}</div>
+                      )}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-gray-800">
@@ -572,6 +571,7 @@ export default function Subscriptions() {
                     priceEu: subscription.price_per_month_eu,
                     priceUa: subscription.price_per_month_ua,
                     priceCz: subscription.price_per_month_cz,
+                    pricePl: subscription.price_per_month_pl,
                   },
                   {
                     label: "3 місяці",
@@ -579,6 +579,7 @@ export default function Subscriptions() {
                     priceEu: subscription.price_per_3months_eu,
                     priceUa: subscription.price_per_3months_ua,
                     priceCz: subscription.price_per_3months_cz,
+                    pricePl: subscription.price_per_3months_pl,
                   },
                   {
                     label: "6 місяців",
@@ -586,6 +587,7 @@ export default function Subscriptions() {
                     priceEu: subscription.price_per_6months_eu,
                     priceUa: subscription.price_per_6months_ua,
                     priceCz: subscription.price_per_6months_cz,
+                    pricePl: subscription.price_per_6months_pl,
                   },
                   {
                     label: "12 місяців",
@@ -593,6 +595,7 @@ export default function Subscriptions() {
                     priceEu: subscription.price_per_12months_eu,
                     priceUa: subscription.price_per_12months_ua,
                     priceCz: subscription.price_per_12months_cz,
+                    pricePl: subscription.price_per_12months_pl,
                   },
                 ]
                   .filter(
@@ -600,7 +603,8 @@ export default function Subscriptions() {
                       (term.price != null && term.price > 0) ||
                       (term.priceEu != null && term.priceEu > 0) ||
                       (term.priceUa != null && term.priceUa > 0) ||
-                      (term.priceCz != null && term.priceCz > 0)
+                      (term.priceCz != null && term.priceCz > 0) ||
+                      (term.pricePl != null && term.pricePl > 0)
                   )
                   .map((term, index) => (
                     <div
@@ -615,7 +619,8 @@ export default function Subscriptions() {
                         {subscription.regions?.includes("en") &&
                         (subscription.regions?.includes("de") ||
                           subscription.regions?.includes("ua") ||
-                          subscription.regions?.includes("cz")) &&
+                          subscription.regions?.includes("cz") ||
+                          subscription.regions?.includes("pl")) &&
                         term.price !== 0
                           ? "/ "
                           : ""}
@@ -624,7 +629,8 @@ export default function Subscriptions() {
                           `€${term.priceEu}`}{" "}
                         {subscription.regions?.includes("de") &&
                         (subscription.regions?.includes("ua") ||
-                          subscription.regions?.includes("cz")) &&
+                          subscription.regions?.includes("cz") ||
+                          subscription.regions?.includes("pl")) &&
                         term.priceEu !== 0
                           ? "/ "
                           : ""}
@@ -632,13 +638,22 @@ export default function Subscriptions() {
                           term.priceUa !== 0 &&
                           `₴${term.priceUa}`}{" "}
                         {subscription.regions?.includes("ua") &&
-                        subscription.regions?.includes("cz") &&
+                        (subscription.regions?.includes("cz") ||
+                          subscription.regions?.includes("pl")) &&
                         term.priceUa !== 0
                           ? "/ "
                           : ""}
                         {subscription.regions?.includes("cz") &&
                           term.priceCz !== 0 &&
-                          `Kč ${term.priceCz}`}
+                          `Kč ${term.priceCz}`}{" "}
+                        {subscription.regions?.includes("cz") &&
+                        subscription.regions?.includes("pl") &&
+                        term.priceCz !== 0
+                          ? "/ "
+                          : ""}
+                        {subscription.regions?.includes("pl") &&
+                          term.pricePl !== 0 &&
+                          `zł ${term.pricePl}`}
                       </div>
                     </div>
                   ))}
@@ -712,7 +727,7 @@ export default function Subscriptions() {
           <div className="mb-4">
             <h3 className="text-lg font-semibold mb-2">Виберіть регіони</h3>
             <div className="flex space-x-2">
-              {["en", "de", "ua", "cz"].map((region) => (
+              {["en", "de", "ua", "cz", "pl"].map((region) => (
                 <button
                   key={region}
                   onClick={() => toggleRegion(region)}
@@ -781,6 +796,19 @@ export default function Subscriptions() {
                 />
               </div>
             )}
+            {isPl && (
+              <div>
+                <label className="block mb-1">Назва (Польська)</label>
+                <input
+                  type="text"
+                  name="title_pl"
+                  placeholder="Назва (Польська)"
+                  value={currentSubscription.title_pl || ""}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            )}
 
             {isEn && (
               <div>
@@ -825,6 +853,18 @@ export default function Subscriptions() {
                   name="description_cs"
                   placeholder="Опис (Чеська)"
                   value={currentSubscription.description_cs || ""}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            )}
+            {isPl && (
+              <div>
+                <label className="block mb-1">Опис (Польська)</label>
+                <textarea
+                  name="description_pl"
+                  placeholder="Опис (Польська)"
+                  value={currentSubscription.description_pl || ""}
                   onChange={handleInputChange}
                   className="w-full p-2 border rounded"
                 />
@@ -959,29 +999,61 @@ export default function Subscriptions() {
               </div>
             )}
 
+            {isPl && (
+              <div>
+                <h3 className="font-semibold mb-2">Бенефіти (Польська)</h3>
+                {currentSubscription.benefitsList_pl?.map((benefit, index) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <span className="mr-2">{benefit}</span>
+                    <button
+                      onClick={() => handleRemoveBenefit("pl", index)}
+                      className="bg-red-500 text-white px-2 py-1 rounded text-xs cursor-pointer"
+                    >
+                      Видалити
+                    </button>
+                  </div>
+                ))}
+                <div className="flex">
+                  <input
+                    type="text"
+                    value={newBenefit_pl}
+                    onChange={(e) => setNewBenefit_pl(e.target.value)}
+                    placeholder="Додати бенефіт (Польська)"
+                    className="flex-grow p-2 border rounded mr-2"
+                  />
+                  <button
+                    onClick={() => handleAddBenefit("pl")}
+                    className="bg-green-500 text-white px-3 py-2 rounded cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-4 gap-4">
               {[
                 {
                   region: "en",
-                  label: " 1 місяць (USD)",
+                  label: "1 місяць (USD)",
                   name: "price_per_month" as keyof Subscription,
                   type: "number",
                 },
                 {
                   region: "en",
-                  label: " 3 місяці (USD)",
+                  label: "3 місяці (USD)",
                   name: "price_per_3months" as keyof Subscription,
                   type: "number",
                 },
                 {
                   region: "en",
-                  label: " 6 місяців (USD)",
+                  label: "6 місяців (USD)",
                   name: "price_per_6months" as keyof Subscription,
                   type: "number",
                 },
                 {
                   region: "en",
-                  label: " 12 місяців (USD)",
+                  label: "12 місяців (USD)",
                   name: "price_per_12months" as keyof Subscription,
                   type: "number",
                 },
@@ -993,7 +1065,7 @@ export default function Subscriptions() {
                 },
                 {
                   region: "de",
-                  label: " 3 місяці (EU)",
+                  label: "3 місяці (EU)",
                   name: "price_per_3months_eu" as keyof Subscription,
                   type: "number",
                 },
@@ -1017,7 +1089,7 @@ export default function Subscriptions() {
                 },
                 {
                   region: "ua",
-                  label: `3 місяці(UAH)`,
+                  label: `3 місяці (UAH)`,
                   name: "price_per_3months_ua" as keyof Subscription,
                   type: "number",
                 },
@@ -1057,6 +1129,30 @@ export default function Subscriptions() {
                   name: "price_per_12months_cz" as keyof Subscription,
                   type: "number",
                 },
+                {
+                  region: "pl",
+                  label: `1 місяць (PLN)`,
+                  name: "price_per_month_pl" as keyof Subscription,
+                  type: "number",
+                },
+                {
+                  region: "pl",
+                  label: `3 місяці (PLN)`,
+                  name: "price_per_3months_pl" as keyof Subscription,
+                  type: "number",
+                },
+                {
+                  region: "pl",
+                  label: `6 місяців (PLN)`,
+                  name: "price_per_6months_pl" as keyof Subscription,
+                  type: "number",
+                },
+                {
+                  region: "pl",
+                  label: `12 місяців (PLN)`,
+                  name: "price_per_12months_pl" as keyof Subscription,
+                  type: "number",
+                },
               ]
                 .filter((field) => {
                   const region = field.region;
@@ -1064,7 +1160,8 @@ export default function Subscriptions() {
                     (region === "en" && isEn) ||
                     (region === "de" && isDe) ||
                     (region === "ua" && isUa) ||
-                    (region === "cz" && isCz)
+                    (region === "cz" && isCz) ||
+                    (region === "pl" && isPl)
                   );
                 })
                 .map((field) => (
@@ -1078,6 +1175,8 @@ export default function Subscriptions() {
                           ? "₴"
                           : field.name.includes("_cz")
                           ? "Kč "
+                          : field.name.includes("_pl")
+                          ? "zł "
                           : "$"}
                       </span>
                       <input
@@ -1086,9 +1185,7 @@ export default function Subscriptions() {
                         step="0.01"
                         min="0"
                         value={
-                          (currentSubscription[
-                            field.name
-                          ] as readonly string[]) || ""
+                          (currentSubscription[field.name] as number) || ""
                         }
                         onChange={handleInputChange}
                         className={`w-full p-2 border rounded ${

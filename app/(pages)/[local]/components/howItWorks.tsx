@@ -31,11 +31,18 @@ const steps = {
     "Manažer vás bude kontaktovat a aktivuje vaše předplatné",
     "Užijte si kvalitní služby po dobu zaplaceného období",
   ],
+  pl: [
+    "Zaloguj się lub zarejestruj na naszej stronie",
+    "Wybierz żądaną subskrypcję i okres",
+    "Opłać swoje zamówienie",
+    "Menedżer skontaktuje się z Tobą i aktywuje Twoją subskrypcję",
+    "Ciesz się wysokiej jakości usługami przez opłacony okres",
+  ],
 };
 
 export default function HowItWorks() {
   const params = useParams();
-  const locale = (params.local as "en" | "ua" | "de" | "cz") || "en";
+  const locale = (params.local as "en" | "ua" | "de" | "cz" | "pl") || "en";
   const stepTitle = useClientTranslation("step");
   const mainTitle = useClientTranslation("how_it_works");
   const currentSteps = steps?.[locale] ?? [];
