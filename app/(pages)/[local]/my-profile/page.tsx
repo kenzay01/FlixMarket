@@ -316,6 +316,8 @@ export default function MyProfile() {
                               ? subscription.subscription.title_ua
                               : locale === "cz"
                               ? subscription.subscription.title_cs
+                              : locale === "pl"
+                              ? subscription.subscription.title_pl
                               : subscription.subscription.title_de}
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
@@ -336,6 +338,8 @@ export default function MyProfile() {
                           ? "₴"
                           : subscription.locale === "cz"
                           ? "Kč "
+                          : subscription.locale === "pl"
+                          ? "zł"
                           : "€"}
                         {subscription.price} / {subscription.duration}{" "}
                         {locale === "ua"
@@ -373,6 +377,8 @@ export default function MyProfile() {
                               ? subscription.subscription.title_ua
                               : locale === "cz"
                               ? subscription.subscription.title_cs
+                              : locale === "pl"
+                              ? subscription.subscription.title_pl
                               : subscription.subscription.title_de}
                           </h4>
                           <div className="text-sm text-gray-500 mt-1">
@@ -393,6 +399,8 @@ export default function MyProfile() {
                           ? "₴"
                           : subscription.locale === "cz"
                           ? "Kč "
+                          : subscription.locale === "pl"
+                          ? "zł"
                           : "€"}
                         {subscription.price} / {subscription.duration}{" "}
                         {locale === "ua"
@@ -447,6 +455,8 @@ export default function MyProfile() {
                               ? payment.subscription.title_ua
                               : locale === "cz"
                               ? payment.subscription.title_cs
+                              : locale === "pl"
+                              ? payment.subscription.title_pl
                               : payment.subscription.title_de}
                           </td>
                           <td className="py-3 px-4 text-sm">
@@ -456,6 +466,8 @@ export default function MyProfile() {
                               ? "₴"
                               : payment.locale === "cz"
                               ? "Kč "
+                              : payment.locale === "pl"
+                              ? "zł"
                               : "€"}{" "}
                             {payment.price}
                           </td>

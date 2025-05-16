@@ -131,6 +131,8 @@ export default function PaymentSuccessPage() {
       ? paymentStatus.subscription.title_de || paymentStatus.subscription.title
       : locale === "cz"
       ? paymentStatus.subscription.title_cs || paymentStatus.subscription.title
+      : locale === "pl"
+      ? paymentStatus.subscription.title_pl || paymentStatus.subscription.title
       : paymentStatus.subscription.title;
   };
 
@@ -148,6 +150,8 @@ export default function PaymentSuccessPage() {
         ? "de-DE"
         : locale === "cz"
         ? "cs-CZ"
+        : locale === "pl"
+        ? "pl-PL"
         : "en-US";
 
     const options: Intl.DateTimeFormatOptions = {
@@ -193,6 +197,8 @@ export default function PaymentSuccessPage() {
           ? "Bitte geben Sie Ihren Namen ein"
           : locale === "cz"
           ? "Zadejte své jméno"
+          : locale === "pl"
+          ? "Proszę podać swoje imię"
           : "Please enter your name";
     }
 
@@ -224,14 +230,22 @@ export default function PaymentSuccessPage() {
 
     const subscriptionTitle = getSubscriptionTitle();
     const validUntil = formatDate(paymentStatus?.endDate, false);
-    const price = paymentStatus?.price || 0;
+    let price = paymentStatus?.price || "0";
+    if (typeof price === "number") {
+      price = price.toString();
+    }
+    if (typeof price === "string" && price.includes(".")) {
+      price = price.replace(".", ",");
+    }
     const currency =
       locale === "ua"
         ? "грн"
         : locale === "de"
         ? "€"
         : locale === "cz"
-        ? "Kč "
+        ? "Kč"
+        : locale === "pl"
+        ? "zł"
         : "$";
     const currentTime = new Date().toISOString();
 
@@ -286,6 +300,8 @@ export default function PaymentSuccessPage() {
             ? "DE"
             : locale === "cz"
             ? "CZ"
+            : locale === "pl"
+            ? "PL"
             : "EN"
         }
       `.trim();
@@ -444,6 +460,8 @@ export default function PaymentSuccessPage() {
               ? "Zahlungsinformationen konnten nicht abgerufen werden"
               : locale === "cz"
               ? "Nepodařilo se získat informace o platbě"
+              : locale === "pl"
+              ? "Nie udało się pobrać informacji o płatności"
               : "Could not retrieve payment information"}
           </p>
         </div>
@@ -466,7 +484,15 @@ export default function PaymentSuccessPage() {
                 <p className="text-gray-700 mt-2">
                   <span className="font-semibold">{amountText}:</span>{" "}
                   {paymentStatus.price}
-                  {locale === "ua" ? " грн" : locale === "de" ? " €" : " $"}
+                  {locale === "ua"
+                    ? " грн"
+                    : locale === "de"
+                    ? " €"
+                    : locale === "cz"
+                    ? " Kč"
+                    : locale === "pl"
+                    ? " zł"
+                    : " $"}
                 </p>
               )}
               {paymentStatus.startDate && paymentStatus.endDate && (
@@ -495,6 +521,8 @@ export default function PaymentSuccessPage() {
                 ? "Ihre Zahlung wird bearbeitet. Dies kann einige Minuten dauern."
                 : locale === "cz"
                 ? "Vaše platba se zpracovává. Může to trvat několik minut."
+                : locale === "pl"
+                ? "Twoja płatność jest przetwarzana. Może to potrwać kilka minut."
                 : "Your payment is being processed. This may take a few minutes."}
             </p>
           </div>
@@ -512,6 +540,8 @@ export default function PaymentSuccessPage() {
                 ? "Leider konnte Ihre Zahlung nicht bearbeitet werden."
                 : locale === "cz"
                 ? "Bohužel se vaši platbu nepodařilo zpracovat."
+                : locale === "pl"
+                ? "Niestety, nie udało się przetworzyć twojej płatności."
                 : "Unfortunately, your payment could not be processed."}
             </p>
           </div>
@@ -529,6 +559,8 @@ export default function PaymentSuccessPage() {
                 ? "Zahlungsstatus: " + paymentStatus.status
                 : locale === "cz"
                 ? "Stav platby: " + paymentStatus.status
+                : locale === "pl"
+                ? "Status płatności: " + paymentStatus.status
                 : "Payment status: " + paymentStatus.status}
             </p>
           </div>

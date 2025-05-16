@@ -54,11 +54,13 @@ export default function Footer() {
           <div className="flex flex-col gap-0.5 text-center md:text-start">
             <Link
               href={
-                locale === "en"
-                  ? "/en/terms"
-                  : locale === "ua"
-                  ? "/ua/terms"
-                  : "/de/terms"
+              locale === "en"
+                ? "/en/terms"
+                : locale === "ua"
+                ? "/ua/terms"
+                : locale === "pl"
+                ? "/pl/terms"
+                : "/de/terms"
               }
               className="text-indigo-600 "
             >
